@@ -1,0 +1,114 @@
+Feature: Assets - Actions - View
+  
+  Maximo users shall be able to view assets' work details, tickets, move history, and specification history.
+  
+  Background: 
+    
+     Given I login to Maximo as Administrator
+      And I go to the Assets / Assets application
+      And I click the 'New Asset' toolbar button
+      And I record a random 12 digit number as [Asset]
+      And I enter '[Asset]' in the Asset field
+  
+  Scenario: Assets - Actions - View - View Work Details
+    
+    Maximo users shall be able to view an asset's work history.
+   
+     When I enter 'Test Asset' in the description field of the Asset field
+      And I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select 'Active' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the value 'ACTIVE' in the Status field
+      And I select action 'Create / Service Request'
+      And I see the 'Create SR' dialog
+      And I record the value in the 'Service Request' field as [SR]
+      And I enter '1' in the 'Reported Priority' field
+      And I enter 'Test Service Request' in the Summary field
+      And I click the OK button
+      And I see the flash message 'Service Request [SR] created'
+      And I select action 'View / View Work Details'
+      And I see the 'View Work Details' dialog
+      
+     Then I see exactly 1 row in the Work table
+      And I see the value '[SR]' in the Record field on the first row in the Work table
+      And I logout
+      
+  Scenario: Assets - Actions - View - View Tickets
+    
+    Maximo users shall be able to  view an asset's service requests.
+    
+     When I enter 'View Tickets' in the description field of the Asset field
+      And I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select 'Active' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the value 'ACTIVE' in the Status field
+      And I select action 'Create / Service Request'
+      And I see the 'Create SR' dialog
+      And I record the value in the 'Service Request' field as [SR]
+      And I enter '1' in the 'Reported Priority' field
+      And I enter 'Test Service Request' in the Summary field
+      And I click the OK button
+      And I see the flash message 'Service Request [SR] created'
+      And I select action 'View / View Tickets'
+      And I see the 'View Tickets' dialog
+      
+     Then I see exactly 1 row in the Tickets table
+      And I see the value '[SR]' in the Ticket field on the first row in the Tickets table
+      And I logout
+      
+  Scenario: Assets - Actions - View - View Asset Move History
+    
+    Maximo users shall be able to view an asset's move history.
+ 
+     When I enter 'View Asset Move History' in the description field of the Asset field
+      And I enter 'CONF100' in the Location field
+      And I successfully save the record
+      And I select action 'Move/Modify Assets'
+      And I see these values in the following fields on the current row in the Assets table:
+        | field             | value                   |
+        | Asset             | [Asset]                 |
+        | Description       | View Asset Move History |
+        | Location          | CONF100                 |
+      And I activate the detail menu for the 'To Location' field on the current record in the Assets table
+      And I click menu item 'Select Value'
+      And I enter '=TRANS40' in the Location field
+      And I initiate search in the unlabeled table
+      And I select the first row in the unlabeled table
+      And I click the OK button
+      And I see the 'Asset [Asset] in site BEDFORD was moved successfully' system message
+      And I click the OK button
+      And I select action 'View / View Asset Move History'
+      And I see the 'View Asset Move History' dialog
+      
+     Then I see exactly 2 rows in the unlabeled table
+      And I sort the unlabeled table by the 'Transaction Type' column
+      And I select the 2nd row in the unlabeled table
+      And I see the value 'CONF100' in the 'From Location' field on the current row in the unlabeled table
+      And I see the value 'TRANS40' in the 'To Location' field on the current row in the unlabeled table
+      And I logout
+      
+  Scenario: Assets - Actions - View - View Asset Specification History
+    
+    Maximo users shall be able to view an asset's specification history.
+
+     When I enter 'View Asset Specification History' in the description field of the Asset field
+      And I successfully save the record
+      And I select the 'Specifications' tab
+      And I enter 'VEHICLE \ TTAXLE' in the Classification field
+      And I successfully save the record
+      And I enter '=FUELTP' in the Attribute filter in the Specifications table
+      And I initiate search in the Specifications table
+      And I enter 'ROCKET' in the 'Alphanumeric Value' field on the current row in the Specifications table
+      And I save the record
+      And I enter '=FUELCAP' in the Attribute filter in the Specifications table
+      And I initiate search in the Specifications table
+      And I enter '350' in the 'Numeric Value' field on the current row in the Specifications table
+      And I successfully save the record
+      And I select action 'View / View Asset Specification History'
+      And I see the 'View Asset Specification History' dialog
+      
+     Then I see the Specifications table
+      And I see at least 1 row in the Specifications table
+      And I logout
