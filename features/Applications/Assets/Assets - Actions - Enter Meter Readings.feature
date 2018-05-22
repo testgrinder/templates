@@ -1,3 +1,4 @@
+# template
 Feature: Assets - Actions - Enter Meter Readings
   
   Maximo users shall be able to enter meter readings for assets with meters.

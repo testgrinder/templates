@@ -1,3 +1,4 @@
+# template
 Feature: Assets - Records - Classifications
   
   Maximo users shall be able to add, update, and delete classifications, specifications, and attribute values of specifications.

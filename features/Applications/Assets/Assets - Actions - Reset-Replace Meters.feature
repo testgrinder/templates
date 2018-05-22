@@ -1,3 +1,4 @@
+# template
 Feature: Assets - Actions - Reset/Replace Meters
   
   Maximo users shall be able to reset an asset's meter.

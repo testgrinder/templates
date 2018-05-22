@@ -1,3 +1,4 @@
+# template
 Feature: Assets - Actions - Associate Users and Custodians
   
   Maximo users shall be able to associate users and custodians with an asset.

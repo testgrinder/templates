@@ -1,3 +1,4 @@
+# template
 Feature: Assets - Records - Assets
   
   Maximo users shall be able to create, search, and update assets.

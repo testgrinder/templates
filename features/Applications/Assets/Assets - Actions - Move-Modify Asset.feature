@@ -1,3 +1,4 @@
+# template
 Feature: Assets - Records - Move/Modify Assets
   
   Maximo users shall be able to move assets, change asset parents, associate users, and modify attribute values via the 'Move/Modify Assets' action.

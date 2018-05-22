@@ -1,3 +1,4 @@
+# template
 Feature: Assets - Actions - Report Downtime
   
   Maximo users shall be able to report asset downtime.

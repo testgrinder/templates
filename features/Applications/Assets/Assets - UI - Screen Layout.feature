@@ -1,3 +1,4 @@
+# template
 Feature: Assets - UI - Screen Layout
   
   Maximo users shall be able to confirm screen layouts in the Asset application.

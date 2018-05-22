@@ -1,3 +1,4 @@
+# template
 Feature: Assets - Actions - Duplicate Asset
   
   Maximo users shall be able to duplicate assets.

@@ -1,3 +1,4 @@
+# template
 Feature: Assets - Actions - View
   
   Maximo users shall be able to view assets' work details, tickets, move history, and specification history.

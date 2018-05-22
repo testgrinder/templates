@@ -1,3 +1,4 @@
+# template
 Feature: Assets - Actions - Manage Meter Reading History
   
   Maximo users shall be able to manage assets' meter reading histories.

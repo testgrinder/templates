@@ -1,3 +1,4 @@
+# template
 Feature: Assets - Records - Spare Parts
   
   Maximo users shall be able to add spare parts to assets, filter spare parts, and remove spare parts from assets.

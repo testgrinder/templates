@@ -1,3 +1,4 @@
+# template
 Feature: Assets - Actions - Create
   
   Maximo users shall be able to create work orders and service requests on assets.

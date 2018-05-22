@@ -1,3 +1,4 @@
+# template
 Feature: Assets - Actions - Delete Asset
   
   Maximo users shall be able to delete assets.

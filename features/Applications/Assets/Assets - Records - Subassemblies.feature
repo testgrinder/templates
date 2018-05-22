@@ -1,3 +1,4 @@
+# template
 Feature: Assets - Records - Subassemblies
   
   Maximo users shall be able to add subassemblies to an asset, filter an asset's subassemblies, and remove subassemblies from an asset.

@@ -1,3 +1,4 @@
+# template
 Feature: Assets - Records - Meters
   
   Maximo users shall be able to associate meters with assets and remove those meters.

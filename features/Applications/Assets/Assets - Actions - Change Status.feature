@@ -1,3 +1,4 @@
+# template
 Feature: Assets - Actions - Change Status
   
   Maximo users shall be able to change the status of assets.
