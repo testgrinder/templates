@@ -11,7 +11,14 @@ Feature: Apply Structural Database Changes
       And I select action 'Manage Admin Mode'
       And I see the 'Turn Admin Mode ON' dialog
       And I click the 'Turn Admin Mode ON' button
-      And I see the 'Starting to set Admin Mode ON.' system message
+
+    # Uncomment these lines if your Maximo requires eSignature for database configuration changes
+    # Then I see the 'Electronic Signature Authentication' dialog
+    #  And I enter the password for the Administrator role in the 'Password' field
+    #  And I enter 'Applying database configuration changes via testgrider' in the 'Reason For Change' field
+    #  And I click the OK button
+
+     Then I see the 'Starting to set Admin Mode ON.' system message
       And I click the OK button
       And I wait for 15 seconds
       And I click the 'Refresh Status' button
@@ -24,7 +31,14 @@ Feature: Apply Structural Database Changes
       And I see the 'Structural Database Configuration' dialog
       And I check off the 'Do you have a current backup' checkbox
       And I click the 'Start Configuring the Database' button
-      And I see the 'You started the database configuration. You can click Refresh Status at any time to see the latest status.' system message
+
+    # Uncomment these lines if your Maximo requires eSignature for database configuration changes
+    # Then I see the 'Electronic Signature Authentication' dialog
+    #  And I enter the password for the Administrator role in the 'Password' field
+    #  And I enter 'Applying database configuration changes via testgrider' in the 'Reason For Change' field
+    #  And I click the OK button
+
+     Then I see the 'You started the database configuration. You can click Refresh Status at any time to see the latest status.' system message
       And I click the OK button
       And I wait for 60 seconds
       And I click the 'Refresh Status' button
@@ -36,7 +50,14 @@ Feature: Apply Structural Database Changes
      Then I select action 'Manage Admin Mode'
       And I see the 'Turn Admin Mode OFF' dialog
       And I click the 'Turn Admin Mode OFF' button
-      And I see the 'Starting to set Admin Mode OFF.' system message
+
+    # Uncomment these lines if your Maximo requires eSignature for database configuration changes
+    # Then I see the 'Electronic Signature Authentication' dialog
+    #  And I enter the password for the Administrator role in the 'Password' field
+    #  And I enter 'Applying database configuration changes via testgrider' in the 'Reason For Change' field
+    #  And I click the OK button
+
+     Then I see the 'Starting to set Admin Mode OFF.' system message
       And I click the OK button
       And I wait for 15 seconds
       And I click the 'Refresh Status' button
