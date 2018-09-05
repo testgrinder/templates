@@ -1,3 +1,4 @@
+# template
 Feature: Apply Structural Database Changes
   
   Scenario: Apply Structural Database Changes

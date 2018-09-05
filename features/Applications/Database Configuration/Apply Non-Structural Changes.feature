@@ -1,3 +1,4 @@
+# template
 Feature: Apply Non-Structural Database Changes
   
   Scenario: Apply Non-Structural Database Changes
