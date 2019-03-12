@@ -7,8 +7,7 @@ Feature: Apply Structural Database Changes
      Then I go to the System Configuration / Platform Configuration / Database Configuration application
 
      # turn admin mode on
-     Then I select the List tab
-      And I select action 'Manage Admin Mode'
+     Then I select action 'Manage Admin Mode'
       And I see the 'Turn Admin Mode ON' dialog
       And I click the 'Turn Admin Mode ON' button
 

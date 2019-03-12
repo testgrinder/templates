@@ -8,8 +8,7 @@ Feature: Apply Non-Structural Database Changes
       And I see that the current application is 'Database Configuration'
 
      # apply non-structural changes
-     Then I select the List tab
-      And I select action 'Apply Configuration Changes'
+     Then I select action 'Apply Configuration Changes'
       And I see the 'Non-Structural Database Configuration' dialog
       And I click the 'Start Configuring the Database' button
       And I see the 'You started the database configuration. You can click Refresh Status at any time to see the latest status.' system message
