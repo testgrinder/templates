@@ -37,6 +37,6 @@ Feature: Assets - Actions - Reset/Replace Meters
       And I click the OK button
       
      Then I select action 'Reset/Replace Meters'
-      And I select the first record in the Meters table
+      And I make sure that the table details are visible for the Meters table
       And I see the value 500.00 in the 'Since Last Repair' field in the 'Current Values' section in the Meters table details
       And I logout

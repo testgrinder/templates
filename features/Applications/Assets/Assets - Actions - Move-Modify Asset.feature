@@ -65,7 +65,7 @@ Feature: Assets - Records - Move/Modify Assets
       And I check off the 'User?' checkbox
       And I click the OK button
       
-     Then I successfully save the record
+     Then I save the record
       And I go to the Administration / Resources / People application
       And I enter '=WILSON' in the Person field
       And I initiate search in the People table
@@ -107,4 +107,5 @@ Feature: Assets - Records - Move/Modify Assets
         | Attribute | Description   | Data Type | Alphanumeric Value | Numeric Value | Unit of Measure | Table Value |
         | FUELCAP   | Fuel Capacity | NUMERIC   |                    | 200.0         | GALS            |             | 
       And I logout
+
     

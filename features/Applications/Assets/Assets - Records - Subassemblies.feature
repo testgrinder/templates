@@ -25,15 +25,15 @@ Feature: Assets - Records - Subassemblies
       And I select the List tab
       And I enter '=[Asset]' in the Asset field
       And I initiate search in the Assets table
-      And I select the 1st row in the Assets table
+      And I choose the 1st row in the Assets table
       And I select the 'Spare Parts' tab
       And I click the 'New Row' button in the Subassemblies table
       And I activate the detail menu for the Asset field in the Subassemblies table details
       And I click menu item 'Select Value'
       And I enter '=[Subassembly]' in the Asset filter in the unlabeled table
       And I initiate search in the unlabeled table
-      And I select the 1st row in the unlabeled table
-      And I successfully save the record
+      And I choose the 1st row in the unlabeled table
+      And I save the record
       
      Then I see the value '[Subassembly]' in the Asset field on the current row in the Subassemblies table
       And I logout
@@ -57,17 +57,17 @@ Feature: Assets - Records - Subassemblies
       And I select the List tab
       And I enter '=[Asset]' in the Asset field
       And I initiate search in the Assets table
-      And I select the 1st row in the Assets table
+      And I choose the 1st row in the Assets table
       And I select the 'Spare Parts' tab
       And I click the 'New Row' button in the Subassemblies table
       And I enter '[Subassembly A]' in the Asset field in the Subassemblies table details
-      And I successfully save the record
+      And I save the record
       
      When I activate the detail menu for the Asset field on the current record in the Subassemblies table
       And I click menu item 'Select Value'
       And I enter '=[Subassembly B]' in the Asset filter in the unlabeled table
       And I initiate search in the unlabeled table
-      And I select the first row in the unlabeled table
+      And I choose the first row in the unlabeled table
       
      Then I see the 'Field Asset is read-only' system message
       And I logout
@@ -87,26 +87,26 @@ Feature: Assets - Records - Subassemblies
       And I record a random 12 digit number as [Subassembly B]
       And I enter '[Subassembly B]' in the Asset field
       And I enter 'Filter Subassemblies - ChildB' in the description field of the Asset field
-      And I successfully save the record
+      And I save the record
       And I select the List tab
       And I enter '=[Asset]' in the Asset field
       And I initiate search in the Assets table
-      And I select the 1st row in the Assets table
+      And I choose the 1st row in the Assets table
       And I select the 'Spare Parts' tab
       And I click the 'New Row' button in the Subassemblies table
       And I enter '[Subassembly A]' in the Asset field in the Subassemblies table details
       And I click the 'New Row' button in the Subassemblies table
       And I enter '[Subassembly B]' in the Asset field in the Subassemblies table details
-      And I successfully save the record
+      And I save the record
       And I wait for 300 seconds
       
      When I go to the Assets / Assets application
       And I enter '=[Asset]' in the Asset field
       And I initiate search in the Assets table
-      And I select the 1st row in the Assets table
+      And I choose the 1st row in the Assets table
       And I select the 'Spare Parts' tab
-      And I select the first row in the Subassemblies table
-      And I enter 'ChildA' in the Description filter in the Subassemblies table
+      And I make sure that the table details are visible for the Subassemblies table
+      And I enter '=[Subassembly A]' in the Asset filter in the Subassemblies table
       And I initiate search in the Subassemblies table
       
      Then I see exactly 1 visible row in the Subassemblies table
@@ -123,24 +123,27 @@ Feature: Assets - Records - Subassemblies
       And I record a random 12 digit number as [Subassembly]
       And I enter '[Subassembly]' in the Asset field
       And I enter 'Delete Subassembly - Child' in the description field of the Asset field
-      And I successfully save the record
+      And I save the record
       And I select the List tab
       And I enter '=[Asset]' in the Asset field
       And I initiate search in the Assets table
-      And I select the 1st row in the Assets table
+      And I choose the 1st row in the Assets table
       And I select the 'Spare Parts' tab
       And I click the 'New Row' button in the Subassemblies table
       And I enter '[Subassembly]' in the Asset field in the Subassemblies table details
-      And I successfully save the record
+      And I save the record
       And I see the value '[Subassembly]' in the Asset field on the current row in the Subassemblies table
       And I click the trash can on the current row in the Subassemblies table
-      And I successfully save the record
+      And I save the record
       
      Then I select the List tab
       And I enter '=[Asset]' in the Asset field
       And I initiate search in the Assets table
-      And I select the 1st row in the Assets table
+      And I choose the 1st row in the Assets table
       And I select the 'Spare Parts' tab
       And I see exactly 0 rows in the Subassemblies table
       And I logout
+     
+     
+     
      

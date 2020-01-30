@@ -26,18 +26,18 @@ Feature: Assets - Actions - Report Downtime
       And I activate the detail menu for the 'Downtime Code' field
       And I only see the following rows in the unlabeled table:
         | Value    | Description   |
-        | ADJUST   | Downtime Code |
-        | BRKDWN   | Downtime Code |
-        | MINRSTOP | Downtime Code |
-        | SETUP    | Downtime Code |
+        | ADJUST   | Adjust        |
+        | BRKDWN   | Breakdown     |
+        | MINRSTOP | Minor Stop    |
+        | SETUP    | Setup         |
       And I click the Cancel button
       And I click the OK button
       And I select action 'Manage Downtime History'
-      And I enter '4:00' into the Downtime field on the current record in the unlabeled table
+      And I enter '4:00' in the Downtime field on the current row in the unlabeled table
       And I click the OK button
+      And I save the record
       
-     Then I see the flash message 'Record has been saved'
-      And I see the value '4:00' in the 'Total Downtime' field in the Downtime section
+     Then I see the value '4:00' in the 'Total Downtime' field in the Downtime section
       And I logout
    
   Scenario: Assets - Actions - Report Downtime w/ Status Change

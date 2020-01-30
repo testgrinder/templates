@@ -85,7 +85,7 @@ Feature: Assets - Actions - View
       
      Then I see exactly 2 rows in the unlabeled table
       And I sort the unlabeled table by the 'Transaction Type' column
-      And I select the 2nd row in the unlabeled table
+      And I make current the 2nd row in the unlabeled table
       And I see the value 'CONF100' in the 'From Location' field on the current row in the unlabeled table
       And I see the value 'TRANS40' in the 'To Location' field on the current row in the unlabeled table
       And I logout

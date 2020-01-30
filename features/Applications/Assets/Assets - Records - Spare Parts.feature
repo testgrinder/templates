@@ -62,7 +62,6 @@ Feature: Assets - Records - Spare Parts
         | Quantity     | 1                     |
         | Remarks      | Spare part number 2   |
       And I successfully save the record
-      And I select the first record in the 'Spare Parts' table
       And I enter 'G-1000' in the Item filter in the 'Spare Parts' table
       And I initiate search in the 'Spare Parts' table
       
