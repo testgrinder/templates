@@ -1,0 +1,331 @@
+# template
+Feature: Locations - Actions - Change Status
+  
+  Maximo users shall be able to change the status of locations.
+  
+  Background:
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'Change Status' in the description field of the Location field
+      And I enter 'OPERATING' in the Type field
+      And I save the record
+      And I see the flash message 'Record has been saved'
+    
+  Scenario: Locations - Actions - Change Status - Change status from Select Action menu
+    
+    Maximo users shall be able to change a location's status via the Select Action menu.
+
+     When I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select 'Active' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      
+     Then I see the value 'ACTIVE' in the Status field
+      And I logout
+   
+  Scenario: Locations - Actions - Change Status - Change status from toolbar button
+     
+    Maximo users shall be able to change a location's status via the Change Status toolbar button.
+
+     When I click the 'Change Status' toolbar button
+      And I see the 'Change Status' dialog
+      And I select 'Active' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      
+     Then I see the value 'ACTIVE' in the Status field
+      And I logout
+  
+  
+  Scenario Outline: Locations - Actions - Change Status - Change Status from OPERATING
+    
+    Maximo users shall be able to select the following statuses when a location's status is OPERATING.
+    
+     When I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      
+     Then I see the value '<Display Status>' in the Status field
+      And I logout
+      
+    Examples:
+      | Status                        | Display Status |
+      | Active                        | ACTIVE         |
+      | Broken                        | BROKEN         |
+      | Decommissioned                | DECOMMISSIONED |
+      | Imported from building model  | IMPORTED       |
+      | Inactive                      | INACTIVE       |
+      | Limited Use                   | LIMITEDUSE     |
+      | Missing                       | MISSING        |
+      | Not Ready                     | NOT READY      |
+      | Sealed                        | SEALED         |
+  
+  
+  Scenario Outline: Locations - Actions - Change Status - Change Status from NOT READY
+    
+     Maximo users shall be able to select the following statuses when a location's status is NOT READY.
+    
+     When I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select 'Not Ready' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the flash message 'Record has been saved'
+      And I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      
+     Then I see the value '<Display Status>' in the Status field
+      And I logout
+      
+    Examples:
+      | Status                        | Display Status |
+      | Active                        | ACTIVE         |
+      | Broken                        | BROKEN         |
+      | Decommissioned                | DECOMMISSIONED |
+      | Imported from building model  | IMPORTED       |
+      | Inactive                      | INACTIVE       |
+      | Limited Use                   | LIMITEDUSE     |
+      | Missing                       | MISSING        |
+      | Operating                     | OPERATING      |
+      | Sealed                        | SEALED         |
+    
+  
+  Scenario Outline: Locations - Actions - Change Status - Change Status from ACTIVE
+    
+     Maximo users shall be able to select the following statuses when a location's status is ACTIVE.
+    
+     When I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select 'Active' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the flash message 'Record has been saved'
+      And I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      
+     Then I see the value '<Display Status>' in the Status field
+      And I logout
+      
+    Examples:
+      | Status                        | Display Status |
+      | Broken                        | BROKEN         |
+      | Decommissioned                | DECOMMISSIONED |
+      | Imported from building model  | IMPORTED       |
+      | Inactive                      | INACTIVE       |
+      | Limited Use                   | LIMITEDUSE     |
+      | Missing                       | MISSING        |
+      | Not Ready                     | NOT READY      |
+      | Operating                     | OPERATING      |
+      | Sealed                        | SEALED         |
+
+  Scenario Outline: Locations - Actions - Change Status - Change Status from BROKEN
+    
+     Maximo users shall be able to select the following statuses when a location's status is BROKEN.
+    
+     When I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select 'Broken' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the flash message 'Record has been saved'
+      And I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      
+     Then I see the value '<Display Status>' in the Status field
+      And I logout
+      
+    Examples:
+      | Status                        | Display Status |
+      | Active                        | ACTIVE         |
+      | Decommissioned                | DECOMMISSIONED |
+      | Imported from building model  | IMPORTED       |
+      | Inactive                      | INACTIVE       |
+      | Limited Use                   | LIMITEDUSE     |
+      | Missing                       | MISSING        |
+      | Not Ready                     | NOT READY      |
+      | Operating                     | OPERATING      |
+      | Sealed                        | SEALED         |
+
+  Scenario Outline: Locations - Actions - Change Status - Change Status from DECOMMISSIONED
+    
+     Maximo users shall be able to select the following statuses when a location's status is DECOMMISSIONED.
+    
+     When I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select 'Decommissioned' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the flash message 'Record has been saved'
+      And I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      
+     Then I see the value '<Display Status>' in the Status field
+      And I logout
+      
+    Examples:
+      | Status                        | Display Status |
+      | Active                        | ACTIVE         |
+      | Broken                        | BROKEN         |
+      | Imported from building model  | IMPORTED       |
+      | Inactive                      | INACTIVE       |
+      | Limited Use                   | LIMITEDUSE     |
+      | Missing                       | MISSING        |
+      | Not Ready                     | NOT READY      |
+      | Operating                     | OPERATING      |
+      | Sealed                        | SEALED         |
+
+  Scenario Outline: Locations - Actions - Change Status - Change Status from INACTIVE
+    
+     Maximo users shall be able to select the following statuses when a location's status is INACTIVE.
+    
+     When I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select 'Inactive' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the flash message 'Record has been saved'
+      And I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      
+     Then I see the value '<Display Status>' in the Status field
+      And I logout
+      
+    Examples:
+      | Status                        | Display Status |
+      | Active                        | ACTIVE         |
+      | Broken                        | BROKEN         |
+      | Decommissioned                | DECOMMISSIONED |
+      | Imported from building model  | IMPORTED       |
+      | Limited Use                   | LIMITEDUSE     |
+      | Missing                       | MISSING        |
+      | Not Ready                     | NOT READY      |
+      | Operating                     | OPERATING      |
+      | Sealed                        | SEALED         |
+
+  Scenario Outline: Locations - Actions - Change Status - Change Status from LIMITEDUSE
+    
+     Maximo users shall be able to select the following statuses when a location's status is LIMITEDUSE.
+    
+     When I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select 'Limited Use' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the flash message 'Record has been saved'
+      And I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      
+     Then I see the value '<Display Status>' in the Status field
+      And I logout
+      
+    Examples:
+      | Status                        | Display Status |
+      | Active                        | ACTIVE         |
+      | Broken                        | BROKEN         |
+      | Decommissioned                | DECOMMISSIONED |
+      | Imported from building model  | IMPORTED       |
+      | Inactive                      | INACTIVE       |
+      | Missing                       | MISSING        |
+      | Not Ready                     | NOT READY      |
+      | Operating                     | OPERATING      |
+      | Sealed                        | SEALED         |
+
+  Scenario Outline: Locations - Actions - Change Status - Change Status from MISSING
+    
+     Maximo users shall be able to select the following statuses when a location's status is MISSING.
+    
+     When I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select 'Missing' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the flash message 'Record has been saved'
+      And I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      
+     Then I see the value '<Display Status>' in the Status field
+      And I logout
+      
+    Examples:
+      | Status                        | Display Status |
+      | Active                        | ACTIVE         |
+      | Broken                        | BROKEN         |
+      | Decommissioned                | DECOMMISSIONED |
+      | Imported from building model  | IMPORTED       |
+      | Inactive                      | INACTIVE       |
+      | Limited Use                   | LIMITEDUSE     |
+      | Not Ready                     | NOT READY      |
+      | Operating                     | OPERATING      |
+      | Sealed                        | SEALED         |
+
+
+  Scenario Outline: Locations - Actions - Change Status - Change Status from SEALED
+    
+     Maximo users shall be able to select the following statuses when a location's status is SEALED.
+    
+     When I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select 'Sealed' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the flash message 'Record has been saved'
+      And I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      
+     Then I see the value '<Display Status>' in the Status field
+      And I logout
+      
+    Examples:
+      | Status                        | Display Status |
+      | Active                        | ACTIVE         |
+      | Broken                        | BROKEN         |
+      | Decommissioned                | DECOMMISSIONED |
+      | Imported from building model  | IMPORTED       |
+      | Inactive                      | INACTIVE       |
+      | Limited Use                   | LIMITEDUSE     |
+      | Missing                       | MISSING        |
+      | Not Ready                     | NOT READY      |
+      | Operating                     | OPERATING      |
+  
+  
+  Scenario Outline: Locations - Actions - Change Status - Change Status from IMPORTED
+    
+     Maximo users shall be able to select the following statuses when a location's status is IMPORTED.
+    
+     When I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select 'Imported from building model' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the flash message 'Record has been saved'
+      And I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      
+     Then I see the value '<Display Status>' in the Status field
+      And I logout
+      
+    Examples:
+      | Status                        | Display Status |
+      | Active                        | ACTIVE         |
+      | Broken                        | BROKEN         |
+      | Decommissioned                | DECOMMISSIONED |
+      | Inactive                      | INACTIVE       |
+      | Limited Use                   | LIMITEDUSE     |
+      | Missing                       | MISSING        |
+      | Not Ready                     | NOT READY      |
+      | Operating                     | OPERATING      |
+      | Sealed                        | SEALED         |
+  

@@ -1,0 +1,335 @@
+# template
+Feature: Job Plans - UI - Screen Layout
+  
+  Background: 
+    
+    Given I login to Maximo as Administrator
+      And I go to the Planning / Job Plans application
+
+  Scenario: Job Plans - UI - Screen Layout - List View tab
+   
+     Then I only see these columns in this order in the 'Job Plans' table:                   
+          | column        | attribute            | 
+          | Job Plan      | JOBPLAN.JPNUM        | 
+          | Description   | JOBPLAN.DESCRIPTION  |
+          | Revision      | JOBPLAN.PLUSCREVNUM  | 
+          | Duration      | JOBPLAN.JPDURATION   | 
+          | Supervisor    | JOBPLAN.SUPERVISOR   | 
+          | Status        | JOBPLAN.STATUS       |
+          | Template Type | JOBPLAN.TEMPLATETYPE |
+          | Organization  | JOBPLAN.ORGID        |
+          | Site          | JOBPLAN.SITEID       |
+    
+      And I logout
+
+  Scenario: Job Plans - UI - Screen Layout - Job Plan tab 
+    
+    Given I click the 'New Job Plan' toolbar button
+      
+     Then I select the 'Job Plan' tab
+      
+      And I only see these fields in this order in the header section:
+          | field                 | attribute           | 
+          | Job Plan              | JOBPLAN.JPNUM       | 
+          | Job Plan description  | JOBPLAN.DESCRIPTION |
+          | Revision              | JOBPLAN.PLUSCREVNUM |
+          | Revision description  | JOBPLAN.PLUSCREVCOM |
+          | Organization          | JOBPLAN.ORGID       | 
+          | Site                  | JOBPLAN.SITEID      |
+  
+      And I only see these fields in this order in the Details section:
+          | field                       | attribute                        |
+          | Status                      | JOBPLAN.STATUS                   |
+          | Template Type               | JOBPLAN.TEMPLATETYPE             |
+          | Duration                    | JOBPLAN.JPDURATION               |
+          | Classification              | CLASSSTRUCTURE.HIERARCHYPATH     |
+          | Class Description           | CLASSSTRUCTURE.DESCRIPTION_CLASS |
+          | Launch Entry Name           | JOBPLAN.LAUNCHENTRYNAME          |
+          | Include Tasks in Schedule   | JOBPLAN.INCTASKSINSCHED          |
+          | Start Constraint Offset     | JOBPLAN.STCONOFFSET              |
+          | Finish Constraint Offset    | JOBPLAN.FNCONOFFSET              |
+          | Inspection Form             | JOBPLAN.INSPFORMNUM              |
+          | Inspection Form description | INSPECTIONFORM.NAME              |
+          | Default WO Class            | JOBPLAN.DEFAULTWOCLASS           |
+          | WO Priority                 | JOBPLAN.PRIORITY                 |
+          | Interruptible               | JOBPLAN.INTERRUPTIBLE            |
+          | Interruptible shift         | JOBPLAN.INTSHIFT                 |
+          | Flow Controlled             | JOBPLAN.FLOWCONTROLLED           |
+          | Suspend Flow Control        | JOBPLAN.SUSPENDFLOW              |
+          | Flow Action                 | JOBPLAN.FLOWACTION               |
+          | Flow Action Assist          | JOBPLAN.FLOWACTIONASSIST         |
+  
+      And I only see these fields in this order in the Responsibility section:
+          | field           | attribute             |
+          | Supervisor      | JOBPLAN.SUPERVISOR    |
+          | Crew            | JOBPLAN.AMCREW        |
+          | Lead            | JOBPLAN.LABORCODE     |
+          | Work Group      | JOBPLAN.PERSONGROUP   |
+          | Owner           | JOBPLAN.OWNER         |
+          | Owner Group     | JOBPLAN.OWNERGROUP    |
+          | Crew Work Group | JOBPLAN.CREWWORKGROUP |
+  
+      And I only see these columns in this order in the 'Job Plan Tasks' table:
+          | column              | attribute            |
+          | Sequence            | JOBTASK.TASKSEQUENCE |
+          | Task                | JOBTASK.JPTASK       |
+          | Description         | JOBTASK.DESCRIPTION  |
+          | Nested Job Plan     | JOBTASK.NESTEDJPNUM  |
+          | Duration            | JOBTASK.TASKDURATION |
+          | Meter               | JOBTASK.METERNAME    |
+  
+      And I click the 'New Row' button in the 'Job Plan Tasks' table
+      
+      And I only see these fields in this order in the Details section in the 'Job Plan Tasks' table details:
+          | field                       | attribute                        |
+          | Organization                | JOBTASK.ORGID                    |
+          | Site                        | JOBTASK.SITEID                   |
+          | Task                        | JOBTASK.JPTASK                   |
+          | Task description            | JOBTASK.DESCRIPTION              |
+          | Sequence                    | JOBTASK.TASKSEQUENCE             |
+          | Nested Job Plan             | JOBTASK.NESTEDJPNUM              |
+          | Classification              | CLASSSTRUCTURE.HIERARCHYPATH     |
+          | Class Description           | CLASSSTRUCTURE.DESCRIPTION_CLASS |
+          | Launch Entry Name           | JOBTASK.LAUNCHENTRYNAME          |
+          | Inspection Form             | JOBTASK.INSPFORMNUM              |
+          | Inspection Form description | INSPECTIONFORM.NAME              |
+          | Duration                    | JOBTASK.TASKDURATION             |
+          | Meter                       | JOBTASK.METERNAME                |
+          | Owner                       | JOBTASK.OWNER                    |
+          | Owner Group                 | JOBTASK.OWNERGROUP               |
+          | Crew Work Group             | JOBTASK.CREWWORKGROUP            | 
+          | Flow Controlled             | JOBTASK.FLOWCONTROLLED           |
+          | Suspend Flow Control        | JOBTASK.SUSPENDFLOW              |
+          | Flow Action                 | JOBTASK.FLOWACTION               |
+          | Flow Action Assist          | JOBTASK.FLOWACTIONASSIST         |
+          | Predecessors                | JOBTASK.PREDECESSORTASKS         |
+          | Interruptible               | JOBTASK.INTERRUPTIBLE            |
+          | Interruptible shift         | JOBTASK.INTSHIFT                 |
+    
+      And I only see these columns in this order in the 'Planned Labor' table:
+          | column      | attribute           |
+          | Task        | JOBLABOR.JPTASK     |
+          | Crew Type   | JOBLABOR.AMCREWTYPE |
+          | Craft       | JOBLABOR.CRAFT      |
+          | Skill Level | JOBLABOR.SKILLLEVEL |
+          | Labor       | JOBLABOR.LABORCODE  |
+          | Crew        | JOBLABOR.AMCREW     |
+          | Quantity    | JOBLABOR.QUANTITY   |
+          | Hours       | JOBLABOR.LABORHRS   |
+          | Rate        |                     |
+          | Line Cost   |                     |
+          
+      And I click the 'New Row' button in the 'Planned Labor' table
+      
+      And I only see these fields in this order in the Details section in the 'Planned Labor' table details:
+          | field                 | attribute              |
+          | Organization          | JOBLABOR.ORGID         |
+          | Site                  | JOBLABOR.SITEID        |
+          | Task                  | JOBLABOR.JPTASK        |
+          | Crew Work Group       | JOBLABOR.CREWWORKGROUP |
+          | Labor                 | JOBLABOR.LABORCODE     |
+          | Labor description     | PERSON.DISPLAYNAME     |
+          | Craft                 | JOBLABOR.CRAFT         |
+          | Craft description     | CRAFTSKILL.DESCRIPTION |
+          | Skill Level           | JOBLABOR.SKILLLEVEL    |
+          | Vendor                | JOBLABOR.VENDOR        |
+          | Vendor description    | COMPANIES.NAME         |
+          | Labor Contract        | JOBLABOR.CONTRACTNUM   |
+          | Crew Type             | JOBLABOR.AMCREWTYPE    |
+          | Crew Type description | AMCREWT.DESCRIPTION    |
+          | Crew                  | JOBLABOR.AMCREW        |
+          | Crew description      | AMCREW.DESCRIPTION     |
+          | Quantity              | JOBLABOR.QUANTITY      |
+          | Hours                 | JOBLABOR.LABORHRS      |
+          | Rate                  | JOBLABOR.PAYRATE       |
+          | Line Cost             | JOBLABOR.LINECOST      |
+        
+     Then I select the Materials tab
+    
+      And I see the 'Select Spare Parts' button in the 'Planned Materials' table
+        
+      And I only see these columns in this order in the 'Planned Materials' table:
+          | column            | attribute            |
+          | Task              | JOBMATERIAL.JPTASK   |
+          | Item              | JOBMATERIAL.ITEMNUM  |
+          | Description       | ITEM.DESCRIPTION     |
+          | Storeroom         | JOBMATERIAL.LOCATION |
+          | Item Quantity     | JOBMATERIAL.ITEMQTY  |
+          | Unit Cost         |                      |
+          | Line Cost         |                      |
+          | Vendor            | JOBMATERIAL.VENDOR   |
+        
+      And I click the 'New Row' button in the 'Planned Materials' table
+      
+      And I only see these fields in this order in the Details section in the 'Planned Materials' table details:
+          | field                 | attribute                |
+          | Organization          | JOBMATERIAL.ORGID        |
+          | Site                  | JOBMATERIAL.SITEID       |
+          | Task                  | JOBMATERIAL.JPTASK       |
+          | Item Set              | JOBMATERIAL.ITEMSETID    |
+          | Item Set description  | SETS.DESCRIPTION         |
+          | Item                  | JOBMATERIAL.ITEMNUM      |
+          | Item description      | ITEM.DESCRIPTION         |
+          | Item Quantity         | JOBMATERIAL.ITEMQTY      |
+          | Vendor                | JOBMATERIAL.VENDOR       |
+          | Vendor description    | COMPANIES.NAME           |
+          | Direct Issue          | JOBMATERIAL.DIRECTREQ    |
+          | Storeroom             | JOBMATERIAL.LOCATION     |
+          | Storeroom Site        | JOBMATERIAL.STORELOCSITE |
+          | Unit Cost             | JOBMATERIAL.UNITCOST     |
+          | Line Cost             | JOBMATERIAL.LINECOST     |
+    
+      And I only see these fields in this order in the Condition section in the 'Planned Materials' table details:
+          | field             | attribute                 |
+          | Condition Enabled | ITEM.CONDITIONENABLED     |
+          | Condition Code    | JOBMATERIAL.CONDITIONCODE |
+          | Condition Rate    | ITEMCONDITION.CONDRATE    |
+          | Stock Category    | INVENTORY.CATEGORY        |
+      
+     Then I select the Services tab
+  
+      And I only see these columns in this order in the 'Planned Services' table:
+          | column          | attribute          |
+          | Task            | JOBSERVICE.JPTASK  |
+          | Service Item    | JOBSERVICE.ITEMNUM |
+          | Description     | ITEM.DESCRIPTION   |
+          | Quantity        | JOBSERVICE.ITEMQTY |
+          | Unit Cost       |                    |
+          | Line Cost       |                    |
+          | Vendor          | JOBSERVICE.VENDOR  |
+  
+      And I click the 'New Row' button in the 'Planned Services' table
+  
+      And I only see these fields in this order in the Details section in the 'Planned Services' table details:
+          | field                      | attribute            |
+          | Organization               | JOBSERVICE.ORGID     |
+          | Site                       | JOBSERVICE.SITEID    |
+          | Task                       | JOBSERVICE.JPTASK    |
+          | Item Set                   | JOBSERVICE.ITEMSETID |
+          | Item Set description       | SETS.DESCRIPTION     |
+          | Service Item               | JOBSERVICE.ITEMNUM   |
+          | Service Item description   | ITEM.DESCRIPTION     |
+          | Quantity                   | JOBSERVICE.ITEMQTY   |
+          | Unit Cost                  | JOBSERVICE.UNITCOST  |
+          | Line Cost                  | JOBSERVICE.LINECOST  |
+          | Vendor                     | JOBSERVICE.VENDOR    |
+          | Vendor description         | COMPANIES.NAME       |
+          
+          Then I select the Tools tab
+          
+      And I only see these columns in this order in the 'Planned Tools' table:
+          | column            | attribute        |
+          | Task              | JOBTOOL.JPTASK   |
+          | Tool              | JOBTOOL.ITEMNUM  |
+          | Description       | ITEM.DESCRIPTION |
+          | Tool Quantity     | JOBTOOL.ITEMQTY  |
+          | Tool Hours        | JOBTOOL.HOURS    |
+          | Rate              | JOBTOOL.RATE     |
+          | Line Cost         |                  |
+      
+      And I click the 'New Row' button in the 'Planned Tools' table
+      
+      And I only see these fields in this order in the Details section in the 'Planned Tools' table details:
+          | field                | attribute            |
+          | Organization         | JOBTOOL.ORGID        |
+          | Site                 | JOBTOOL.SITEID       |
+          | Task                 | JOBTOOL.JPTASK       |
+          | Item Set             | JOBTOOL.ITEMSETID    |
+          | Item Set description | SETS.DESCRIPTION     |
+          | Tool                 | JOBTOOL.ITEMNUM      |
+          | Tool description     | ITEM.DESCRIPTION     |
+          | Tool Quantity        | JOBTOOL.ITEMQTY      |
+          | Tool Hours           | JOBTOOL.HOURS        |
+          | Rate                 | JOBTOOL.RATE         |
+          | Storeroom            | JOBTOOL.LOCATION     |
+          | Storeroom Site       | JOBTOOL.STORELOCSITE |
+          | Reservation Required | JOBTOOL.RESERVEREQ   |
+          | Line Cost            | JOBTOOL.LINECOST     |
+      
+      And I click the 'Clear Changes' toolbar button
+      And I click the No button
+      And I logout
+    
+  Scenario: Job Plans - UI - Screen Layout - Work Assets tab
+      
+    Given I click the 'New Job Plan' toolbar button
+    
+     Then I select the 'Work Assets' tab
+    
+      And I only see these fields in this order in the header section:
+          | field                 | attribute           |
+          | Job Plan              | JOBPLAN.JPNUM       |
+          | Job Plan description  | JOBPLAN.DESCRIPTION |
+          | Organization          | JOBPLAN.ORGID       |
+          | Site                  | JOBPLAN.SITEID      |
+      
+      And I only see these columns in this order in the 'Work Assets and Safety Plans' table:
+          | column                          | attribute                      |
+          | Location                        | JPASSETSPLINK.LOCATION         |
+          | Asset                           | JPASSETSPLINK.ASSETNUM         |
+          | Item                            | JPASSETSPLINK.ITEMNUM          |
+          | Asset/Location/Item Description |                                |
+          | Safety Plan                     | JPASSETSPLINK.SAFETYPLANID     |
+          | Default Safety Plan             | JPASSETSPLINK.ISDEFAULTASSETSP |
+  
+      And I click the 'New Row' button in the 'Work Assets and Safety Plans' table
+      
+      And I only see these fields in this order in the Details section in the 'Work Assets and Safety Plans' table details:
+          | field                           | attribute                      |
+          | Location                        | JPASSETSPLINK.LOCATION         |
+          | Asset                           | JPASSETSPLINK.ASSETNUM         |
+          | Item                            | JPASSETSPLINK.ITEMNUM          |
+          | Item Type                       | ITEM.ITEMTYPE                  |
+          | Asset/Location/Item Description | JPASSETSPLINK.ASSETDESCRIPTION |
+          | Organization                    | JPASSETSPLINK.ORGID            |
+          | Site                            | JPASSETSPLINK.SITEID           |
+          | Safety Plan                     | JPASSETSPLINK.SAFETYPLANID     |
+          | Safety Plan description         | SAFETYPLAN.DESCRIPTION         |
+          | Default Safety Plan             | JPASSETSPLINK.ISDEFAULTASSETSP |
+      
+      And I only see these fields in this order in the 'Purchasing Details' section in the 'Work Assets and Safety Plans' table details:
+          | field                               | attribute                     |
+          | Create WO When Purchasing This Item | JPASSETSPLINK.WOREQWHENPURCH  |
+          | Work Type of Created Work Order     | JPASSETSPLINK.WOTYPEWHENPURCH |
+      
+      And I logout
+    
+  Scenario: Job Plans - UI - Screen Layout - Specifications tab
+        
+    Given I click the 'New Job Plan' toolbar button
+        
+     Then I select the Specifications tab
+        
+      And I only see these fields in this order in the header section:
+          | field                 | attribute                        |
+          | Job Plan              | JOBPLAN.JPNUM                    |
+          | Job Plan description  | JOBPLAN.DESCRIPTION              |
+          | Classification        | CLASSSTRUCTURE.HIERARCHYPATH     |
+          | Class Description     | CLASSSTRUCTURE.DESCRIPTION_CLASS |
+          | Organization          | JOBPLAN.ORGID                    |
+          | Site                  | JOBPLAN.SITEID                   |
+      
+      And I only see these columns in this order in the Specifications table:
+          | column                  | attribute                  |
+          | Attribute               | JOBPLANSPEC.ASSETATTRID    |
+          | Description             | ASSETATTRIBUTE.DESCRIPTION |
+          | Data Type               | ASSETATTRIBUTE.DATATYPE    |
+          | Alphanumeric Value      | JOBPLANSPEC.ALNVALUE       |
+          | Numeric Value           | JOBPLANSPEC.NUMVALUE       |
+          | Unit of Measure         | JOBPLANSPEC.MEASUREUNITID  |
+          | Table Value             | JOBPLANSPEC.TABLEVALUE     |
+  
+      And I only see these columns in this order in the 'Task Specifications' table:
+          | column                | attribute                  |
+          | Task                  | JOBTASKSPEC.JPTASK         |
+          | Classification        |                            |
+          | Attribute             | JOBTASKSPEC.ASSETATTRID    |
+          | Description           | ASSETATTRIBUTE.DESCRIPTION |
+          | Data Type             | ASSETATTRIBUTE.DATATYPE    |
+          | Alphanumeric Value    | JOBTASKSPEC.ALNVALUE       |
+          | Numeric Value         | JOBTASKSPEC.NUMVALUE       |
+          | Unit of Measure       | JOBTASKSPEC.MEASUREUNITID  |
+          | Table Value           | JOBTASKSPEC.TABLEVALUE     |
+      
+      And I logout
+        

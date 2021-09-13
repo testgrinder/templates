@@ -1,0 +1,80 @@
+#template
+Feature: Preventive Maintenance - Records - Preventive Maintenance
+  
+  Maximo users shall be able to create, update, and search PM records.
+  
+  Background:
+    
+    Given I login to Maximo as Administrator
+      And I go to the Preventive Maintenance / Preventive Maintenance application
+      And I click the 'New PM' toolbar button
+      And I record a random 8 digit number as [PM]
+      And I enter '[PM]' in the PM field
+      And I activate the detail menu for the Location field
+      And I click menu item 'Select Value'
+      And I choose the first row in the unnamed table
+      And I see the value 'WSCH' in the 'Work Order Status' field in the 'Work Order Information' section
+      
+  
+  Scenario: Preventive Maintenance - Records - Preventive Maintenance - Create PM
+    
+    Maximo users shall be able to create new Preventive Maintenance records.
+    
+     When I enter 'Create PM' in the description field of the PM field
+     
+     Then I successfully save the record
+      And I logout
+  
+  
+  Scenario: Preventive Maintenance - Records - Preventive Maintenance - Search for PM
+    
+    Maximo users shall be able to navigate to a PM from the List View tab.
+    
+     When I enter 'Search for PM' in the description field of the PM field
+      And I successfully save the record
+      And I go to the Preventive Maintenance / Preventive Maintenance application
+      And I enter '=[PM]' in the PM filter in the PMs table
+      And I initiate search in the PMs table
+      And I choose the first row in the PMs table
+    
+     Then I see the value '[PM]' in the PM field
+      And I logout
+  
+  
+  Scenario: Preventive Maintenance - Records - Preventive Maintenance - Advanced Search for PM
+    
+    Maximo users shall be able to navigate to a PM using the Advanced Search function.
+    
+     When I enter 'Advanced Search for PM' in the description field of the PM field
+      And I successfully save the record
+      And I go to the Preventive Maintenance / Preventive Maintenance application
+      And I click menu bar button 'Advanced Search'
+      And I enter '[PM]' in the PM field
+      And I click the Find button
+    
+     Then I see the value '[PM]' in the PM field
+      And I logout
+      
+  
+  Scenario: Preventive Maintenance - Records - Preventive Maintenance - Update PM
+    
+    Maximo users shall be able to update fields on PMs in DRAFT status.
+    
+    When I enter 'Update PM' in the description field of the PM field
+     And I enter '4' in the Priority field in the 'Work Order Information' section
+     And I successfully save the record
+     And I see these values in the following fields:
+         | field      | value           |
+         | PM         | [PM]            |
+         | Status     | DRAFT           |
+         | Priority   | 4               |
+     And I enter '3' in the Priority field in the 'Work Order Information' section
+     And I successfully save the record
+    
+    Then I see these values in the following fields:
+         | field      | value           |
+         | PM         | [PM]            |
+         | Status     | DRAFT           |
+         | Priority   | 3               |
+     And I see the value 'Update PM' in the description field of the PM field
+     And I logout

@@ -1,0 +1,30 @@
+#template
+Feature: Preventive Maintenance - Actions - Duplicate PM
+  
+  Maximo users shall be able to duplicate PM records.
+  
+  Scenario: Preventive Maintenance - Actions - Duplicate PM
+    
+    Given I login to Maximo as Administrator
+      And I go to the Preventive Maintenance / Preventive Maintenance application
+      And I click the 'New PM' toolbar button
+      And I record a random 8 digit number as [PM]
+      And I enter '[PM]' in the PM field
+      And I enter 'Duplicate PM' in the description field of the PM field
+      And I activate the detail menu for the Location field in the Details section
+      And I click menu item 'Select Value'
+      And I choose the first row in the unnamed table
+      And I record the value in the Location field as [Location]
+      And I select action 'Change Status'
+      And I select 'Active' in the dropdown list for the 'New Status' field
+      And I click the OK button
+    
+     When I select action 'Duplicate PM'
+    
+     Then I see the flash message 'Record has been duplicated.'
+      And I do not see the value '[PM]' in the PM field
+      And I see the value 'Duplicate PM' in the description field of the PM field
+      And I see the value '[Location]' in the Location field
+      And I see the value 'DRAFT' in the Status field
+      And I successfully save the record
+      And I logout

@@ -1,0 +1,73 @@
+# template
+Feature: Job Plans - Actions - View Costs
+  
+  Maximo users shall be able to view a job plan's costs.
+  
+  Scenario: Job Plans - Actions - View Cost
+    
+    Given I login to Maximo as Administrator
+      And I go to the Planning / Job Plans application
+      And I click the 'New Job Plan' toolbar button
+      And I record a random 8 digit number as [JP]
+      And I enter '[JP]' in the 'Job Plan' field
+      And I enter 'View Costs' in the description field of the 'Job Plan' field
+     When I select action 'View Costs'
+     Then I see these values in the following fields:
+            | field           | value   |
+            | Labor Hours     | 0:00    |
+            | Labor Cost      | 0.00    |
+            | Material Cost   | 0.00    |
+            | Service Cost    | 0.00    |
+            | Tool Cost       | 0.00    |
+            | Total Cost      | 0.00    |
+      And I click the OK button
+     When I click the 'New Row' button in the 'Planned Labor' table
+      And I activate the detail menu for the Craft field in the 'Planned Labor' table details
+      And I click menu item 'Go To Crafts'
+      And I enter '!=~null~' in the 'Standard Rate' filter in the Crafts table
+      And I initiate search in the Crafts table
+      And I choose the first row in the Crafts table
+      And I record the value in the Craft field as [Craft]
+      And I record the value in the 'Standard Rate' field as [CraftCost]
+      And I click the 'Return With Value' titlebar button
+      And I see the value '[Craft]' in the Craft field in the 'Planned Labor' table details
+      And I see the value '1' in the Quantity field in the 'Planned Labor' table details
+      And I enter '1' in the Hours field in the 'Planned Labor' table details
+      And I select the Materials tab
+      And I click the 'New Row' button in the 'Planned Materials' table
+      And I activate the detail menu for the Item field in the 'Planned Materials' table details
+      And I click menu item 'Go To / Inventory'
+      And I enter '=A' in the 'ABC Type' filter in the Inventory table
+      And I initiate search in the Inventory table
+      And I choose the first row in the Inventory table
+      And I record the value in the Item field as [Material]
+      And I do not see the value '0.00' in the 'Standard Cost' field on the first row in the 'Inventory Costs' table
+      And I record the value in the 'Standard Cost' field on the first row in the 'Inventory Costs' table as [MatCost]
+      And I click the 'Return With Value' titlebar button
+      And I see the value '[Material]' in the Item field in the 'Planned Materials' table details
+      And I see the value '1.00' in the 'Item Quantity' field in the 'Planned Materials' table details
+      And I select the Tools tab
+      And I click the 'New Row' button in the 'Planned Tools' table
+      And I activate the detail menu for the Tool field in the 'Planned Tools' table details
+      And I click menu item 'Select Value'
+      And I record the value in the Tool field on the first row in the unnamed table as [Tool]
+      And I choose the first row in the unnamed table
+      And I see the value '[Tool]' in the Tool field in the 'Planned Tools' table details
+      And I see the value '1.00' in the 'Tool Quantity' field in the 'Planned Tools' table details
+      And I enter '2' in the 'Tool Hours' field in the 'Planned Tools' table details
+      And I enter '25.01' in the 'Rate' field in the 'Planned Tools' table details
+      And I press the Tab key
+      And I see the value '50.02' in the 'Line Cost' field on the current row in the 'Planned Tools' table
+      And I successfully save the record
+      And I add the numeric value '[CraftCost]' to the numeric value '[MatCost]' and record the result as [Labor+Mat]
+      And I add the numeric value '[Labor+Mat]' to the numeric value '50.02' and record the result as [TotalCost]
+     Then I select action 'View Costs'
+      And I see these values in the following fields:
+            | field           | value       |
+            | Labor Hours     | 1:00        |
+            | Labor Cost      | [CraftCost] |
+            | Material Cost   | [MatCost]   |
+            | Tool Cost       | 50.02       |
+            | Total Cost      | [TotalCost] |
+      And I click the OK button
+      And I logout

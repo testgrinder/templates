@@ -1,0 +1,32 @@
+#template
+Feature: Work Order Tracking - Actions - Delete Work Order
+  
+  Maximo users shall be able to delete work orders that have not yet been approved and are not referenced on other records.
+  
+  Scenario: Work Order Tracking - Actions - Delete Work Order
+    
+    Given I login to Maximo as Administrator
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [WO]
+      And I enter 'Deleting Work Orders' in the description field of the 'Work Order' field
+      And I activate the detail menu for the 'Location' field
+      And I click menu item 'Select Value'
+      And I record the value in the Location field on the first row in the unnamed table as [Location]
+      And I choose the first row in the unnamed table
+      And I see the value '[Location]' in the Location field in the header section
+      And I activate the detail menu for the 'Work Type' field
+      And I enter '=PM' in the Type filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I successfully save the record
+      
+     When I select action 'Delete Work Order'
+      And I see the 'Are you sure you want to delete this record?' system message
+      And I click the Yes button
+     
+     Then I see the flash message 'Record has been deleted.'
+      And I enter '=[WO]' in the 'Work Order' filter in the 'Work Orders' table
+      And I initiate search in the 'Work Orders' table
+      And I see 0 rows in the 'Work Orders' table
+      And I logout

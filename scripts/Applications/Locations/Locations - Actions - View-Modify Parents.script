@@ -1,0 +1,42 @@
+# template
+Feature: Locations - Actions - View/Modify Parents
+  
+  Maximo users shall be able to move locations to a new parent location.
+  
+  Scenario: Locations - Actions - View/Modify Parents
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'View/Modify Parents' in the description field of the Location field
+      And I enter 'OPERATING' in the Type field
+      And I select action 'Associate Systems with Location'
+      And I see the 'Associate Systems with Location' dialog
+      And I click the 'New Row' button
+      And I activate the detail menu for the System field in the System table details
+      And I enter 'PRIMARY' in the System filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I see the value 'PRIMARY' in the System field on the first row in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'PRIMARY' in the System field in the System table details
+      And I activate the detail menu for the Parent field in the System table details
+      And I click menu item 'Select Value'
+      And I record the value in the Location field on the first row in the unnamed table as [Parent]
+      And I choose the first row in the unnamed table
+      And I see the value '[Parent]' in the Parent field in the System table details
+      And I click the OK button
+      And I see the value '[Parent]' in the Parent field on the current row in the 'Parent of [Location] in the PRIMARY System' table
+     When I select action 'View/Modify Parents'
+      And I see the 'View/Modify Parents' dialog
+      And I see the value '[Parent]' in the Parent field on the current row in the Parents table
+      And I activate the detail menu for the 'New Parent' field on the current row in the Parents table
+      And I click menu item 'Select Value'
+      And I enter '!=[Parent]' in the Location filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I record the value in the Location field on the first row in the unnamed table as [NewParent]
+      And I choose the first row in the unnamed table
+      And I click the OK button
+     Then I see the value '[NewParent]' in the Parent field on the current row in the 'Parent of [Location] in the PRIMARY System' table
+      And I logout

@@ -1,0 +1,66 @@
+#template
+Feature: Work Order Tracking - Actions - Select Owner
+  
+  Maximo users shall be able to assign persons/person groups as the owner of a work order.
+  
+  Scenario: Work Order Tracking - Actions - Select Owner - Person
+    
+    Given I login to Maximo as Administrator
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [WO]
+      And I enter 'Select WO Owner' in the description field of the 'Work Order' field
+      And I activate the detail menu for the 'Location' field
+      And I click menu item 'Select Value'
+      And I record the value in the Location field on the first row in the unnamed table as [Location]
+      And I choose the first row in the unnamed table
+      And I see the value '[Location]' in the Location field in the header section
+      And I activate the detail menu for the 'Work Type' field
+      And I enter '=PM' in the Type filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see that the Owner field is readonly in the Responsibility section
+      And I see that the 'Owner Group' field is readonly in the Responsibility section
+    
+     When I select action 'Select Owner'
+      And I see the 'Select Owner' dialog
+      And I see that the Persons tab appears first in its group
+      And I see that the 'Person Groups' tab appears immediately to the right of the Persons tab
+      And I record the value in the Person field on the first row in the Persons table as [Owner]
+      And I choose the first row in the Persons table
+    
+     Then I see the value '[Owner]' in the Owner field
+      And I see an empty value in the 'Owner Group' field
+      And I logout
+  
+  
+  Scenario: Work Order Tracking - Actions - Select Owner - Person Group
+    
+    Given I login to Maximo as Administrator
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [WO]
+      And I enter 'WO Select Owner Group test' in the description field of the 'Work Order' field
+      And I activate the detail menu for the 'Location' field
+      And I click menu item 'Select Value'
+      And I record the value in the Location field on the first row in the unnamed table as [Location]
+      And I choose the first row in the unnamed table
+      And I see the value '[Location]' in the Location field in the header section
+      And I activate the detail menu for the 'Work Type' field
+      And I enter '=PM' in the Type filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see that the Owner field is readonly in the Responsibility section
+      And I see that the 'Owner Group' field is readonly in the Responsibility section
+    
+     When I select action 'Select Owner'
+      And I see the 'Select Owner' dialog
+      And I see that the Persons tab appears first in its group
+      And I see that the 'Person Groups' tab appears immediately to the right of the Persons tab
+      And I select the 'Person Groups' tab
+      And I record the value in the 'Person Group' field on the first row in the 'Person Groups' table as [OwnerGroup]
+      And I choose the first row in the 'Person Groups' table
+      
+     Then I see the value '[OwnerGroup]' in the 'Owner Group' field
+      And I see an empty value in the Owner field
+      And I logout

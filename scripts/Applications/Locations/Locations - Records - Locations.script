@@ -1,0 +1,94 @@
+# template
+Feature: Locations - Records - Locations
+  
+  Locations shall be created, searched, and updated.
+  
+  Scenario: Locations - Records - Locations - Create Location
+    
+    Maximo users shall be able to create locations.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+     When I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I save the record
+     Then I see the flash message 'Record has been saved'
+      And I logout
+      
+  Scenario: Locations - Records - Locations - Search for Location
+    
+    Maximo users shall be able to navigate to a location by searching in the List View tab.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I save the record
+      And I see the flash message 'Record has been saved'
+     When I go to the Assets / Locations application
+      And I enter '[Location]' in the Location filter in the Locations table
+      And I initiate search in the Locations table
+      And I select the 1st row in the Locations table
+     Then I see these values in the following fields:
+        | field       | value         |
+        | Location    | [Location]    |
+        | Type        | OPERATING     |
+      And I see the value 'Test Location' in the description field of the Location field
+      And I logout
+      
+  Scenario: Locations - Records - Locations - Advanced Search for Location
+    
+    Maximo users shall be able to navigate to a location by searching in the Advanced Search dialog.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I save the record
+      And I see the flash message 'Record has been saved'
+     When I go to the Assets / Locations application
+      And I click menu bar button 'Advanced Search'
+      And I enter '[Location]' in the Location field
+      And I click the Find button
+     Then I see the value '[Location]' in the Location field
+      And I logout
+      
+  Scenario: Locations - Records - Locations - Update Location
+    
+    Maximo users shall be able to update location records.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I enter '6800' in the 'Rotating Item' field
+      And I save the record
+      And I see the flash message 'Record has been saved'
+     When I go to the Assets / Locations application
+      And I enter '[Location]' in the Location filter in the Locations table
+      And I initiate search in the Locations table
+      And I select the 1st row in the Locations table
+      And I enter '3600' in the 'Rotating Item' field
+      And I successfully save the record
+     Then I go to the Assets / Locations application
+      And I enter '[Location]' in the Location filter in the Locations table
+      And I initiate search in the Locations table
+      And I select the 1st row in the Locations table
+      And I see these values in the following fields:
+        | field         | value         |
+        | Location      | [Location]    |
+        | Type          | OPERATING     |
+        | Rotating Item | 3600          |
+      And I see the value 'Test Location' in the description field of the Location field
+      And I logout

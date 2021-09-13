@@ -1,0 +1,35 @@
+# template
+Feature: Locations - Actions - Create Work Order
+  
+  Maximo users shall be able to create work orders for a location via the Locations application.
+  
+  Scenario: Locations - Actions - Create Work Order
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Create Work Order' in the description field of the Location field
+      And I enter '2' in the Priority field
+      And I enter '6000-323-000' in the 'GL Account' field
+      And I enter 'BOILERS' in the 'Failure Class' field
+      And I successfully save the record
+     When I select action 'Create / Work Order'
+      And I see the 'Create Work Order' dialog
+      And I record the value in the 'Work Order' field as [WO]
+      And I see the value '2' in the 'Priority' field
+      And I click the OK button
+     Then I see the flash message 'Work order [WO] created'
+      And I go to the Work Orders / Work Order Tracking application
+      And I enter '=[WO]' in the 'Work Order' filter in the 'Work Orders' table
+      And I initiate search in the 'Work Orders' table
+      And I choose the first row in the 'Work Orders' table
+      And I see these values in the following fields:
+            | field         | value         |
+            | Work Order    | [WO]          |
+            | GL Account    | 6000-323-000  |
+            | Failure Class | BOILERS       |
+            | Location      | [Location]    |
+      And I logout

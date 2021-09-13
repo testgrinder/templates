@@ -1,0 +1,36 @@
+#template
+Feature: Work Order Tracking - Actions - Take Ownership
+  
+  Maximo users shall be able to take ownership of work orders.
+  
+  Scenario: Work Order Tracking - Actions - Take Ownership
+    
+    Maximo users shall be able to take ownership of a work order without navigating a dialog via the Take Ownership action.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Administration / Resources / People application
+      And I record the user name for the Administrator role as [Admin]
+      And I enter '[Admin]' in the Person filter in the People table
+      And I initiate search in the People table
+      And I record the value in the Person field on the first row in the People table as [AdminPerson]
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [WO]
+      And I enter 'Take Ownership of WO' in the description field of the 'Work Order' field
+      And I activate the detail menu for the 'Location' field
+      And I click menu item 'Select Value'
+      And I record the value in the Location field on the first row in the unnamed table as [Location]
+      And I choose the first row in the unnamed table
+      And I see the value '[Location]' in the Location field in the header section
+      And I activate the detail menu for the 'Work Type' field
+      And I enter '=PM' in the Type filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see that the Owner field is readonly in the Responsibility section
+      And I see that the 'Owner Group' field is readonly in the Responsibility section
+    
+     When I select action 'Take Ownership'
+     
+     Then I see the value '[AdminPerson]' in the Owner field in the Responsibility section
+      And I save the record
+      And I logout

@@ -1,0 +1,34 @@
+# template
+Feature: Locations - Actions - Create Service Request
+  
+  Maximo users shall be able to create service requests for a location via the Locations application.
+  
+  Scenario: Locations - Actions - Create Service Request
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Create Service Request' in the description field of the Location field
+      And I enter '2' in the Priority field
+      And I enter '6000-323-000' in the 'GL Account' field
+      And I successfully save the record
+     When I select action 'Create / Service Request'
+      And I see the 'Create SR' dialog
+      And I see the value '[Location]' in the Location field
+      And I see the value 'Create Service Request' in the description field of the Location field
+      And I see the value '2' in the 'Reported Priority' field
+      And I record the value in the 'Service Request' field as [SR]
+      And I click the OK button
+     Then I see the flash message 'Service Request [SR] created'
+      And I go to the Work Orders / Service Requests application
+      And I enter '=[SR]' in the 'Service Request' filter in the 'Service Requests' table
+      And I initiate search in the 'Service Requests' table
+      And I choose the first row in the 'Service Requests' table
+      And I see the value '[SR]' in the 'Service Request' field
+      And I see the value '6000-323-000' in the 'GL Account' field
+      And I see the value '[Location]' in the Location field in the 'Service Request Details' section
+      And I logout
+     

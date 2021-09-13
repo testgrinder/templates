@@ -1,0 +1,78 @@
+# template
+Feature: Locations - Actions - Associate Systems with Location
+  
+  Maximo users shall be able to associate and disassociate existing systems with a location.
+  
+  Scenario: Locations - Actions - Associate Systems with Location - Associate System with Location
+  
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'System Association' in the description field of the Location field
+      And I enter 'OPERATING' in the Type field
+     When I select action 'Associate Systems with Location'
+      And I see the 'Associate Systems with Location' dialog
+      And I click the 'New Row' button
+      And I activate the detail menu for the System field in the System table details
+      And I enter 'PRIMARY' in the System filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I see the value 'PRIMARY' in the System field on the first row in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'PRIMARY' in the System field in the System table details
+      And I see that the 'Primary System' checkbox is checked in the System table details
+      And I activate the detail menu for the Parent field in the System table details
+      And I click menu item 'Select Value'
+      And I record the value in the Location field on the first row in the unnamed table as [Parent]
+      And I choose the first row in the unnamed table
+      And I see the value '[Parent]' in the Parent field in the System table details
+      And I click the OK button
+     Then I only see the following rows in the Systems table:
+            | System    | Description       |
+            | PRIMARY   | Primary Hierarchy |
+      And I only see the following rows in the 'Parent of [Location] in the PRIMARY System' table:
+            | Parent    |
+            | [Parent]  |
+      And I logout
+  
+  
+  Scenario: Locations - Actions - Associate Systems with Location - Remove System Association from Location
+    
+    Maximo users shall be able to remove system associations from locations that have no child locations in said system.
+    
+      Given I login to Maximo as Administrator
+        And I go to the Assets / Locations application
+        And I click the 'New Location' toolbar button
+        And I record a random 12 digit number as [Location]
+        And I enter '[Location]' in the Location field
+        And I enter 'OPERATING' in the Type field
+        And I select action 'Associate Systems with Location'
+        And I see the 'Associate Systems with Location' dialog
+        And I click the 'New Row' button
+        And I activate the detail menu for the System field in the System table details
+        And I enter 'PRIMARY' in the System filter in the unnamed table
+        And I initiate search in the unnamed table
+        And I see the value 'PRIMARY' in the System field on the first row in the unnamed table
+        And I choose the first row in the unnamed table
+        And I see the value 'PRIMARY' in the System field in the System table details
+        And I see that the 'Primary System' checkbox is checked in the System table details
+        And I activate the detail menu for the Parent field in the System table details
+        And I click menu item 'Select Value'
+        And I record the value in the Location field on the first row in the unnamed table as [Parent]
+        And I choose the first row in the unnamed table
+        And I see the value '[Parent]' in the Parent field in the System table details
+        And I click the OK button
+        And I only see the following rows in the Systems table:
+            | System    | Description       |
+            | PRIMARY   | Primary Hierarchy |
+        And I only see the following rows in the 'Parent of [Location] in the PRIMARY System' table:
+            | Parent    |
+            | [Parent]  |
+       When I select action 'Associate Systems with Location'
+        And I see the value 'PRIMARY' in the System field on the first row in the System table
+        And I click the trash can on the first row in the System table
+        And I click the OK button
+       Then I see 0 rows in the Systems table
+        And I see 0 rows in the 'Parents in the System' table
+        And I logout

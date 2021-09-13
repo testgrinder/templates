@@ -1,0 +1,26 @@
+# template
+Feature: Locations - Actions - Delete Location
+  
+  Maximo users shall be able to delete locations.
+  
+  Scenario: Locations - Actions - Delete Location - Delete Location
+    
+    Maximo users shall be able to delete a location.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'Delete Location' in the description field of the Location field
+      And I enter 'OPERATING' in the Type field
+      And I successfully save the record
+     When I select action 'Delete Location'
+      And I see the 'delete this record?' system message
+      And I click the Yes button
+     Then I see the flash message 'Record has been deleted'
+      And I go to the Assets / Locations application
+      And I enter '=[Location]' in the Location filter in the Locations table
+      And I initiate search in the Locations table
+      And I see 0 rows in the Locations table
+      And I logout

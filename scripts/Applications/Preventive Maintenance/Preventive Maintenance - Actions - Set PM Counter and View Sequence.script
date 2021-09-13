@@ -1,0 +1,70 @@
+#template
+Feature: Preventive Maintenance - Actions - Set PM Counter and View Sequence
+  
+  Maximo users shall be able to set PM counters and view the effect on job plan sequencing.
+  
+  Scenario: Preventive Maintenance - Actions - Set PM Counter
+    
+    Given I login to Maximo as Administrator
+      And I go to the Preventive Maintenance / Preventive Maintenance application
+      And I click the 'New PM' toolbar button
+      And I record a random 8 digit number as [PM]
+      And I enter '[PM]' in the PM field
+      And I enter 'Set PM Counter' in the description field of the PM field
+      And I activate the detail menu for the Location field in the Details section
+      And I click menu item 'Select Value'
+      And I choose the first row in the unnamed table
+      And I record the value in the Location field as [Location]
+      And I select the Frequency tab
+      And I enter '1' in the Frequency field
+      And I activate the detail menu for the 'Frequency Units' field
+      And I enter 'months' in the Value filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'MONTHS' in the 'Frequency Units' field
+      And I record the date 28 days from now as [4Weeks]
+      And I enter '[4Weeks]' in the 'Estimated Next Due Date' field
+      And I select the 'Job Plan Sequence' tab
+      And I click the 'New Row' button in the 'Job Plan Sequence' table
+      And I activate the detail menu for the 'Job Plan' field in the 'Job Plan Sequence' table details
+      And I click menu item 'Go To Job Plans'
+      And I enter '=ACTIVE' in the Status filter in the 'Job Plans' table
+      And I initiate search in the 'Job Plans' table
+      And I choose the 1st row in the 'Job Plans' table
+      And I record the value in the 'Job Plan' field as [JP1]
+      And I click the 'Return With Value' titlebar button
+      And I enter '1' in the Sequence field in the 'Job Plan Sequence' table details 
+      And I click the 'New Row' button in the 'Job Plan Sequence' table
+      And I activate the detail menu for the 'Job Plan' field in the 'Job Plan Sequence' table details
+      And I click menu item 'Go To Job Plans'
+      And I enter '=ACTIVE' in the Status filter in the 'Job Plans' table
+      And I initiate search in the 'Job Plans' table
+      And I choose the 2nd row in the 'Job Plans' table
+      And I record the value in the 'Job Plan' field as [JP2]
+      And I click the 'Return With Value' titlebar button
+      And I enter '2' in the Sequence field in the 'Job Plan Sequence' table details
+      And I click the 'Change Status' toolbar button
+      And I select 'Active' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      
+     When I select action 'View Sequence'
+      And I see the 'View Sequence' dialog
+    
+     Then I see the value '1' in the Sequence field on the 1st row in the Sequences table
+      And I see the value '[JP1]' in the 'Job Plan' field on the 1st row in the Sequences table
+      And I see the value '2' in the Sequence field on the 2nd row in the Sequences table
+      And I see the value '[JP2]' in the 'Job Plan' field on the 2nd row in the Sequences table
+      And I click the OK button
+      And I select action 'Set PM Counter'
+      And I see the 'Set PM Counter' dialog
+      And I see the value '0' in the Counter field
+      And I enter '1' in the 'New PM Counter' field
+      And I click the OK button
+      And I select action 'View Sequence'
+      And I see the 'View Sequence' dialog
+      And I see the value '2' in the Sequence field on the 1st row in the Sequences table
+      And I see the value '[JP2]' in the 'Job Plan' field on the 1st row in the Sequences table
+      And I see the value '1' in the Sequence field on the 2nd row in the Sequences table
+      And I see the value '[JP1]' in the 'Job Plan' field on the 2nd row in the Sequences table
+      And I click the OK button
+      And I logout

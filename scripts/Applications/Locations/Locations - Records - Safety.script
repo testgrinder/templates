@@ -1,0 +1,340 @@
+# template
+Feature: Locations - Records - Safety
+  
+  Maximo users shall be able to add, filter, and remove hazards, hazardous materials, and lock out tag out procedures.
+  
+  Scenario: Locations - Records - Safety - Add Hazard and Verify Precautions
+    
+    Maximo users shall be able to add a hazard to a location and verify precautions for the hazard.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I save the record 
+     When I select the Safety tab
+      And I see the Hazards table
+      And I see the Precautions table
+      And I click the 'New Row' button in the Hazards table
+      And I activate the detail menu for the Hazard field in the Hazards table details
+      And I click menu item 'Select Value'
+      And I enter '=CSHIVOLT' in the Hazard filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'CSHIVOLT' in the Hazard field in the Hazards table details
+      And I see the value 'CS High Voltage' in the description field of the Hazard field in the Hazards table details
+      And I save the record
+     Then I only see the following rows in the 'Precautions for' table:
+            | Precaution            | Description                                 |
+            | CSPOLICE              | BEDFORD CS CSPOLICE officer direct traffic  |
+            | CSPROCLO              | BEDFORD CS Wear protective clothing         |
+      And I logout
+  
+  
+  Scenario: Locations - Records - Safety - Filter Hazards
+    
+    Maximo users shall be able to filter a location's hazards.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I save the record
+     When I select the Safety tab
+      And I see the Hazards table
+      And I see the Precautions table
+      And I click the 'New Row' button in the Hazards table
+      And I activate the detail menu for the Hazard field in the Hazards table details
+      And I click menu item 'Select Value'
+      And I enter '=CRASH' in the Hazard filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'CRASH' in the Hazard field in the Hazards table details
+      And I see the value 'Danger inherent in operating a motor vehicle' in the description field of the Hazard field in the Hazards table details 
+      And I click the 'New Row' button in the Hazards table
+      And I activate the detail menu for the Hazard field in the Hazards table details
+      And I click menu item 'Select Value'
+      And I enter '=TRAFFIC' in the Hazard filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'TRAFFIC' in the Hazard field in the Hazards table details
+      And I see the value 'Danger of being hit by passing vehicles' in the description field of the Hazard field in the Hazards table details
+      And I save the record
+      And I only see the following rows in the Hazards table:
+            | Hazard      | 
+            | CRASH       |
+            | TRAFFIC     | 
+      And I enter '=CRASH' in the Hazard filter in the Hazards table
+      And I initiate search in the Hazards table
+     Then I only see the following rows in the Hazards table:
+            | Hazard      |
+            | CRASH       |
+      And I logout
+  
+  
+  Scenario: Locations - Records - Safety - Remove Hazard
+    
+    Maximo users shall be able to remove a hazard from a location.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I save the record
+     When I select the Safety tab
+      And I see the Hazards table
+      And I see the Precautions table
+      And I click the 'New Row' button in the Hazards table
+      And I activate the detail menu for the Hazard field in the Hazards table details
+      And I click menu item 'Select Value'
+      And I enter '=DUST' in the Hazard filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'DUST' in the Hazard field on the current row in the Hazards table
+      And I save the record
+      And I only see the following rows in the Hazards table:
+            | Hazard      | 
+            | DUST        | 
+      And I click the trash can on the first row in the Hazards table
+      And I save the record
+     Then I see 0 rows in the Hazards table
+      And I logout
+  
+  
+  Scenario: Locations - Records - Safety - Add Hazardous Material
+    
+    Maximo users shall be able to add a hazardous material to a location.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I save the record 
+     When I select the Safety tab
+      And I select the 'Hazardous Materials' tab
+      And I see the 'Hazardous Materials' table
+      And I click the 'New Row' button in the 'Hazardous Materials' table
+      And I activate the detail menu for the Hazard field in the 'Hazardous Materials' table details
+      And I click menu item 'Select Value'
+      And I only see the following rows in the unnamed table:
+            | Hazard      | Description         |
+            | SULFACID    | Sulfuric Acid       |
+      And I choose the first row in the unnamed table
+     Then I see these values in the following fields in the 'Hazardous Materials' table details:
+            | field       | value       |
+            | Hazard      | SULFACID    |
+            | MSDS        | SA-437      |
+            | Health      | 3           |
+            | Contact     | 7           |
+      And I successfully save the record
+      And I logout
+  
+  
+  Scenario: Locations - Records - Safety - Remove Hazardous Material
+    
+    Maximo users shall be able to remove a hazardous material from a location.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I save the record
+     When I select the Safety tab
+      And I select the 'Hazardous Materials' tab
+      And I see the 'Hazardous Materials' table
+      And I click the 'New Row' button in the 'Hazardous Materials' table
+      And I activate the detail menu for the Hazard field in the 'Hazardous Materials' table details
+      And I click menu item 'Select Value'
+      And I only see the following rows in the unnamed table:
+            | Hazard      | Description         |
+            | SULFACID    | Sulfuric Acid       |
+      And I choose the first row in the unnamed table
+      And I see these values in the following fields in the 'Hazardous Materials' table details:
+            | field       | value       |
+            | Hazard      | SULFACID    |
+            | MSDS        | SA-437      |
+            | Health      | 3           |
+            | Contact     | 7           |
+      And I successfully save the record
+      And I click the trash can on the first row in the 'Hazardous Materials' table
+      And I successfully save the record
+     Then I see 0 rows in the 'Hazardous Materials' table
+      And I logout
+  
+  
+  Scenario: Locations - Records - Safety - Add Lock Out Tag Out Procedure
+    
+    Maximo users shall be able to add lock out / tag out procedures to a location.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I save the record
+      And I select the Safety tab
+     When I select the 'Lock Out/Tag Out' tab
+      And I click the 'New Row' button in the Hazards table
+      And I activate the detail menu for the Hazard field in the Hazards table details
+      And I click menu item 'Select Value'
+      And I enter '=FLOW' in the Hazard filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'FLOW' in the Hazard field in the Hazards table details
+      And I click the 'New Row' button in the 'Tag Out Procedures for' table
+      And I activate the detail menu for the 'Tag Out' field in the 'Tag Out Procedures for' table details
+      And I click menu item 'Select Value'
+      And I enter '=NOFLOW01' in the 'Tag Out' filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'NOFLOW01' in the 'Tag Out' field in the 'Tag Out Procedures for' table details
+      And I see the value 'Centrifugal Pump 100GPM/60FT HD' in the description field of the Location field in the 'Tag Out Procedures for' table details
+      And I see the value '11430' in the Asset field in the 'Tag Out Procedures for' table details
+      And I save the record
+     Then I only see the following rows in the 'Lock Out Operations for' table:
+            | Location | Asset  | Description                        | Locking Device Required State | Apply Sequence  | Remove Sequence |
+            |          | 12222  | Centrifugal Pump 100 GPM, 60 FT-HD | OFF                           | 1               | 2               |
+            |          |        | Intake Valve 339-A                 | CLOSED                        | 2               | 1               |
+            |          |        | Drain Valve 339-D                  | OPEN                          | 3               |                 |
+            |          |        | Allow full drainage                |                               | 4               |                 |
+            |          |        | Drain Valve 339-D                  | CLOSED                        | 5               |                 |
+      And I logout
+  
+  
+  Scenario: Locations - Records - Safety - Filter Lock Out Tag Out Procedures
+    
+    Maximo users shall be able to filter lock out / tag out procedures on a location.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I save the record
+      And I select the Safety tab
+      And I select the 'Lock Out/Tag Out' tab
+      And I click the 'New Row' button in the Hazards table
+      And I activate the detail menu for the Hazard field in the Hazards table details
+      And I click menu item 'Select Value'
+      And I enter '=FLOW' in the Hazard filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'FLOW' in the Hazard field in the Hazards table details
+      And I click the 'New Row' button in the Hazards table
+      And I activate the detail menu for the Hazard field in the Hazards table details
+      And I click menu item 'Select Value'
+      And I enter '=ROTATION' in the Hazard filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'ROTATION' in the Hazard field in the Hazards table details
+      And I make current the first row in the Hazards table
+      And I click the 'New Row' button in the 'Tag Out Procedures for' table
+      And I activate the detail menu for the 'Tag Out' field in the 'Tag Out Procedures for' table details
+      And I click menu item 'Select Value'
+      And I enter '=NOFLOW01' in the 'Tag Out' filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'NOFLOW01' in the 'Tag Out' field in the 'Tag Out Procedures for' table details
+      And I see the value 'Centrifugal Pump 100GPM/60FT HD' in the description field of the Location field in the 'Tag Out Procedures for' table details
+      And I see the value '11430' in the Asset field in the 'Tag Out Procedures for' table details
+      And I save the record
+      And I make current the second row in the Hazards table
+      And I click the 'New Row' button in the 'Tag Out Procedures for' table
+      And I activate the detail menu for the 'Tag Out' field in the 'Tag Out Procedures for' table details
+      And I click menu item 'Select Value'
+      And I enter '=NOROTATE' in the 'Tag Out' filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'NOROTATE' in the 'Tag Out' field in the 'Tag Out Procedures for' table details
+      And I see the value 'Circulation Fan- Centrifugal/ 20/000 CFM' in the description field of the Location field in the 'Tag Out Procedures for' table details
+      And I see the value '11210' in the Asset field in the 'Tag Out Procedures for' table details
+      And I click the 'New Row' button in the 'Tag Out Procedures for' table
+      And I activate the detail menu for the 'Tag Out' field in the 'Tag Out Procedures for' table details
+      And I click menu item 'Select Value'
+      And I enter '=TAG222' in the 'Tag Out' filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'TAG222' in the 'Tag Out' field in the 'Tag Out Procedures for' table details
+      And I see the value 'Circulation Fan #3- Main Office HVAC' in the description field of the Location field in the 'Tag Out Procedures for' table details
+      And I see the value 'BR250' in the Location field in the 'Tag Out Procedures for' table details
+      And I successfully save the record
+     When I enter '=FLOW' in the Hazard filter in the Hazards table
+      And I initiate search in the Hazards table
+     Then I only see the following rows in the Hazards table:
+            | Hazard  | Description               |
+            | FLOW    | Liquid flow through pipes |
+     When I enter '=ROTATION' in the Hazard filter in the Hazards table
+      And I initiate search in the Hazards table
+     Then I only see the following rows in the Hazards table:
+            | Hazard    | Description               |
+            | ROTATION  | Rotating blades / parts   |
+     When I enter '=NOROTATE' in the 'Tag Out' filter in the 'Tag Out Procedures for' table
+      And I initiate search in the 'Tag Out Procedures for' table
+     Then I only see the following rows in the 'Tag Out Procedures for' table:
+            | Tag Out   | Description                   |
+            | NOROTATE  | Lock down fan blade rotation  |
+     When I enter 'TAG' in the 'Tag Out' filter in the 'Tag Out Procedures for' table
+      And I initiate search in the 'Tag Out Procedures for' table
+     Then I only see the following rows in the 'Tag Out Procedures for' table:
+            | Tag Out   | Description                   |
+            | TAG222    | Electrically Isolate Fan      |
+      And I logout
+    
+    
+  Scenario: Locations - Records - Safety - Delete Lock Out Tag Out Procedure
+    
+    Maximo users shall be able to add lock out / tag out procedures to a location.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I save the record 
+      And I select the Safety tab
+      And I select the 'Lock Out/Tag Out' tab
+      And I click the 'New Row' button in the Hazards table
+      And I activate the detail menu for the Hazard field in the Hazards table details
+      And I click menu item 'Select Value'
+      And I enter '=FLOW' in the Hazard filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'FLOW' in the Hazard field in the Hazards table details
+      And I click the 'New Row' button in the 'Tag Out Procedures for' table
+      And I activate the detail menu for the 'Tag Out' field in the 'Tag Out Procedures for' table details
+      And I click menu item 'Select Value'
+      And I enter '=NOFLOW01' in the 'Tag Out' filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'NOFLOW01' in the 'Tag Out' field in the 'Tag Out Procedures for' table details
+      And I see the value 'Centrifugal Pump 100GPM/60FT HD' in the description field of the Location field in the 'Tag Out Procedures for' table details
+      And I see the value '11430' in the Asset field in the 'Tag Out Procedures for' table details
+      And I save the record
+     When I click the trash can on the first row in the 'Tag Out Procedures for' table
+      And I save the record
+     Then I see 0 rows in the 'Tag Out Procedures for' table
+     When I click the trash can on the first row in the Hazards table
+      And I save the record
+     Then I see 0 rows in the Hazards table
+      And I logout

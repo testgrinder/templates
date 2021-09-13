@@ -1,0 +1,54 @@
+# template
+Feature: Locations - Actions - Add/Update Image
+  
+  Scenario: Locations - Actions - Add/Update Image - Attach Image
+    
+    Maximo users shall be able to attach an image file to a location.
+
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'Location Images' in the description field of the Location field
+      And I enter 'OPERATING' in the Type field
+     When I select action 'Add/Update Image'
+      And I see the 'Add/Modify Image' dialog
+      And I select the 'test.jpg' file for upload in the 'Specify a New File' field
+      And I click the OK button
+     Then I do not see a system message
+      And I select action 'Add/Update Image'
+      And I see the 'Add/Modify Image' dialog
+      And I see the value 'test.jpg' in the 'Current Image File' field
+      And I click the Cancel button
+      And I logout
+  
+  
+  Scenario: Locations - Actions - Add/Update Image - Update Image
+    
+    Maximo users shall be able to attach an image file to a location.
+
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'Location Images' in the description field of the Location field
+      And I enter 'OPERATING' in the Type field
+     When I select action 'Add/Update Image'
+      And I see the 'Add/Modify Image' dialog
+      And I select the 'test.jpg' file for upload in the 'Specify a New File' field
+      And I click the OK button
+     Then I do not see a system message
+      And I select action 'Add/Update Image'
+      And I see the 'Add/Modify Image' dialog
+      And I see the value 'test.jpg' in the 'Current Image File' field
+      And I select the 'test2.jpg' file for upload in the 'Specify a New File' field
+      And I click the OK button
+     Then I do not see a system message
+      And I select action 'Add/Update Image'
+      And I see the 'Add/Modify Image' dialog
+      And I see the value 'test2.jpg' in the 'Current Image File' field
+      And I click the Cancel button
+      And I logout
+  

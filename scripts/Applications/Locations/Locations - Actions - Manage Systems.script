@@ -1,0 +1,127 @@
+# template
+Feature: Locations - Actions - Manage Systems
+  
+  Maximo users shall be able to create, filter, and delete systems in Maximo.
+  
+  Scenario: Locations - Actions - Manage Systems - Create New System
+    
+    Maximo users shall be able to create and save a new system.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'Manage Systems' in the description field of the Location field
+      And I enter 'OPERATING' in the Type field
+     When I select action 'Manage Systems'
+      And I see the 'Manage Systems' dialog
+      And I click the 'New Row' button
+      And I enter 'TESTSYS1' in the System field in the Systems table details
+      And I enter 'Test System' in the description field of the System field in the Systems table details
+      And I see that the Network checkbox is unchecked in the Systems table details
+      And I see that the 'Primary System' checkbox is unchecked in the Systems table details
+      And I see that the 'Address system' checkbox is unchecked in the Systems table details
+      And I click the OK button
+      And I go to the Assets / Locations application
+      And I enter '=[Location]' in the Location filter in the Locations table
+      And I initiate search in the Locations table
+      And I choose the 1st row in the Locations table
+     Then I select action 'Manage Systems'
+      And I enter '=TESTSYS1' in the System filter in the Systems table
+      And I initiate search in the Systems table
+      And I see the value 'TESTSYS1' in the System field on the first row in the Systems table
+    # note: the created system is deleted in the following step so this test may be re-run without errors
+      And I click the trash can on the first row in the Systems table
+      And I click the OK button
+      And I logout
+  
+  
+  Scenario: Locations - Actions - Manage Systems - Filter Systems
+    
+    Maximo users shall be able to filter the list of existing systems.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'Manage Systems' in the description field of the Location field
+      And I enter 'OPERATING' in the Type field
+     When I select action 'Manage Systems'
+      And I see the 'Manage Systems' dialog
+      And I enter 'FLEET' in the System filter in the Systems table
+      And I initiate search in the Systems table
+     Then I only see the following rows in the Systems table:
+            | System  | Description                 | Site      |
+            | FLEET   | Corporate Fleet Management  | FLEET     |
+     When I enter '' in the System filter in the Systems table
+      And I enter 'primary' in the Description filter in the Systems table
+      And I initiate search in the Systems table
+     Then I only see the following rows in the Systems table:
+            | System    | Description                       | Site      |
+            | PRIMARY   | Primary Hierarchy                 | BEDFORD   |
+            | ITHQ      | Primary IT Hierarchy              | MCLEAN    |
+            | CSPRIM    | BEDFORD CS Primary Site Hierachy  | BEDFORD   |
+            | CSPRIM    | DENVER CS Primary Site Hierachy   | DENVER    |
+            | VF        | Valley Forge site primary system  | VF        |
+      And I enter '' in the Description filter in the Systems table
+     When I enter 'DENVER' in the Site filter in the Systems table
+      And I initiate search in the Systems table
+     Then I only see the following rows in the Systems table:
+            | System    | Description                               | Site      |
+            | CSELECSY  | DENVER CS Electrical Site System          | DENVER    |
+            | CSGEO     | DENVER CS GEOgraphical Cross Site System  | DENVER    |
+            | CSPRIM    | DENVER CS Primary Site Hierachy           | DENVER    |
+      And I enter '' in the Site filter in the Systems table
+     When I enter 'Y' in the 'Primary System' filter in the Systems table
+      And I initiate search in the Systems table
+     Then I only see the following rows in the Systems table:
+            | System    | Description                               | Site      | Primary System  |
+            | PRIMARY   | Primary Hierarchy                         | BEDFORD   | checked         |
+            | FLEET     | Corporate Fleet Management                | FLEET     | checked         |
+            | ITHQ      | Primary IT Hierarchy                      | MCLEAN    | checked         |
+            | MAIN      | Main Manufacturing Hierarchy              | TEXAS     | checked         |
+            | PRIMARY   | Laredo Manufacturing Hierarchy            | LAREDO    | checked         |
+            | CSPRIM    | DENVER CS Primary Site Hierachy           | DENVER    | checked         |
+            | VF        | Valley Forge site primary system          | VF        | checked         |
+      And I click the Cancel button
+      And I logout
+  
+  
+  Scenario: Locations - Actions - Manage Systems - Delete System
+    
+    Maximo users shall be able to delete a system.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'Manage Systems' in the description field of the Location field
+      And I enter 'OPERATING' in the Type field
+      And I select action 'Manage Systems'
+      And I see the 'Manage Systems' dialog
+      And I click the 'New Row' button
+      And I enter 'TESTSYS2' in the System field in the Systems table details
+      And I enter 'Test System' in the description field of the System field in the Systems table details
+      And I see that the Network checkbox is unchecked in the Systems table details
+      And I see that the 'Primary System' checkbox is unchecked in the Systems table details
+      And I see that the 'Address system' checkbox is unchecked in the Systems table details
+      And I click the OK button
+     When I select action 'Manage Systems'
+      And I enter '=TESTSYS2' in the System filter in the Systems table
+      And I initiate search in the Systems table
+      And I see the value 'TESTSYS2' in the System field on the first row in the Systems table
+      And I click the trash can on the first row in the Systems table
+      And I click the OK button
+      And I go to the Assets / Locations application
+      And I enter '=[Location]' in the Location filter in the Locations table
+      And I initiate search in the Locations table
+      And I choose the 1st row in the Locations table
+     Then I select action 'Manage Systems'
+      And I enter '=TESTSYS2' in the System filter in the Systems table
+      And I initiate search in the Systems table
+      And I see exactly 0 rows in the Systems table
+      And I click the Cancel button
+      And I logout

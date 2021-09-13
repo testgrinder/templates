@@ -1,0 +1,99 @@
+# template
+Feature: Job Plans - Actions - Revise Job Plan
+  
+  Maximo users shall be able to revise job plans and view the revision history.
+  
+  Scenario: Job Plans - Actions - Revise Job Plan
+    
+    Given I login to Maximo as Administrator
+      And I record the user name for the Administrator role as [Admin]
+      And I go to the Administration / Resources / People application
+      And I enter '[Admin]' in the Person filter in the People table
+      And I initiate search in the People table
+      And I record the value in the Person field on the first row in the People table as [AdminPerson]
+      And I go to the Planning / Job Plans application
+      And I click the 'New Job Plan' toolbar button
+      And I record a random 8 digit number as [JP]
+      And I enter '[JP]' in the 'Job Plan' field
+      And I enter 'Revise Job Plan' in the description field of the 'Job Plan' field
+      And I enter these values in the following fields in the Details section:
+          | field             | value             |
+          | Duration          | 2:00              |
+          | WO Priority       | 3                 |
+      And I activate the detail menu for the Supervisor field in the Responsibility section
+      And I click menu item 'Select Value'
+      And I record the value in the Person field on the first row in the unnamed table as [Supervisor]
+      And I choose the first row in the unnamed table
+      And I see the value '[Supervisor]' in the Supervisor field in the Responsibility section
+      And I click the 'New Row' button in the 'Job Plan Tasks' table
+      And I see the value '10' in the Task field in the 'Job Plan Tasks' table details
+      And I enter 'Test Task for Revision' in the description field of the Task field in the 'Job Plan Tasks' table details
+      And I successfully save the record
+      And I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select 'Active' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the value 'ACTIVE' in the Status field
+      And I see fields input mode as:
+          | field             | mode              |
+          | Duration          | readonly          |
+          | WO Priority       | readonly          |
+          | Supervisor        | readonly          |
+      And I see that the description field of the 'Job Plan' field is readonly
+      And I see that the Description field is readonly on the current row in the 'Job Plan Tasks' table
+     When I select action 'Revise Job Plan'
+      And I see the 'Revise Job Plan' dialog
+      And I see these values in the following fields:
+          | field             | value             |
+          | Job Plan          | [JP]              |
+          | Revision          | 1                 |
+      And I enter 'Testing job plan revision' in the 'Revision Description' field
+      And I click the OK button
+     Then I see these values in the following fields:
+          | field             | value             |
+          | Status            | PNDREV            |
+          | Revision          | 1                 |
+      And I see the value 'Testing job plan revision' in the description field of the Revision field
+      And I see fields input mode as:
+          | field             | mode              |
+          | Duration          | editable          |
+          | WO Priority       | editable          |
+          | Supervisor        | editable          |
+     When I enter these values in the following fields:
+          | field               | value           |
+          | Duration            | 3:00            |
+          | WO Priority         | 2               |
+      And I enter 'Revised Job Plan' in the description field of the 'Job Plan' field
+      And I activate the detail menu for the Supervisor field in the Responsibility section
+      And I click menu item 'Select Value'
+      And I record the value in the Person field on the second row in the unnamed table as [NewSupervisor]
+      And I choose the second row in the unnamed table
+      And I enter 'Revised Test Task' in the Description field on the first row in the 'Job Plan Tasks' table
+      And I successfully save the record
+      And I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select 'Active' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the value 'ACTIVE' in the Status field
+     Then I go to the Planning / Job Plans application
+      And I enter '=[JP]' in the 'Job Plan' filter in the 'Job Plans' table
+      And I enter '' in the Status filter in the 'Job Plans' table
+      And I initiate search in the 'Job Plans' table
+      And I only see the following rows in the 'Job Plans' table:
+            | Job Plan  | Description       | Revision  | Duration  | Supervisor      | Status    |
+            | [JP]      | Revise Job Plan   | 0         | 2:00      | [Supervisor]    | REVISED   |
+            | [JP]      | Revised Job Plan  | 1         | 3:00      | [NewSupervisor] | ACTIVE    |
+      And I choose the second row in the 'Job Plans' table
+     When I select action 'View Revision History'
+      And I see the 'View Revision History' dialog
+     Then I only see the following rows in the 'Job Plan Details' table:
+            | Revision Number | Status    | Changed By        | Revison Comments          |
+            | 1               | ACTIVE    | [AdminPerson]     | Testing job plan revision |
+            | 0               | REVISED   | [AdminPerson]     |                           |
+      And I only see the following rows in the 'Job Task Details' table:
+            | Task    | Revision  | Revision Status | Description             |
+            | 10      | 1         | CHANGED         | Revised Test Task       |
+            | 10      | 0         |                 | Test Task for Revision  |
+      And I click the OK button
+      And I logout
+      

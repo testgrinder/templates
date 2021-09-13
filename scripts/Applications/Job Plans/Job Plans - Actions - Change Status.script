@@ -1,0 +1,86 @@
+# template
+Feature: Job Plans - Actions - Change Status
+  
+  Maximo users shall be able to change the status of job plans.
+  
+  Background:
+    
+    Given I login to Maximo as Administrator
+      And I go to the Planning / Job Plans application
+      And I click the 'New Job Plan' toolbar button
+      And I record a random 12 digit number as [JP]
+      And I enter '[JP]' in the 'Job Plan' field
+      And I enter 'Test JP' in the description field of the 'Job Plan' field
+      
+    
+  Scenario: Job Plans - Actions - Change Status - Change status from Select Action menu
+    
+    Maximo users shall be able to change a job plan's status via the Select Action menu.
+
+     When I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select 'Active' in the dropdown list for the 'New Status' field
+      And I click the OK button
+     Then I see the value 'ACTIVE' in the Status field
+      And I logout
+   
+   
+  Scenario: Job Plans - Actions - Change Status - Change status from toolbar button
+     
+    Maximo users shall be able to change a job plan's status via the Change Status toolbar button.
+
+     When I click the 'Change Status' toolbar button
+      And I see the 'Change Status' dialog
+      And I select 'Active' in the dropdown list for the 'New Status' field
+      And I click the OK button
+     Then I see the value 'ACTIVE' in the Status field
+      And I logout
+  
+  
+   Scenario Outline: Job Plans - Actions - Change Status - Change Status from DRAFT
+    
+    Maximo users shall be able to select the following statuses when a job plan's status is DRAFT.
+    
+     When I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+     Then I see the value '<Display Status>' in the Status field
+      And I logout
+      
+    Examples:
+      | Status                | Display Status |
+      | Active                | ACTIVE         |
+      | Inactive              | INACTIVE       |
+  
+  
+  Scenario Outline: Job Plans - Actions - Change Status - Change Status from ACTIVE
+    
+    Maximo users shall be able to select the following statuses when a job plan's status is ACTIVE.
+    
+     When I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+     Then I see the value '<Display Status>' in the Status field
+      And I logout
+      
+    Examples:
+      | Status                | Display Status |
+      | Inactive              | INACTIVE       |
+  
+  
+  Scenario Outline: Job Plans - Actions - Change Status - Change Status from INACTIVE
+    
+    Maximo users shall be able to select the following statuses when a job plan's status is INACTIVE.
+    
+     When I select action 'Change Status'
+      And I see the 'Change Status' dialog
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+     Then I see the value '<Display Status>' in the Status field
+      And I logout
+      
+    Examples:
+      | Status                | Display Status |
+      | Active                | ACTIVE         |

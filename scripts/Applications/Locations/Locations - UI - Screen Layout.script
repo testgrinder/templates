@@ -1,0 +1,353 @@
+# template
+Feature: Locations - UI - Screen Layout
+
+	Background:
+
+		Given I login to Maximo as Administrator
+		  And I go to the Assets / Locations application
+
+		  And I click the 'New Location' toolbar button
+
+	Scenario: Locations - UI - Screen Layout - List View tab 
+
+		 When I select the 'List View' tab
+		  And I click the No button
+		  And I only see these columns in this order in the Locations table:
+			    | column      | attribute             |
+			    | Location    | LOCATIONS.LOCATION    |
+			    | Description | LOCATIONS.DESCRIPTION |
+			    | Type        | LOCATIONS.TYPE        |
+			    | Status      | LOCATIONS.STATUS      |
+			    | Priority    | LOCOPER.LOCPRIORITY   |
+			    | Site        | LOCATIONS.SITEID      |
+
+	Scenario: Locations - UI - Screen Layout - Location tab
+		
+	   Then I only see these fields in this order in the header section:
+			    | field                     | attribute                    |
+			    | Location                  | LOCATIONS.LOCATION           |
+			    | Location description      | LOCATIONS.DESCRIPTION        |
+			    | Type                      | LOCATIONS.TYPE               |
+			    | Rotating Item             | LOCATIONS.ITEMNUM            |
+			    | Rotating Item description | ITEM.DESCRIPTION             |
+			    | Meter Group               | LOCATIONS.GROUPNAME          |
+			    | Meter Group description   | METERGROUP.DESCRIPTION       |
+			    | Calendar                  | LOCATIONS.CALNUM             |
+			    | Shift                     | LOCATIONS.SHIFTNUM           |
+			    | Site                      | LOCATIONS.SITEID             |
+			    | Priority                  | LOCATIONS.LOCPRIORITY        |
+			    | Failure Class             | LOCATIONS.FAILURECODE        |
+			    | GL Account                | LOCATIONS.GLACCOUNT          |
+			    | Internal Labor Account    | LOCATIONS.INTLABREC          |
+			    | Is a Repair Facility      | LOCATIONS.ISREPAIRFACILITY   | # needs sigoption REPFACILITY
+			    | Status                    | LOCATIONS.STATUS             |
+			    | Address                   | LOCATIONS.SERVICEADDRESSCODE | 
+			    | Bill to Address           | LOCATIONS.BILLTOADDRESSCODE  |
+			    | Ship to Address           | LOCATIONS.SHIPTOADDRESSCODE  |
+		  And I see the attachments paper clip in the header section
+		  And I only see these fields in this order in the 'Address Information' section:
+			    | field                             | attribute                       | 
+			    | Service Address                   | LOCATIONS.SADDRESSCODE          |
+			    | Service Address description       | SERVICEADDRESS.DESCRIPTION      |
+			    | Formatted Address                 | SERVICEADDRESS.FORMATTEDADDRESS |
+			    | Street Address                    | SERVICEADDRESS.STREETADDRESS    |
+			    | City                              | SERVICEADDRESS.CITY             |
+			    | State/Province                    | SERVICEADDRESS.STATEPROVINCE    |
+			    | State/Province description        | ALNDOMAIN.DESCRIPTION           |
+			    | Ancestor's Address                | LOCATIONS.LHANCESTORADDRESS     |
+			    | Ancestor's Address description    | LOCATIONS.LHANCESTORADDRESSDESC |
+		  And I only see these columns in this order in the 'Systems' table:
+			    | column              | attribute             |
+			    | System              | LOCSYSTEM.SYSTEMID    |
+			    | Description         | LOCSYSTEM.DESCRIPTION |
+			    | Network             | LOCSYSTEM.NETWORK     |
+			    | Address system      | LOCSYSTEM.ADDRESS     |
+		  And I only see these columns in this order in the 'Parents in the System' table:
+			    | column                | attribute             |
+			    | Parent                | LOCHIERARCHY.PARENT   |
+			    | Description           | LOCATIONS.DESCRIPTION |
+			    | Item                  |                       |
+		  And I see the 'New Row' button in the 'Parents in the System' table
+		  And I only see these columns in this order in the 'Children in the System' table:
+			    | column                | attribute               |
+			    | Location              | LOCHIERARCHY.LOCATION   |
+			    | Description           | LOCATIONS.DESCRIPTION   |
+			    | Item                  |                         |
+		  And I see the 'New Row' button in the 'Children in the System' table
+		  And I click the 'Clear Changes' toolbar button
+		  And I click the No button
+		  And I logout
+	
+	
+	Scenario: Locations - UI - Screen Layout - Assets tab
+		
+		  And I select the Assets tab
+	   Then I only see these fields in this order in the header section:
+			    | field                     | attribute                    |
+			    | Location                  | LOCATIONS.LOCATION           |
+			    | Location description      | LOCATIONS.DESCRIPTION        |
+			    | Site                      | LOCATIONS.SITEID             |
+		  And I see the Assets table
+		  And I only see these columns in this order in the Assets table:
+			    | column        | attribute         |
+			    | Asset         | ASSET.ASSETNUM    |
+			    | Description   | ASSET.DESCRIPTION |
+			    | Parent        | ASSET.PARENT      |
+			    | Rotating Item | ASSET.ITEMNUM     |
+			    | Priority      |                   |
+			    | Asset Up      |                   |
+			    | Calendar      | ASSET.CALNUM      |
+		  And I click the 'Clear Changes' toolbar button
+		  And I click the No button
+		  And I logout
+	
+	
+	Scenario: Locations - UI - Screen Layout - History tab
+	  
+	    And I select the History tab
+	   Then I only see these fields in this order in the header section:
+			    | field                 | attribute             |
+			    | Location              | LOCATIONS.LOCATION    |
+			    | Location description  | LOCATIONS.DESCRIPTION |
+			    | Site                  | LOCATIONS.SITEID      |
+		  And I only see these columns in this order in the 'Assets' table:
+			    | column             | attribute                 |
+			    | Asset              | ASSETTRANS.ASSETNUM       |
+			    | Description        | ASSET.DESCRIPTION         |
+			    | Moved Date         | ASSETTRANS.DATEMOVED      |
+			    | From Site          | ASSETTRANS.SITEID         |
+			    | To Site            | ASSETTRANS.TOSITEID       |
+			    | From Location      | ASSETTRANS.FROMLOC        |
+			    | To Location        | ASSETTRANS.TOLOC          |
+			    | From Parent        | ASSETTRANS.FROMPARENT     |
+			    | To Parent          | ASSETTRANS.TOPARENT       |
+		  And I click the 'Clear Changes' toolbar button
+		  And I click the No button
+		  And I logout
+	
+	
+	Scenario: Locations - UI - Screen Layout - Safety tab 
+
+	    And I select the Safety tab
+	   Then I only see these fields in this order in the header section:
+			    | field                 | attribute             |
+			    | Location              | LOCATIONS.LOCATION    |
+			    | Location description  | LOCATIONS.DESCRIPTION |
+			    | Site                  | LOCATIONS.SITEID      |
+		 Then I select the 'Hazards and Precautions' tab
+		  And I only see these columns in this order in the Hazards table:
+			    | column                | attribute              |
+			    | Hazard                | SAFETYLEXICON.HAZARDID |
+			    | Description           | HAZARD.DESCRIPTION     |
+		  And I click the 'New Row' button in the Hazards table
+		  And I only see these fields in this order in the Details section in the Hazards table details:
+			    | field                        | attribute                   |
+			    | Hazard                       | SAFETYLEXICON.HAZARDID      |
+			    | Hazard description           | HAZARD.DESCRIPTION          |
+			    | Can Have Hazardous Materials | HAZARD.HAZMATENABLED        |
+			    | Type                         | HAZARD.HAZARDTYPE           |
+		  And I only see these columns in this order in the 'Precautions for' table:
+			    | column                | attribute                 |
+			    | Precaution            | HAZARDPREC.PRECAUTIONID   |
+			    | Description           | PRECAUTION.DESCRIPTION    |
+		  And I select the 'Hazardous Materials' tab
+		  And I only see these columns in this order in the 'Hazardous Materials' table:
+			    | column                | attribute                 |
+			    | Hazard                | SAFETYLEXICON.HAZARDID    |
+			    | Description           | HAZARD.DESCRIPTION        |
+			    | MSDS                  | HAZARD.MSDSNUM            |
+			    | Health                | HAZARD.HEALTHRATING       |
+			    | Flammability          | HAZARD.FLAMMABILITYRATING |
+			    | Reactivity            | HAZARD.REACTIVITYRATING   |
+			    | Contact               | HAZARD.CONTACTRATING      |
+		  And I click the 'New Row' button in the 'Hazardous Materials' table
+		  And I only see these fields in this order in the 'Material' section in the 'Hazardous Materials' table details:
+		    	| field                 | attribute                 |
+		    	| Hazard                | SAFETYLEXICON.HAZARDID    |
+		    	| Hazard description    | HAZARD.DESCRIPTION        |
+		    	| MSDS                  | HAZARD.MSDSNUM            |
+      And I only see these fields in this order in the 'NFPA Rating' section in the 'Hazardous Materials' table details:
+          | field                 | attribute                 |
+		    	| Health                | HAZARD.HEALTHRATING       |
+		    	| Flammability          | HAZARD.FLAMMABILITYRATING |
+		    	| Reactivity            | HAZARD.REACTIVITYRATING   |
+		    	| Contact               | HAZARD.CONTACTRATING      |
+		 Then I select the 'Lock Out/Tag Out' tab
+		  And I only see these columns in this order in the Hazards table:
+		    	| column                | attribute                 |
+		    	| Hazard                | SAFETYLEXICON.HAZARDID    |
+		    	| Description           | HAZARD.DESCRIPTION        |
+		  And I click the 'New Row' button in the Hazards table
+		  And I only see these fields in this order in the Details section in the Hazards table details:
+		    	| field                 | attribute                 |
+		    	| Hazard                | SAFETYLEXICON.HAZARDID    |
+		    	| Hazard description    | HAZARD.DESCRIPTION        |
+		    	| Type                  | HAZARD.HAZARDTYPE         |
+		  And I only see these columns in this order in the 'Tag Out Procedures for' table:
+		    	| column                | attribute                 |
+		    	| Tag Out               | SAFETYLEXICON.TAGOUTID    |
+		    	| Description           | TAGOUT.DESCRIPTION        |
+		    	| Location              | TAGOUT.LOCATION           |
+		    	| Asset                 | TAGOUT.ASSETNUM           |
+		  And I click the 'New Row' button in the 'Tag Out Procedures for' table
+		  And I only see these fields in this order in the Details section in the 'Tag Out Procedures for' table details:
+		    	| field                 | attribute                 |
+		    	| Tag Out               | SAFETYLEXICON.TAGOUTID    |
+		    	| Tag Out description   | TAGOUT.DESCRIPTION        |
+		    	| Location              | TAGOUT.LOCATION           |
+		    	| Location description  | TAGOUT.ASSETDESCRIPTION   |
+		    	| Asset                 | TAGOUT.ASSETNUM           |
+		    	| Required State        | TAGOUT.REQUIREDSTATE      |
+		    	| Apply Sequence        | SAFETYLEXICON.APPLYSEQ    |
+		    	| Remove Sequence       | SAFETYLEXICON.REMOVESEQ   |
+		  And I only see these columns in this order in the 'Lock Out Operations for' table:
+		    	| column                        | attribute                 |
+		    	| Location                      | LOCKOUT.LOCATION          |
+		    	| Asset                         | LOCKOUT.ASSETNUM          |
+		    	| Description                   | LOCKOUT.DEVICEDESCRIPTION |
+		    	| Locking Device Required State | LOCKOUT.REQUIREDSTATE     |
+		    	| Apply Sequence                | TAGLOCK.APPLYSEQ          |
+		    	| Remove Sequence               | TAGLOCK.REMOVESEQ         |
+		 Then I select the 'Safety-Related Assets' tab
+		  And I only see these columns in this order in the 'Safety-Related Assets' table:
+		    	| column                | attribute                          |
+		    	| Asset                 | SPRELATEDASSET.RELATEDASSET        |
+		    	| Location              | SPRELATEDASSET.RELATEDLOCATION     |
+		    	| Description           |                                    |
+		  And I click the 'New Row' button in the 'Safety-Related Assets' table
+		  And I only see these fields in this order in the Details section in the 'Safety-Related Assets' table details:
+		    	| field                 | attribute                          |
+		    	| Asset                 | SPRELATEDASSET.RELATEDASSET        |
+		    	| Location              | SPRELATEDASSET.RELATEDLOCATION     |
+		    	| Description           | SPRELATEDASSET.RELASSETDESCRIPTION |
+		  And I click the 'Clear Changes' toolbar button
+		  And I click the No button
+		  And I logout
+  
+  
+  Scenario: Locations - UI - Screen Layout - Meters tab 
+	  
+	    And I enter 'OPERATING' in the 'Type' field
+	 	 When I select the Meters tab
+		 Then I only see these fields in this order in the header section:
+			    | field                   | attribute              |
+			    | Location                | LOCATIONS.LOCATION     |
+			    | Location description    | LOCATIONS.DESCRIPTION  |
+			    | Meter Group             | LOCATIONS.GROUPNAME    |
+			    | Meter Group description | METERGROUP.DESCRIPTION |
+			    | Site                    | LOCATIONS.SITEID       |
+		  And I only see these columns in this order in the Meters table:
+			    | column                  | attribute                   |
+			    | Sequence                | LOCATIONMETER.SEQUENCE      |
+			    | Meter                   | LOCATIONMETER.METERNAME     |
+			    | Description             | METER.DESCRIPTION           |
+			    | Meter Type              | METER.METERTYPE             |
+			    | Unit of Measure         | LOCATIONMETER.MEASUREUNITID |
+			    | Active                  | LOCATIONMETER.ACTIVE        |
+		  And I click the 'New Row' button in the Meters table
+		  And I only see these fields in this order in the 'Meter Details' section in the Meters table details:
+			    | field                   | attribute                        |
+			    | Sequence                | LOCATIONMETER.SEQUENCE           |
+			    | Meter                   | LOCATIONMETER.METERNAME          |
+			    | Meter description       | METER.DESCRIPTION                |
+			    | Meter Type              | METER.METERTYPE                  |
+			    | Unit of Measure         | LOCATIONMETER.MEASUREUNITID      |
+			    | Active                  | LOCATIONMETER.ACTIVE             |
+			    | Point                   | LOCATIONMETER.POINTNUM           |
+			    | Last Reading            | LOCATIONMETER.LASTREADING        |
+			    | Last Reading Date       | LOCATIONMETER.LASTREADINGDATE    |
+			    | Last Reading Inspector  | LOCATIONMETER.LASTREADINGINSPCTR |
+			    | Remarks                 | LOCATIONMETER.REMARKS            |
+		  And I only see these fields in this order in the 'Continuous Meter Details' section in the Meters table details:
+			    | field                                     | attribute                        |
+			    | Average Calculation Method                | LOCATIONMETER.AVGCALCMETHOD      |
+			    | Average Calculation Method description    | SYNONYMDOMAIN.DESCRIPTION        |
+			    | Sliding Window Size                       | LOCATIONMETER.SLIDINGWINDOWSIZE  |
+			    | Average Units/Day                         | LOCATIONMETER.AVERAGE            |
+			    | Life to Date for Location                 | LOCATIONMETER.LIFETODATE         |
+			    | Rollover                                  | LOCATIONMETER.ROLLOVER           |
+			    | Reading Type                              | LOCATIONMETER.READINGTYPE        |
+		  And I click the 'Clear Changes' toolbar button
+		  And I click the No button
+		  And I logout
+	
+	
+	Scenario: Locations - UI - Screen Layout - Specifications tab
+
+	   When I select the Specifications tab
+	   Then I only see these fields in this order in the header section:
+			    | field                 | attribute                         |
+			    | Location              | LOCATIONS.LOCATION                |
+			    | Location description  | LOCATIONS.DESCRIPTION             |
+			    | Classification        | CLASSSTRUCTURE.HIERARCHYPATH      |
+			    | Class Description     | CLASSSTRUCTURE.DESCRIPTION_CLASS  |
+			    | Site                  | LOCATIONS.SITEID                  |
+      And I enter '43000000' in the Classification field in the header section 
+		  And I only see these columns in this order in the Specifications table:
+			    | column                | attribute                  |
+			    | Attribute             | LOCATIONSPEC.ASSETATTRID   |
+			    | Description           | ASSETATTRIBUTE.DESCRIPTION |
+			    | Data Type             | ASSETATTRIBUTE.DATATYPE    |
+			    | Alphanumeric Value    | LOCATIONSPEC.ALNVALUE      |
+			    | Numeric Value         | LOCATIONSPEC.NUMVALUE      |
+			    | Unit of Measure       | LOCATIONSPEC.MEASUREUNITID |
+			    | Table Value           | LOCATIONSPEC.TABLEVALUE    |
+		  And I click the 'New Row' button in the Specifications table
+		  And I only see these fields in this order in the Details section in the Specifications table details:
+			    | field                 | attribute                  |
+			    | Attribute             | LOCATIONSPEC.ASSETATTRID   |
+			    | Attribute description | ASSETATTRIBUTE.DESCRIPTION |
+			    | Data Type             | ASSETATTRIBUTE.DATATYPE    |
+			    | Unit of Measure       | LOCATIONSPEC.MEASUREUNITID |
+			    | Section               | LOCATIONSPEC.SECTION       |
+			    | Alphanumeric Value    | LOCATIONSPEC.ALNVALUE      |
+			    | Numeric Value         | LOCATIONSPEC.NUMVALUE      |
+			    | Table Value           | LOCATIONSPEC.TABLEVALUE    |
+			    | Inherited from        | CLASSSPEC.INHERITEDFROM    |
+			    | Apply Down Hierarchy  | CLASSSPEC.APPLYDOWNHIER    |
+		  And I click the 'Clear Changes' toolbar button
+		  And I click the No button
+		  And I logout
+	
+	
+	Scenario: Locations - UI - Screen Layout - Service Address tab 
+
+	   When I select the 'Service Address' tab
+	   Then I only see these fields in this order in the header section:
+			    | field                   | attribute              |
+			    | Location                | LOCATIONS.LOCATION     |
+			    | Location description    | LOCATIONS.DESCRIPTION  |
+			    | Organization            | LOCATIONS.ORGID        |
+			    | Site                    | LOCATIONS.SITEID       |
+			And I only see these fields in this order in the 'Address Information' section:
+			    | field                       | attribute                       |
+			    | Service Address             | LOCATIONS.SADDRESSCODE          |
+			    | Service Address description | SERVICEADDRESS.DESCRIPTION      |
+			    | Formatted Address           | SERVICEADDRESS.FORMATTEDADDRESS |
+			    | Street Address              | SERVICEADDRESS.STREETADDRESS    |
+			    | Address Line 2              | SERVICEADDRESS.ADDRESSLINE2     |
+			    | Address Line 3              | SERVICEADDRESS.ADDRESSLINE3     |
+			    | City                        | SERVICEADDRESS.CITY             |
+			    | Region/District             | SERVICEADDRESS.REGIONDISTRICT   |
+			    | County                      | SERVICEADDRESS.COUNTY           |
+			    | State/Province              | SERVICEADDRESS.STATEPROVINCE    |
+			    | State/Province description  | ALNDOMAIN.DESCRIPTION           |
+			    | Zip/Postal Code             | SERVICEADDRESS.POSTALCODE       |
+			    | Country                     | SERVICEADDRESS.COUNTRY          |
+			    | Country description         | ALNDOMAIN.DESCRIPTION           |
+			    | GEO Code                    | SERVICEADDRESS.GEOCODE          |
+			    | Time Zone                   | SERVICEADDRESS.TIMEZONE         |
+			    | Time Zone description       | SYNONYMDOMAIN.DESCRIPTION       |
+			    | Latitude(Y)                 | SERVICEADDRESS.LATITUDEY        |
+			    | Longitude(X)                | SERVICEADDRESS.LONGITUDEX       |
+			    | Reference Point             | SERVICEADDRESS.REFERENCEPOINT   |
+			    | Directions                  | SERVICEADDRESS.DIRECTIONS       |
+			And I only see these fields in this order in the 'Location Hierarchy' section:
+		      | field                             | attribute                       |
+		      | Address From Location             | LOCATIONS.LHANCESTOR            |
+		      | Address From Location description | LOCATIONS.LHANCESTORDESC        |
+		      | Ancestor's Address                | LOCATIONS.LHANCESTORADDRESS     |
+		      | Ancestor's Address description    | LOCATIONS.LHANCESTORADDRESSDESC |
+		  And I click the 'Clear Changes' toolbar button
+		  And I click the No button
+		  And I logout

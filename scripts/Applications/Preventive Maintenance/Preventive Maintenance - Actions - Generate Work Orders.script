@@ -1,0 +1,48 @@
+#template
+Feature: Preventive Maintenance - Actions - Generate Work Orders
+  
+  Maximo users shall be able to generate work orders from PM records.
+  
+  Scenario: Preventive Maintenance - Actions - Generate Work Orders
+    
+    Given I login to Maximo as Administrator
+      And I go to the Preventive Maintenance / Preventive Maintenance application
+      And I click the 'New PM' toolbar button
+      And I record a random 8 digit number as [PM]
+      And I enter '[PM]' in the PM field
+      And I enter 'Generate Work Orders' in the description field of the PM field
+      And I activate the detail menu for the Location field in the Details section
+      And I click menu item 'Select Value'
+      And I choose the first row in the unnamed table
+      And I record the value in the Location field as [Location]
+      And I select the Frequency tab
+      And I enter '1' in the Frequency field
+      And I activate the detail menu for the 'Frequency Units' field
+      And I enter 'months' in the Value filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'MONTHS' in the 'Frequency Units' field
+      And I record the date 28 days from now as [4Weeks]
+      And I enter '[4Weeks]' in the 'Estimated Next Due Date' field
+      And I select action 'Change Status'
+      And I select 'Active' in the dropdown list for the 'New Status' field
+      And I click the OK button
+    
+     When I select action 'Generate Work Orders'
+      And I see the 'Generate Work Orders' dialog
+      And I see the value '0' in the 'Generate WOs Due Today Plus This Number of Days' field
+      And I enter '30' in the 'Generate WOs Due Today Plus This Number of Days' field
+      And I see that the 'Use Frequency Criteria' checkbox is checked
+      And I see that the 'Run Work Order Generation in the Background' checkbox is unchecked
+      And I click the OK button
+      
+     Then I see the 'created work order' system message
+      And I click the OK button
+      And I go to the Work Orders / Work Order Tracking application
+      And I click menu bar button 'Advanced Search'
+      And I enter '=[PM]' in the PM field
+      And I click the Find button
+      And I see the value '[Location]' in the Location field
+      And I see the value '[PM]' in the PM field in the 'Job Details' section
+      And I see the value '[4Weeks] 12:00 AM' in the 'Target Start' field in the 'Scheduling Information' section
+      And I logout

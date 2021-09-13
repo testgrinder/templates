@@ -1,0 +1,179 @@
+#template
+Feature: Work Order Tracking - Actions - Apply Route
+  
+  Maximo users shall be able to apply routes to work orders with route stops 
+  as child work orders, work order tasks, or entries in the multi asset, location, and CI table.
+  
+  Background:
+    
+    Given I login to Maximo as Administrator
+      And I go to the Planning / Routes application
+      And I click the 'New Route' toolbar button
+      And I record a random 8 digit number as [Route]
+      And I enter '[Route]' in the Route field
+    
+  Scenario: Work Order Tracking - Actions - Apply Route - Child Work Orders
+    
+    Maximo users shall be able to apply a route to a work order with the route stops becoming child work orders.
+    
+      And I enter 'WO Testing - Child Work Orders' in the description field of the Route field
+      And I see that the 'Child Work Orders' radio button in the 'When this Route is applied to a Work Order, the Route Stops will become' radio button group is selected
+      And I click the 'New Row' button in the 'Route Stops' table
+      And I enter '10' in the Sequence field in the 'Route Stops' table details
+      And I enter 'Stop 1' in the Description field in the 'Route Stops' table details
+      And I activate the detail menu for the Location field in the 'Route Stops' table details
+      And I click menu item 'Select Value'
+      And I enter 'OPERATING' in the Type filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I record the value in the Location field on the first row in the unnamed table as [Stop1]
+      And I choose the first row in the unnamed table
+      And I see the value '[Stop1]' in the Location field in the 'Route Stops' table details
+      And I click the 'New Row' button in the 'Route Stops' table
+      And I enter '20' in the Sequence field in the 'Route Stops' table details
+      And I enter 'Stop 2' in the Description field in the 'Route Stops' table details
+      And I activate the detail menu for the Location field in the 'Route Stops' table details
+      And I click menu item 'Select Value'
+      And I enter 'OPERATING' in the Type filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I record the value in the Location field on the second row in the unnamed table as [Stop2]
+      And I choose the second row in the unnamed table
+      And I see the value '[Stop2]' in the Location field in the 'Route Stops' table details
+      And I successfully save the record
+      And I wait for 60 seconds
+    
+     When I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [WO]
+      And I enter 'Apply Route as Child WOs' in the description field of the 'Work Order' field
+      And I select action 'Apply Route'
+      And I see the 'Apply Route' dialog
+      And I enter '[Route]' in the Route filter in the Routes table
+      And I initiate search in the Routes table
+      And I see the value '[Route]' in the Route field on the first row in the Routes table
+      And I choose the first row in the Routes table
+      And I see the 'created in apply route' system message
+      And I click the Close button
+      And I select the 'List View' tab
+      
+     Then I click menu bar button 'Advanced Search'
+      And I enter '=[WO]' in the 'Parent WO' field
+      And I click the Find button
+      And I see exactly 2 rows in the 'Work Orders' table
+      And I choose the first row in the 'Work Orders' table
+      And I see the value '[WO]' in the 'Parent WO' field
+      And I see the value '[Stop1]' in the Location field
+      And I click the 'Next Work Order' toolbar button
+      And I see the value '[WO]' in the 'Parent WO' field
+      And I see the value '[Stop2]' in the Location field
+      And I logout
+  
+  
+   Scenario: Work Order Tracking - Actions - Apply Route - Entries in the Work Order's Multi Asset, Location and CI Table
+     
+     Maximo users shall be able to apply a route to a work order with the route stops becoming entries in the Multi Asset, Location and CI table.
+    
+      And I enter 'WO Testing - Multi Asset, Location and CI Table' in the description field of the Route field
+      And I click the "Entries in the Work Order's Multi Asset, Location and CI Table" radio button in the 'When this Route is applied to a Work Order, the Route Stops will become' radio button group
+      And I click the 'New Row' button in the 'Route Stops' table
+      And I enter '10' in the Sequence field in the 'Route Stops' table details
+      And I enter 'Stop 1' in the Description field in the 'Route Stops' table details
+      And I activate the detail menu for the Location field in the 'Route Stops' table details
+      And I click menu item 'Select Value'
+      And I enter 'OPERATING' in the Type filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I record the value in the Location field on the first row in the unnamed table as [Stop1]
+      And I choose the first row in the unnamed table
+      And I see the value '[Stop1]' in the Location field in the 'Route Stops' table details
+      And I click the 'New Row' button in the 'Route Stops' table
+      And I enter '20' in the Sequence field in the 'Route Stops' table details
+      And I enter 'Stop 2' in the Description field in the 'Route Stops' table details
+      And I activate the detail menu for the Location field in the 'Route Stops' table details
+      And I click menu item 'Select Value'
+      And I enter 'OPERATING' in the Type filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I record the value in the Location field on the second row in the unnamed table as [Stop2]
+      And I choose the second row in the unnamed table
+      And I see the value '[Stop2]' in the Location field in the 'Route Stops' table details
+      And I successfully save the record
+      And I wait for 60 seconds
+    
+     When I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [WO]
+      And I enter "Apply Route as Entries in the Work Order's Multi Asset, Location and CI Table" in the description field of the 'Work Order' field
+      And I select action 'Apply Route'
+      And I see the 'Apply Route' dialog
+      And I enter '[Route]' in the Route filter in the Routes table
+      And I initiate search in the Routes table
+      And I see the value '[Route]' in the Route field on the first row in the Routes table
+      And I choose the first row in the Routes table
+    
+     Then I see exactly 2 rows in the 'Multiple Assets,Locations and CIs' table
+      And I see the value '[Stop1]' in the Location field on the first row in the 'Multiple Assets,Locations and CIs' table
+      And I see the value '[Stop2]' in the Location field on the second row in the 'Multiple Assets,Locations and CIs' table
+      And I logout
+  
+  
+  Scenario: Work Order Tracking - Actions - Apply Route - Work Order Tasks
+    
+    Maximo users shall be able to apply a route to a work order with the route stops becoming tasks.
+    
+      And I enter 'WO Testing - WO Tasks' in the description field of the Route field
+      And I click the 'Work Order Tasks' radio button in the 'When this Route is applied to a Work Order, the Route Stops will become' radio button group
+      And I click the 'New Row' button in the 'Route Stops' table
+      And I enter '10' in the Sequence field in the 'Route Stops' table details
+      And I enter 'Stop 1' in the Description field in the 'Route Stops' table details
+      And I activate the detail menu for the Location field in the 'Route Stops' table details
+      And I click menu item 'Select Value'
+      And I enter 'OPERATING' in the Type filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I record the value in the Location field on the first row in the unnamed table as [Stop1]
+      And I choose the first row in the unnamed table
+      And I see the value '[Stop1]' in the Location field in the 'Route Stops' table details
+      And I click the 'New Row' button in the 'Route Stops' table
+      And I enter '20' in the Sequence field in the 'Route Stops' table details
+      And I enter 'Stop 2' in the Description field in the 'Route Stops' table details
+      And I activate the detail menu for the Location field in the 'Route Stops' table details
+      And I click menu item 'Select Value'
+      And I enter 'OPERATING' in the Type filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I record the value in the Location field on the second row in the unnamed table as [Stop2]
+      And I choose the second row in the unnamed table
+      And I see the value '[Stop2]' in the Location field in the 'Route Stops' table details
+      And I successfully save the record
+      And I wait for 60 seconds
+    
+     When I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [WO]
+      And I enter "Apply Route as Entries in the Work Order's Multi Asset, Location and CI Table" in the description field of the 'Work Order' field
+      And I select action 'Apply Route'
+      And I see the 'Apply Route' dialog
+      And I enter '[Route]' in the Route filter in the Routes table
+      And I initiate search in the Routes table
+      And I see the value '[Route]' in the Route field on the first row in the Routes table
+      And I choose the first row in the Routes table
+      And I see the 'created in apply route' system message
+      And I click the Close button
+    
+     Then I select the Plans tab
+      And I see exactly 2 rows in the 'Tasks for Work Order [WO]' table
+      And I make sure that the table details are visible for the 'Tasks for Work Order [WO]' table
+      And I see these values in the following fields in the 'Tasks for Work Order [WO]' table details:
+          | field             | value             |
+          | Task              | 10                |
+          | Task description  | Stop 1            |
+          | Sequence          | 10                |
+          | Route             | [Route]           |
+          | Route Stop        | 1                 |
+          | Location          | [Stop1]           |
+      And I make current the second row in the 'Tasks for Work Order [WO]' table
+      And I see these values in the following fields in the 'Tasks for Work Order [WO]' table details:
+          | field             | value             |
+          | Task              | 20                |
+          | Task description  | Stop 2            |
+          | Sequence          | 20                |
+          | Route             | [Route]           |
+          | Route Stop        | 2                 |
+          | Location          | [Stop2]           |
+      And I logout 

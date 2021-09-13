@@ -1,0 +1,45 @@
+#template
+Feature: Work Order Tracking - Actions - Duplicate Work Order
+  
+  Maximo users shall be able to duplicate work orders.
+  
+  Scenario: Work Order Tracking - Actions - Duplicate Work Order
+    
+    Given I login to Maximo as Administrator
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [WO]
+      And I enter 'Duplicating Work Orders' in the description field of the 'Work Order' field
+      And I activate the detail menu for the 'Location' field
+      And I click menu item 'Select Value'
+      And I record the value in the Location field on the first row in the unnamed table as [Location]
+      And I choose the first row in the unnamed table
+      And I see the value '[Location]' in the Location field in the header section
+      And I activate the detail menu for the 'Work Type' field
+      And I enter '=PM' in the Type filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I activate the detail menu for the 'Job Plan' field
+      And I click menu item 'Select Value'
+      And I uncheck the "Show Job Plans for the Work Order's Asset and Location Only" checkbox
+      And I click the Refresh button
+      And I record the value in the 'Job Plan' field on the first row in the unnamed table as [JP]
+      And I choose the first row in the unnamed table
+      And I see the value '[JP]' in the 'Job Plan' field
+      And I enter '3' in the Priority field
+      And I successfully save the record
+    
+     When I select action 'Duplicate Work Order'
+    
+     Then I see the flash message 'Record has been duplicated.'
+      And I do not see the value '[WO]' in the 'Work Order' field
+      And I see the value 'Duplicating Work Orders' in the description field of the 'Work Order' field
+      And I see these values in the following fields:
+          | field             | value               |
+          | Location          | [Location]          |
+          | Work Type         | PM                  |
+          | Job Plan          | [JP]                |
+          | Priority          | 3                   |
+      And I select the 'List View' tab
+      And I click the No button
+      And I logout

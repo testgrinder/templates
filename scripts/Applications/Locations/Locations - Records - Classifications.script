@@ -1,0 +1,226 @@
+# template
+Feature: Locations - Records - Classifications
+  
+  Classifications shall be added to locations.  Attribute values shall be updated and removed from specifications. Classifications shall be updated and removed.
+    
+  Scenario: Locations - Records - Classifications - Add Classification
+      
+    Maximo users shall be able to add a classification to a location.
+
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I save the record
+     When I select the Specifications tab
+      And I enter 'FANS \ CENTRIF' in the Classification field
+      And I save the record
+     Then I see these values in the following fields:
+        | field             | value            |
+        | Classification    | FANS \ CENTRIF   |
+        | Class Description | Fans\Centrifugal |
+      And I logout
+    
+  Scenario: Locations - Records - Classifications - Advanced Search by Classification
+    
+    Maximo users shall be able to find a location by advanced searching for its classification.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I select the 'Specifications' tab
+      And I enter 'FANS \ CENTRIF' in the Classification field
+      And I save the record
+     When I select the List tab
+      And I click menu bar button 'Advanced Search'
+      And I enter 'FANS \ CENTRIF' in the Classification field
+      And I click the Find button
+      And I enter '=[Location]' in the Location filter in the Locations table
+      And I initiate search in the Locations table
+      And I choose the first row in the Locations table
+     Then I see the value '[Location]' in the Location field
+      And I logout
+      
+  Scenario: Locations - Records - Classifications - Add Attribute Values to Specifications
+      
+    Maximo users shall be able to add attribute values to specifications of a location with a classification.
+      
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I save the record
+      And I select the 'Specifications' tab
+      And I enter 'FANS \ CENTRIF' in the Classification field
+      And I successfully save the record
+     When I enter '=SPEED' in the Attribute filter in the Specifications table
+      And I initiate search in the Specifications table
+      And I enter '1500.0' in the 'Numeric Value' field on the current row in the Specifications table
+      And I save the record
+      And I enter '=SHAFTDIA' in the Attribute filter in the Specifications table
+      And I initiate search in the Specifications table
+      And I enter '36' in the 'Numeric Value' field on the current row in the Specifications table
+      And I successfully save the record
+     Then I select the List tab
+      And I enter '=[Location]' in the Location field
+      And I initiate search in the Locations table
+      And I choose the first row in the Locations table
+      And I select the Specifications tab
+      And I enter 'S*' in the Attribute filter in the Specifications table
+      And I initiate search in the Specifications table
+      And I only see the following rows in the Specifications table:
+        | Attribute | Description    | Data Type | Alphanumeric Value | Numeric Value | Unit of Measure | Table Value |
+        | SPEED     | Speed Limit    | NUMERIC   |                    | 1,500.0       | RPM             |             |
+        | SHAFTDIA  | Shaft Diameter | NUMERIC   |                    | 36.0          | INCHES          |             |
+      And I logout
+        
+  Scenario: Locations - Records - Classifications - Update Attribute Values of Specifications
+    
+    Maximo users shall be able to update attribute values of specifications for a location with a classification.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I save the record
+      And I select the 'Specifications' tab
+      And I enter 'FANS \ CENTRIF' in the Classification field
+      And I successfully save the record
+      And I enter '=SPEED' in the Attribute filter in the Specifications table
+      And I initiate search in the Specifications table
+      And I enter '1500.0' in the 'Numeric Value' field on the current row in the Specifications table
+      And I save the record
+      And I enter '=SHAFTDIA' in the Attribute filter in the Specifications table
+      And I initiate search in the Specifications table
+      And I enter '36' in the 'Numeric Value' field on the current row in the Specifications table
+      And I successfully save the record
+     When I select the List tab
+      And I enter '=[Location]' in the Location field
+      And I initiate search in the Locations table
+      And I choose the first row in the Locations table
+      And I select the Specifications tab
+      And I enter '=SPEED' in the Attribute filter in the Specifications table
+      And I initiate search in the Specifications table
+      And I enter '2000.0' in the 'Numeric Value' field on the current row in the Specifications table
+      And I save the record
+      And I enter '=SHAFTDIA' in the Attribute filter in the Specifications table
+      And I initiate search in the Specifications table
+      And I enter '40' in the 'Numeric Value' field on the current row in the Specifications table
+      And I successfully save the record
+     Then I select the List tab
+      And I enter '=[Location]' in the Location field
+      And I initiate search in the Locations table
+      And I choose the first row in the Locations table
+      And I select the Specifications tab
+      And I enter 'S*' in the Attribute filter in the Specifications table
+      And I initiate search in the Specifications table
+      And I only see the following rows in the Specifications table:
+        | Attribute | Description    | Data Type | Alphanumeric Value | Numeric Value | Unit of Measure | Table Value |
+        | SPEED     | Speed Limit    | NUMERIC   |                    | 2,000.0       | RPM             |             |
+        | SHAFTDIA  | Shaft Diameter | NUMERIC   |                    | 40.0          | INCHES          |             |
+      And I logout
+      
+  Scenario: Locations - Records - Classifications - Delete Specification
+    
+    Maximo users shall be able to delete a specification for a location with a classification.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I select the 'Specifications' tab
+      And I enter 'FANS \ CENTRIF' in the Classification field
+      And I save the record
+      And I only see the following rows in the Specifications table:
+        | Attribute |
+        | SPEED     |
+        | SHAFTDIA  |
+        | DIRDRIVE  |
+        | VARPITCH  |
+        | MOUNTYP   |
+        | CAPACITY  |
+     When I enter '=CAPACITY' in the Attribute filter in the Specifications table
+      And I initiate search in the Specifications table
+      And I click the trash can on the current row in the Specifications table
+      And I successfully save the record
+      And I enter '' in the Attribute filter in the Specifications table
+      And I initiate search in the Specifications table
+     Then I only see the following rows in the Specifications table:
+        | Attribute |
+        | SPEED     |
+        | SHAFTDIA  |
+        | DIRDRIVE  |
+        | VARPITCH  |
+        | MOUNTYP   |
+      And I logout
+      
+  Scenario: Locations - Records - Classifications - Update Classification
+    
+    Maximo users shall be able to change a location's classification.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I select the 'Specifications' tab
+      And I enter 'FANS \ CENTRIF' in the Classification field
+      And I save the record
+     When I activate the detail menu for the Classification field
+      And I click menu item 'Clear Classification'
+      And I enter 'TRACTOR \ CLASS8' in the Classification field
+      And I successfully save the record
+     Then I go to the Assets / Locations application
+      And I enter '=[Location]' in the Location field
+      And I initiate search in the Locations table
+      And I choose the first row in the Locations table
+      And I select the Specifications tab
+      And I see these values in the following fields:
+        | field             | value            |
+        | Classification    | TRACTOR \ CLASS8 |
+        | Class Description | Heavy Truck      |
+      And I logout
+      
+  Scenario: Locations - Records - Classifications - Delete Classification
+    
+    Maximo users shall be able to delete a location's classification.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I select the 'Specifications' tab
+      And I enter 'FANS \ CENTRIF' in the Classification field
+      And I save the record
+     When I activate the detail menu for the Classification field
+      And I click menu item 'Clear Classification'
+      And I successfully save the record
+     Then I go to the Assets / Locations application
+      And I enter '=[Location]' in the Location field
+      And I initiate search in the Locations table
+      And I choose the first row in the Locations table
+      And I select the Specifications tab
+      And I see an empty value in the Classification field
+      And I see exactly 0 total number of rows in the Specifications table
+      And I logout

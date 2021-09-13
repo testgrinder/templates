@@ -1,0 +1,1047 @@
+#template
+Feature: Work Order Tracking Screen Layout
+    Background:
+      
+      Given I login to Maximo as Administrator
+        And I go to the Work Orders / Work Order Tracking application
+  
+    Scenario: Work Order Tracking - UI - Screen Layout - List View tab layout
+      
+        
+       Then I only see these columns in this order in the "Work Orders" table:
+            | column          | attribute             |
+            | Work Order      | WORKORDER.WONUM       |
+            | Description     | WORKORDER.DESCRIPTION |
+            | Location        | WORKORDER.LOCATION    |
+            | Asset           | WORKORDER.ASSETNUM    |
+            | Status          | WORKORDER.STATUS      |
+            | Scheduled Start | WORKORDER.SCHEDSTART  |
+            | Priority        | WORKORDER.WOPRIORITY  |
+            | Site            | WORKORDER.SITEID      |
+        
+        And I logout
+        
+    Scenario: Work Order Tracking - UI - Screen Layout - Work Order tab
+     
+       When I click the 'New Work Order' toolbar button
+        
+       Then I only see these fields in this order in the header section:
+            | field                           | attribute                        |
+            | Work Order                      | WORKORDER.WONUM                  |
+            | Work Order description          | WORKORDER.DESCRIPTION            |
+            | Location                        | WORKORDER.LOCATION               |
+            | Location description            | LOCATIONS.DESCRIPTION            |
+            | Asset                           | WORKORDER.ASSETNUM               |
+            | Asset description               | ASSET.DESCRIPTION                |
+            | Configuration Item              | WORKORDER.CINUM                  |
+            | Configuration Item description  | CI.DESCRIPTION                   |
+            | Parent WO                       | WORKORDER.PARENT                 |
+            | Classification                  | CLASSSTRUCTURE.HIERARCHYPATH     |
+            | Class Description               | CLASSSTRUCTURE.DESCRIPTION_CLASS |
+            | Launch Entry Name               | WORKORDER.LAUNCHENTRYNAME        |
+            | Repair Facility                 | WORKORDER.REPAIRFACILITY         |
+            | Repair Facility description     | LOCATIONS.DESCRIPTION            |
+            | Repair Facility Site            | WORKORDER.REPFACSITEID           |
+            | Site                            | WORKORDER.SITEID                 |
+            | Class                           | WORKORDER.WOCLASS                |
+            | Work Type                       | WORKORDER.WORKTYPE               |
+            | GL Account                      | WORKORDER.GLACCOUNT              |
+            | Failure Class                   | WORKORDER.FAILURECODE            |
+            | Problem Code                    | WORKORDER.PROBLEMCODE            |
+            | Storeroom Material Status       | WORKORDER.STOREROOMMTLSTATUS     |
+            | Direct Issue Material Status    | WORKORDER.DIRISSUEMTLSTATUS      |
+            | Work Package Material Status    | WORKORDER.WORKPACKMTLSTATUS      |
+            | Material Status Last Updated    | WORKORDER.AVAILSTATUSDATE        |
+            | Status                          | WORKORDER.STATUS                 |
+            | Status Date                     | WORKORDER.STATUSDATE             |
+            | Inherit Status Changes          | WORKORDER.PARENTCHGSSTATUS       |
+            | Accepts Charges                 | WORKORDER.WOACCEPTSCHARGES       |
+            | Is Task                         | WORKORDER.ISTASK                 |
+            | Under Flow Control              | WORKORDER.FLOWCONTROLLED         |
+            | Suspend Flow Control            | WORKORDER.SUSPENDFLOW            |
+            | Flow Action                     | WORKORDER.FLOWACTION             |
+            | Flow Action Assist              | WORKORDER.FLOWACTIONASSIST       |
+        
+        And I only see these fields in this order in the "Job Details" section:
+            | field                       | attribute                   |
+            | Job Plan                    | WORKORDER.JPNUM             |
+            | Job Plan Revision #         | WORKORDER.PLUSCJPREVNUM     |
+            | PM                          | WORKORDER.PMNUM             |
+            | Safety Plan                 | WORKORDER.SAFETYPLANID      |
+            | Contract                    | WORKORDER.CONTRACT          |
+            | Inspection Form             | WORKORDER.INSPFORMNUM       |
+            | Inspection Form description | INSPECTIONFORM.NAME         |
+            | Inspection Result           | INSPECTIONRESULT.RESULTNUM  |
+        
+        And I only see these fields in this order in the "Asset Details" section:
+            | field            | attribute               |
+            | Asset Up         | ASSET.ISRUNNING         |
+            | Warranties Exist | WORKORDER.WARRANTYEXIST |
+            | SLA Applied      | WORKORDER.SLAAPPLIED    |
+            | Charge to Store  | WORKORDER.CHARGESTORE   |
+            | Current Value    | WORKORDER.CURRENTVALUE  |
+        
+        And I only see these fields in this order in the Priority section:
+            | field                   | attribute                  |
+            | Asset/Location Priority | WORKORDER.ASSETLOCPRIORITY |
+            | Priority                | WORKORDER.WOPRIORITY       |
+            | Priority Justification  | WORKORDER.JUSTIFYPRIORITY  |
+            | Risk Assessment         | WORKORDER.RISK             |
+        
+        And I only see these fields in this order in the 'Address Information' section:
+            | field                        | attribute                         |
+            | Service Address              | WOSERVICEADDRESS.SADDRESSCODE     |
+            | Service Address description  | WOSERVICEADDRESS.DESCRIPTION      |
+            | Formatted Address            | WOSERVICEADDRESS.FORMATTEDADDRESS |
+            | Street Address               | WOSERVICEADDRESS.STREETADDRESS    |
+            | City                         | WOSERVICEADDRESS.CITY             |
+            | State/Province               | WOSERVICEADDRESS.STATEPROVINCE    |
+            | State/Province description   | ALNDOMAIN.DESCRIPTION             |
+            
+        # following steps are specific to Maximo instances with Calibration license
+        
+        # And I only see these fields in this order in the 'Calibration Details' section:
+        #     | field                     | attribute                         |
+        #     | Frequency                 | WORKORDER.PLUSCFREQUENCY          |
+        #     | Frequency Units           | WORKORDER.PLUSCFREQUNIT           |
+        #     | Next Calibration Due Date | WORKORDER.PLUSCNEXTDATE_NP        |
+        #     | Loop Calibration          | WORKORDER.PLUSCLOOP               |
+        #     | Physical Location         | WORKORDER.PLUSCPHYLOC             |
+        
+        # end license-specific steps
+        
+        And I only see these columns in this order in the "Multiple Assets,Locations and CIs" table:
+            | column             | attribute                    |
+            | Asset              | MULTIASSETLOCCI.ASSETNUM     |
+            | Location           | MULTIASSETLOCCI.LOCATION     |
+            | Configuration Item | MULTIASSETLOCCI.CINUM        |
+            | Target Description | MULTIASSETLOCCI.TARGETDESC   |
+            | Sequence           | MULTIASSETLOCCI.SEQUENCE     |
+            | Mark Progress      | MULTIASSETLOCCI.PROGRESS     |
+            | Inspection Form    | MULTIASSETLOCCI.INSPFORMNUM  | 
+            | Inspection Result  | INSPECTIONRESULT.RESULTNUM   |
+            | Site               | MULTIASSETLOCCI.SITEID       |
+        
+        And I see the Select button in the "Multiple Assets,Locations and CIs" table
+        
+        And I see the "Clear All" button in the "Multiple Assets,Locations and CIs" table
+        
+        And I click the "New Row" button
+        
+        And I only see these fields in this order in the Details section in the "Multiple Assets,Locations and CIs" table details:
+            | field                           | attribute                   |
+            | Asset                           | MULTIASSETLOCCI.ASSETNUM    |
+            | Asset description               | ASSET.DESCRIPTION           |
+            | Location                        | MULTIASSETLOCCI.LOCATION    |
+            | Location description            | LOCATIONS.DESCRIPTION       |
+            | Configuration Item              | MULTIASSETLOCCI.CINUM       |
+            | Configuration Item description  | CI.DESCRIPTION              |
+            | Target Description              | MULTIASSETLOCCI.TARGETDESC  |
+            | Comment                         | MULTIASSETLOCCI.COMMENTS    |
+            | Sequence                        | MULTIASSETLOCCI.SEQUENCE    |
+            | Mark Progress                   | MULTIASSETLOCCI.PROGRESS    |
+            | Site                            | MULTIASSETLOCCI.SITEID      |
+        
+        And I only see these fields in this order in the "Scheduling Information" section:
+            | field                     | attribute                 |
+            | Target Start              | WORKORDER.TARGSTARTDATE   |
+            | Target Finish             | WORKORDER.TARGCOMPDATE    |
+            | Scheduled Start           | WORKORDER.SCHEDSTART      |
+            | Scheduled Finish          | WORKORDER.SCHEDFINISH     |
+            | Start No Earlier Than     | WORKORDER.SNECONSTRAINT   |
+            | Finish No Later Than      | WORKORDER.FNLCONSTRAINT   |
+            | Actual Start              | WORKORDER.ACTSTART        |
+            | Actual Finish             | WORKORDER.ACTFINISH       |
+            | Duration                  | WORKORDER.ESTDUR          |
+            | Time Remaining            | WORKORDER.REMDUR          |
+            | Predecessors              | WORKORDER.PREDESSORWOS    |
+            | Include Tasks in Schedule | WORKORDER.INCTASKSINSCHED |
+        
+        And I only see these fields in this order in the "Follow-up Work" section:
+            | field                    | attribute                 |
+            | Originating Record       | WORKORDER.ORIGRECORDID    |
+            | Originating Record Class | WORKORDER.ORIGRECORDCLASS |
+            | Has Follow-up Work       | WORKORDER.HASFOLLOWUPWORK |
+            | Interruptible            | WORKORDER.INTERRUPTIBLE   |
+            | Interruptible shift      | WORKORDER.INTSHIFT        |
+        
+        And I only see these fields in this order in the Responsibility section:
+            | field           | attribute                |
+            | Reported By     | WORKORDER.REPORTEDBY     |
+            | Reported Date   | WORKORDER.REPORTDATE     |
+            | On Behalf Of    | WORKORDER.ONBEHALFOF     |
+            | Phone           | WORKORDER.PHONE          |
+            | Supervisor      | WORKORDER.SUPERVISOR     |
+            | Crew            | WORKORDER.AMCREW         |
+            | Lead            | WORKORDER.LEAD           |
+            | Work Group      | WORKORDER.PERSONGROUP    |
+            | Vendor          | WORKORDER.VENDOR         |
+            | Crew Work Group | WORKORDER.CREWWORKGROUP  | 
+            | Owner           | WORKORDER.OWNER          |
+            | Owner Group     | WORKORDER.OWNERGROUP     |
+            | Service Group   | WORKORDER.COMMODITYGROUP |
+            | Service         | WORKORDER.COMMODITY      |
+        
+        And I logout
+    
+    Scenario: Work Order Tracking - UI - Screen Layout - Plans tab
+      
+       When I click the "New Work Order" toolbar button
+        And I record the value in the 'Work Order' field as [WO]
+        And I select the Plans tab
+        
+       Then I only see these fields in this order in the header section:
+            | field                  | attribute             |
+            | Work Order             | WORKORDER.WONUM       |
+            | Work Order description | WORKORDER.DESCRIPTION |
+            | Parent WO              | WORKORDER.PARENT      |
+            | Site                   | WORKORDER.SITEID      |
+            | Status                 | WORKORDER.STATUS      |
+        
+        And I only see these columns in this order in the "Children of Work Order [WO]" table:
+            | column       | attribute              |
+            | Sequence     | WOACTIVITY.WOSEQUENCE  |
+            | Record       | WOACTIVITY.WONUM       |
+            | Record Class | WOACTIVITY.WOCLASS     |
+            | Summary      | WOACTIVITY.DESCRIPTION |
+            | Location     | WOACTIVITY.LOCATION    |
+            | Asset        | WOACTIVITY.ASSETNUM    |
+            | Status       | WOACTIVITY.STATUS      |
+        
+        And I see the "Select Assets" button in the "Children of Work Order [WO]" table
+        
+        And I see the "Select Locations" button in the "Children of Work Order [WO]" table
+        
+        And I see the "Select Work Orders" button in the "Children of Work Order [WO]" table
+        
+        And I click the "New Row" button in the "Children of Work Order [WO]" table
+        
+        And I only see these fields in this order in the "Child Information" section in the "Children of Work Order [WO]" table details:
+            | field                  | attribute                   |
+            | Sequence               | WOACTIVITY.WOSEQUENCE       |
+            | Record                 | WOACTIVITY.WONUM            |
+            | Record description     | WOACTIVITY.DESCRIPTION      |
+            | Record Class           | WOACTIVITY.WOCLASS          |
+            | Location               | WOACTIVITY.LOCATION         |
+            | Location description   | LOCATIONS.DESCRIPTION       |
+            | Asset                  | WOACTIVITY.ASSETNUM         |
+            | Asset description      | ASSET.DESCRIPTION           |
+            | Job Plan               | WOACTIVITY.JPNUM            |
+            | Job Plan description   | JOBPLAN.DESCRIPTION         |
+            | Service Group          | WOACTIVITY.COMMODITYGROUP   |
+            | Service                | WOACTIVITY.COMMODITY        |
+            | Route                  | WOACTIVITY.ROUTE            |
+            | Route Stop             | WOACTIVITY.ROUTESTOPID      |
+            | Status                 | WOACTIVITY.STATUS           |
+            | GL Account             | WOACTIVITY.GLACCOUNT        |
+            | Priority               | WOACTIVITY.WOPRIORITY       |
+            | Inherit Status Changes | WOACTIVITY.PARENTCHGSSTATUS |
+            | Accepts Charges        | WOACTIVITY.WOACCEPTSCHARGES |
+            | Under Flow Control     | WOACTIVITY.FLOWCONTROLLED   |
+            | Suspend Flow Control   | WOACTIVITY.SUSPENDFLOW      |
+            | Flow Action            | WOACTIVITY.FLOWACTION       |
+            | Flow Action Assist     | WOACTIVITY.FLOWACTIONASSIST |
+            | Launch Entry Name      | WOACTIVITY.LAUNCHENTRYNAME  |
+        
+        And I only see these fields in this order in the "Scheduling Information" section in the "Children of Work Order [WO]" table details:
+            | field                     | attribute                  |
+            | Target Start              | WOACTIVITY.TARGSTARTDATE   |
+            | Target Finish             | WOACTIVITY.TARGCOMPDATE    |
+            | Scheduled Start           | WOACTIVITY.SCHEDSTART      |
+            | Scheduled Finish          | WOACTIVITY.SCHEDFINISH     |
+            | Start No Earlier Than     | WOACTIVITY.SNECONSTRAINT   |
+            | Finish No Later Than      | WOACTIVITY.FNLCONSTRAINT   |
+            | Include Tasks in Schedule | WOACTIVITY.INCTASKSINSCHED |
+            | Actual Start              | WOACTIVITY.ACTSTART        |
+            | Actual Finish             | WOACTIVITY.ACTFINISH       |
+            | Estimated Duration        | WOACTIVITY.ESTDUR          |
+            | Time Remaining            | WOACTIVITY.REMDUR          |
+            | Interruptible             | WOACTIVITY.INTERRUPTIBLE   | 
+            | Interruptible shift       | WOACTIVITY.INTSHIFT        | 
+            | Predecessors              | WOACTIVITY.PREDESSORWOS    |
+        
+        And I only see these columns in this order in the "Tasks for Work Order [WO]" table:
+            | column             | attribute                  |
+            | Sequence           | WOACTIVITY.WOSEQUENCE      |
+            | Task               | WOACTIVITY.TASKID          |
+            | Summary            | WOACTIVITY.DESCRIPTION     |
+            | Estimated Duration | WOACTIVITY.ESTDUR          |
+            | Status             | WOACTIVITY.STATUS          |
+            | Owner              | WOACTIVITY.OWNER           |
+            | Owner Group        | WOACTIVITY.OWNERGROUP      |
+        
+        And I click the "New Row" button in the "Tasks for Work Order [WO]" table
+        
+        And I only see these fields in this order in the "Task Information" section in the "Tasks for Work Order [WO]" table details:
+            | field                       | attribute                        |
+            | Task                        | WOACTIVITY.TASKID                |
+            | Task description            | WOACTIVITY.DESCRIPTION           |
+            | Sequence                    | WOACTIVITY.WOSEQUENCE            |
+            | Status                      | WOACTIVITY.STATUS                |
+            | Classification              | CLASSSTRUCTURE.HIERARCHYPATH     |
+            | Classification Description  | CLASSSTRUCTURE.DESCRIPTION_CLASS | 
+            | Inspection Form             | WOACTIVITY.INSPFORMNUM           | 
+            | Inspection Form description | INSPECTIONFORM.NAME              | 
+            | Inspection Result           | INSPECTIONRESULT.RESULTNUM       | 
+            | Under Flow Control          | WOACTIVITY.FLOWCONTROLLED        |
+            | Flow Action                 | WOACTIVITY.FLOWACTION            |
+            | Suspend Flow Control        | WOACTIVITY.SUSPENDFLOW           |
+            | Flow Action Assist          | WOACTIVITY.FLOWACTIONASSIST      |
+            | Launch Entry Name           | WOACTIVITY.LAUNCHENTRYNAME       | 
+            | Interruptible               | WOACTIVITY.INTERRUPTIBLE         | 
+            | Interruptible shift         | WOACTIVITY.INTSHIFT              |
+            | Inherit Status Changes      | WOACTIVITY.PARENTCHGSSTATUS      |
+            | Accepts Charges             | WOACTIVITY.WOACCEPTSCHARGES      |
+            | Owner                       | WOACTIVITY.OWNER                 |
+            | Owner Group                 | WOACTIVITY.OWNERGROUP            |
+            | Crew Work Group             | WOACTIVITY.CREWWORKGROUP         | 
+            | Route                       | WOACTIVITY.ROUTE                 |
+            | Route Stop                  | WOACTIVITY.ROUTESTOPID           |
+        
+        And I only see these fields in this order in the "Work Reference Information" section in the "Tasks for Work Order [WO]" table details:
+            | field                 | attribute                   |
+            | Reference WO          | WOACTIVITY.WONUM            |
+            | Location              | WOACTIVITY.LOCATION         |
+            | Location description  | LOCATIONS.DESCRIPTION       |
+            | Asset                 | WOACTIVITY.ASSETNUM         |
+            | Asset description     | ASSET.DESCRIPTION           |
+            | Service Group         | WOACTIVITY.COMMODITYGROUP   |
+            | Service               | WOACTIVITY.COMMODITY        |
+            | Observation           | WOACTIVITY.OBSERVATION      |
+            | Inspector             | WOACTIVITY.INSPECTOR        |
+            | Measurement Point     | WOACTIVITY.POINTNUM         |
+            | Measurement Value     | WOACTIVITY.MEASUREMENTVALUE |
+            | Measurement Date      | WOACTIVITY.MEASUREDATE      |
+        
+        And I only see these fields in this order in the "Scheduling Information" section in the "Tasks for Work Order [WO]" table details:
+            | field                 | attribute                |
+            | Target Start          | WOACTIVITY.TARGSTARTDATE |
+            | Target Finish         | WOACTIVITY.TARGCOMPDATE  |
+            | Scheduled Start       | WOACTIVITY.SCHEDSTART    |
+            | Scheduled Finish      | WOACTIVITY.SCHEDFINISH   |
+            | Start No Earlier Than | WOACTIVITY.SNECONSTRAINT |
+            | Finish No Later Than  | WOACTIVITY.FNLCONSTRAINT |
+            | Actual Start          | WOACTIVITY.ACTSTART      |
+            | Actual Finish         | WOACTIVITY.ACTFINISH     |
+            | Estimated Duration    | WOACTIVITY.ESTDUR        |
+            | Time Remaining        | WOACTIVITY.REMDUR        |
+            | Predecessors          | WOACTIVITY.PREDESSORWOS  |
+        
+        And I only see these columns in this order in the Labor table:
+            | column        | attribute          |
+            | Task          |                    |
+            | Crew Type     | WPLABOR.AMCREWTYPE | 
+            | Craft         | WPLABOR.CRAFT      |
+            | Skill Level   | WPLABOR.SKILLLEVEL |
+            | Vendor        | WPLABOR.VENDOR     |
+            | Quantity      | WPLABOR.QUANTITY   |
+            | Labor         | WPLABOR.LABORCODE  |
+            | Crew          | WPLABOR.AMCREW     | 
+            | Regular Hours | WPLABOR.LABORHRS   |
+            | Rate          |                    |
+            | Line Cost     |                    |
+        
+        And I see the "Select Crew Type" button in the Labor table
+        
+        And I see the "Select Craft" button in the Labor table
+        
+        And I click the "New Row" button in the Labor table
+        
+        And I only see these fields in this order in the Details section in the Labor table details:
+            | field           | attribute              |
+            | Task            | WPLABOR.TASKID         |
+            | Crew Work Group | WPLABOR.CREWWORKGROUP  | 
+            | Crew Type       | WPLABOR.AMCREWTYPE     | 
+            | Craft           | WPLABOR.CRAFT          |
+            | Skill Level     | WPLABOR.SKILLLEVEL     |
+            | Vendor          | WPLABOR.VENDOR         |
+            | Labor Contract  | WPLABOR.CONTRACTNUM    |
+            | Quantity        | WPLABOR.QUANTITY       | 
+            | Crew            | WPLABOR.AMCREW         |
+            | Labor           | WPLABOR.LABORCODE      |
+            | Outside         | WPLABOR.OUTSIDE        |
+            | Regular Hours   | WPLABOR.LABORHRS       |
+            | Rate            | WPLABOR.DISPLAYRATE    |
+            | Line Cost       | WPLABOR.LINECOST       |
+            | Rate Changed    | WPLABOR.RATEHASCHANGED |
+        
+        And I select the Materials tab
+        
+        And I only see these columns in this order in the Materials table:
+            | column            | attribute              |
+            | Task              |                        |
+            | Item              | WPMATERIAL.ITEMNUM     |
+            | Description       | WPMATERIAL.DESCRIPTION |
+            | Quantity          | WPMATERIAL.ITEMQTY     |
+            | Unit Cost         | WPMATERIAL.UNITCOST    |
+            | Line Cost         | WPMATERIAL.LINECOST    |
+            | Storeroom         | WPMATERIAL.LOCATION    |
+            | Direct Issue      | WPMATERIAL.DIRECTREQ   |
+        
+        And I see the "Select Materials" button in the Materials table
+        
+        And I see the "Select Asset Spare Parts" button in the Materials table
+        
+        And I click the "New Row" button in the Materials table
+        
+        And I only see these fields in this order in the Details section in the Materials table details:
+            | field             | attribute                |
+            | Task              | WPMATERIAL.TASKID        |
+            | Item              | WPMATERIAL.ITEMNUM       |
+            | Item description  | WPMATERIAL.DESCRIPTION   |
+            | Line Type         | WPMATERIAL.LINETYPE      |
+            | Quantity          | WPMATERIAL.ITEMQTY       |
+            | Order Unit        | WPMATERIAL.ORDERUNIT     |
+            | Unit Cost         | WPMATERIAL.UNITCOST      |
+            | Line Cost         | WPMATERIAL.LINECOST      |
+            | Storeroom         | WPMATERIAL.LOCATION      |
+            | Storeroom Site    | WPMATERIAL.STORELOCSITE  |
+            | Reservation Type  | WPMATERIAL.RESTYPE       |
+            | Direct Issue      | WPMATERIAL.DIRECTREQ     |
+            | Vendor            | WPMATERIAL.VENDOR        |
+            | Stock Category    | ITEMORGINFO.CATEGORY     |
+            | Condition Code    | WPMATERIAL.CONDITIONCODE |
+            | Condition Rate    | ITEMCONDITION.CONDRATE   |
+            | Condition Enabled | ITEM.CONDITIONENABLED    |
+            | PR                | WPMATERIAL.PR            |
+            | PR Line           | WPMATERIAL.PRLINENUM     |
+            | Issue To          | WPMATERIAL.ISSUETO       |
+            | Required Date     | WPMATERIAL.REQUIREDATE   |
+            | Requested By      | WPMATERIAL.REQUESTBY     |
+        
+        And I select the Services tab
+        
+        And I only see these columns in this order in the Services table:
+            | column              | attribute             |
+            | Task                |                       |
+            | Service             | WPSERVICE.ITEMNUM     |
+            | Description         | WPSERVICE.DESCRIPTION |
+            | Quantity            | WPSERVICE.ITEMQTY     |
+            | Unit Cost           | WPSERVICE.UNITCOST    |
+            | Line Cost           | WPSERVICE.LINECOST    |
+        
+        And I see the "Select Standard Services" button in the Services table
+        
+        And I click the "New Row" button in the Services table
+        
+        And I only see these fields in this order in the Details section in the Services table details:
+            | field                 | attribute             |
+            | Task                  | WPSERVICE.TASKID      |
+            | Line Type             | WPSERVICE.LINETYPE    |
+            | Service               | WPSERVICE.ITEMNUM     |
+            | Service description   | WPSERVICE.DESCRIPTION |
+            | Quantity              | WPSERVICE.ITEMQTY     |
+            | Order Unit            | WPSERVICE.ORDERUNIT   |
+            | Unit Cost             | WPSERVICE.UNITCOST    |
+            | Line Cost             | WPSERVICE.LINECOST    |
+            | Issue To              | WPSERVICE.ISSUETO     |
+            | Required Date         | WPSERVICE.REQUIREDATE |
+            | Requested By          | WPSERVICE.REQUESTBY   |
+            | Vendor                | WPSERVICE.VENDOR      |
+            | PR                    | WPSERVICE.PR          |
+            | PR Line               | WPSERVICE.PRLINENUM   |
+        
+        And I select the Tools tab
+        
+        And I only see these columns in this order in the Tools table:
+            | column            | attribute          |
+            | Task              |                    |
+            | Tool              | WPTOOL.ITEMNUM     |
+            | Description       | WPTOOL.DESCRIPTION |
+            | Quantity          | WPTOOL.ITEMQTY     |
+            | Tool Hours        | WPTOOL.HOURS       |
+            | Rate              | WPTOOL.RATE        |
+            | Line Cost         | WPTOOL.LINECOST    |
+        
+        And I see the "Select Tools" button in the Tools table 
+        
+        And I click the "New Row" button in the Tools table
+        
+        And I only see these fields in this order in the Details section in the Tools table details:
+            | field                | attribute             |
+            | Task                 | WPTOOL.TASKID         |
+            | Tool                 | WPTOOL.ITEMNUM        |
+            | Tool description     | WPTOOL.DESCRIPTION    |
+            | Quantity             | WPTOOL.ITEMQTY        |
+            | Tool Hours           | WPTOOL.HOURS          |
+            | Rate                 | WPTOOL.RATE           |
+            | Line Cost            | WPTOOL.LINECOST       |
+            | Rate Changed         | WPTOOL.RATEHASCHANGED |
+            | Reservation Required | WPTOOL.RESERVEREQ     |
+            | Storeroom            | WPTOOL.LOCATION       |
+            | Storeroom Site       | WPTOOL.STORELOCSITE   |
+            | Reservation Type     | WPTOOL.RESTYPE        |
+            | Issue To             | WPTOOL.ISSUETO        |
+            | Required Date        | WPTOOL.REQUIREDATE    |
+        
+        And I click the 'Clear Changes' toolbar button
+        And I click the No button
+        And I logout
+        
+    Scenario: Work Order Tracking - UI - Screen Layout - Assignments tab
+      
+       When I click the 'New Work Order' toolbar button
+        And I select the Assignments tab
+      
+        And I only see these fields in this order in the header section:
+            | field                   | attribute               |
+            | Work Order              | WORKORDER.WONUM         |
+            | Work Order description  | WORKORDER.DESCRIPTION   |
+            | Parent WO               | WORKORDER.PARENT        |
+            | Site                    | WORKORDER.SITEID        |
+            | Scheduled Start         | WORKORDER.SCHEDSTART    |
+            | Scheduled Finish        | WORKORDER.SCHEDFINISH   |
+            | Status                  | WORKORDER.STATUS        |
+            | Target Start            | WORKORDER.TARGSTARTDATE |
+            | Target Finish           | WORKORDER.TARGCOMPDATE  |
+        
+        And I only see these columns in this order in the Assignments table:
+            | column            | attribute               |
+            | Task              |                         |
+            | Description       | WORKORDER.DESCRIPTION   |
+            | Crew Type         | ASSIGNMENT.AMCREWTYPE   |
+            | Craft             | ASSIGNMENT.CRAFT        |
+            | Skill Level       | ASSIGNMENT.SKILLLEVEL   |
+            | Labor             | ASSIGNMENT.LABORCODE    |
+            | Crew              | ASSIGNMENT.AMCREW       |
+            | Scheduled Start   | ASSIGNMENT.SCHEDULEDATE |
+            | Hours             | ASSIGNMENT.LABORHRS     |
+            | Status            | ASSIGNMENT.STATUS       |
+        
+        And I click the "New Row" button in the Assignments table
+        
+        And I only see these fields in this order in the Details section in the Assignments table details:
+            | field             | attribute               |
+            | Task              | ASSIGNMENT.TASKID       |
+            | Task description  | WORKORDER.DESCRIPTION   |
+            | Labor             | ASSIGNMENT.LABORCODE    |
+            | Labor description | PERSON.DISPLAYNAME      |
+            | Craft             | ASSIGNMENT.CRAFT        |
+            | Crew Type         | ASSIGNMENT.AMCREWTYPE   |
+            | Crew              | ASSIGNMENT.AMCREW       |
+            | Skill Level       | ASSIGNMENT.SKILLLEVEL   |
+            | Vendor            | ASSIGNMENT.VENDOR       |
+            | Contract          | ASSIGNMENT.CONTRACTNUM  |
+            | Crew Work Group   | ASSIGNMENT.CREWWORKGROUP|
+            | Scheduled Start   | ASSIGNMENT.SCHEDULEDATE |
+            | Hours             | ASSIGNMENT.LABORHRS     |
+            | Status            | ASSIGNMENT.STATUS       |
+            | Work Zone         | ASSIGNMENT.WORKZONE     |
+        
+        And I see the "Complete Assignment" button in the Assignments table
+        
+        And I see the "Available Labor" button in the Assignments table
+        
+        And I logout
+      
+    Scenario: Work Order Tracking - UI - Screen Layout - Related Records tab
+       
+       When I click the 'New Work Order' toolbar button
+        And I select the "Related Records" tab   
+        
+        And I only see these fields in this order in the header section:
+            | field                  | attribute             |
+            | Work Order             | WORKORDER.WONUM       |
+            | Work Order description | WORKORDER.DESCRIPTION |
+            | Site                   | WORKORDER.SITEID      |
+            | Status                 | WORKORDER.STATUS      |
+        
+        And I only see these columns in this order in the "Related Work Orders" table:
+            | column                  | attribute                |
+            | Work Order              |                          |
+            | Description             | WORKORDER.DESCRIPTION    |
+            | Class                   |                          |
+            | Status                  | WORKORDER.STATUS         |
+            | Relationship            | RELATEDRECORD.RELATETYPE |
+        
+        And I see the "Select Work Orders" button
+        
+        And I click the "New Row" button in the "Related Work Orders" table
+        
+        And I only see these fields in this order in the Details section in the "Related Work Orders" table details:
+            | field                       | attribute                       |
+            | Work Order                  | RELATEDRECORD.RELATEDRECWONUM   |
+            | Work Order description      | WORKORDER.DESCRIPTION           |
+            | Class                       | RELATEDRECORD.RELATEDRECWOCLASS |
+            | Asset                       | WORKORDER.ASSETNUM              |
+            | Asset description           | ASSET.DESCRIPTION               |
+            | Location                    | WORKORDER.LOCATION              |
+            | Location description        | LOCATIONS.DESCRIPTION           |
+            | Classification              | CLASSSTRUCTURE.HIERARCHYPATH    |
+            | Classification description  | CLASSSTRUCTURE.DESCRIPTION      |
+            | Status                      | WORKORDER.STATUS                |
+            | Relationship                | RELATEDRECORD.RELATETYPE        |
+        
+        And I only see these columns in this order in the "Related Tickets" table:
+            | column             | attribute                     |
+            | Related Record Key | RELATEDRECORD.RELATEDRECKEY   |
+            | Description        | TICKET.DESCRIPTION            |
+            | Class              | RELATEDRECORD.RELATEDRECCLASS |
+            | Status             | TICKET.STATUS                 |
+            | Relationship       | RELATEDRECORD.RELATETYPE      |
+        
+        And I see the "Select Tickets" button in the "Related Tickets" table
+        
+        And I click the "New Row" button in the "Related Tickets" table
+        
+        And I only see these fields in this order in the Details section in the "Related Tickets" table details:
+            | field                           | attribute                     |
+            | Related Record Key              | RELATEDRECORD.RELATEDRECKEY   |
+            | Related Record Key description  | TICKET.DESCRIPTION            |
+            | Class                           | RELATEDRECORD.RELATEDRECCLASS |
+            | Asset                           | TICKET.ASSETNUM               |
+            | Asset description               | ASSET.DESCRIPTION             |
+            | Location                        | TICKET.LOCATION               |
+            | Location description            | LOCATIONS.DESCRIPTION         |
+            | Classification                  | CLASSSTRUCTURE.HIERARCHYPATH  |
+            | Classification description      | CLASSSTRUCTURE.DESCRIPTION    |
+            | Status                          | TICKET.STATUS                 |
+            | Relationship                    | RELATEDRECORD.RELATETYPE      |
+        
+        And I logout
+    
+    
+    Scenario: Work Order Tracking - UI - Screen Layout - Actuals tab
+       
+       When I click the 'New Work Order' toolbar button
+        And I record the value in the 'Work Order' field as [WO]
+        And I click the 'Approve Work Order' toolbar button
+        And I click the OK button
+        And I select the Actuals tab  
+        
+        And I only see these fields in this order in the header section:
+            | field                   | attribute               |
+            | Work Order              | WORKORDER.WONUM         |
+            | Work Order description  | WORKORDER.DESCRIPTION   |
+            | Parent WO               | WORKORDER.PARENT        |
+            | Site                    | WORKORDER.SITEID        |
+            | Status                  | WORKORDER.STATUS        |
+        
+        And I see the 'Children of Work Order [WO]' table
+        
+        And I only see these columns in this order in the 'Tasks for Work Order [WO]' table:
+            | column              | attribute               |
+            | Sequence            | WOACTIVITY.WOSEQUENCE   |
+            | Task                | WOACTIVITY.TASKID       |
+            | Summary             | WOACTIVITY.DESCRIPTION  |
+            | Estimated Duration  | WOACTIVITY.ESTDUR       |
+            | Status              | WOACTIVITY.STATUS       |
+        And I see the 'New Row' button in the 'Tasks for Work Order [WO]' table
+        
+        And I see that the Labor tab appears first in its group
+        And I see that the Materials tab appears immediately to the right of the Labor tab
+        And I see that the Services tab appears immediately to the right of the Materials tab
+        And I see that the Tools tab appears last in its group
+        
+        And I only see these columns in this order in the Labor table:
+            | column              | attribute                   |
+            | Task                |                             |
+            | Labor               | LABTRANS.LABORCODE          |
+            | Name                | PERSON.DISPLAYNAME          |
+            | Approved            | LABTRANS.GENAPPRSERVRECEIPT |
+            | Start Date          |                             |
+            | Start Time          |                             |
+            | End Time            |                             |
+            | Regular Hours       | LABTRANS.REGULARHRS         |
+            | Rate                | LABTRANS.PAYRATE            |
+        And I see the 'Enter Time By Crew' button in the Labor table
+        And I see the 'Select Labor' button in the Labor table
+        And I see the 'Select Planned Labor' button in the Labor table
+        And I see the 'New Row' button in the Labor table
+        
+        And I select the Materials tab
+        And I only see these columns in this order in the Materials table:
+            | column              | attribute                   |
+            | Task                |                             |
+            | Item                | MATUSETRANS.ITEMNUM         |
+            | Description         | MATUSETRANS.DESCRIPTION     |
+            | Transaction Type    | MATUSETRANS.ISSUETYPE       |
+            | Storeroom           | MATUSETRANS.STORELOC        |
+            | Quantity            |                             |
+            | Bin                 | MATUSETRANS.BINNUM          |
+            
+        And I see the 'Select Materials' button in the Materials table
+        And I see the 'Select Reserved Items' button in the Materials table
+        And I see the 'Select Asset Spare Parts' button in the Materials table
+        And I see the 'New Row' button in the Materials table
+        And I click the 'New Row' button in the Materials table
+        
+        And I only see these fields in this order in the Details section in the Materials table details:
+            | field                 | attribute                     |
+            | Task                  | MATUSETRANS.ACTUALSTASKID     |
+            | Item                  | MATUSETRANS.ITEMNUM           |
+            | Item description      | MATUSETRANS.DESCRIPTION       |
+            | Line Type             | MATUSETRANS.LINETYPE          |
+            | Storeroom             | MATUSETRANS.STORELOC          |
+            | Site                  | MATUSETRANS.SITEID            |
+            | Quantity              | MATUSETRANS.POSITIVEQUANTITY  |
+            | Unit Cost             | MATUSETRANS.UNITCOST          |
+            | Line Cost             | MATUSETRANS.LINECOST          |
+            | Bin                   | MATUSETRANS.BINNUM            |
+            | Lot                   | MATUSETRANS.LOTNUM            |
+            | Expiration Date       | INVLOT.USEBY                  |
+            | Lot Type              | ITEM.LOTTYPE                  |
+            | Condition Code        | MATUSETRANS.CONDITIONCODE     |
+            | Rate Percentage       | MATUSETRANS.CONDRATE          |
+            | Condition Enabled     | ITEM.CONDITIONENABLED         |
+            | Stock Category        | ITEMORGINFO.CATEGORY          |
+            | Entered By            | MATUSETRANS.ENTERBY           |
+            | Actual Date           | MATUSETRANS.ACTUALDATE        |
+        And I only see these fields in this order in the 'Charge Information' section in the Materials table details:
+            | field                 | attribute                     |
+            | Requisition           | MATUSETRANS.MRNUM             |
+            | Requisition Line      | MATUSETRANS.MRLINENUM         |
+            | Location              | MATUSETRANS.LOCATION          |
+            | Location description  | LOCATIONS.DESCRIPTION         |
+            | Asset                 | MATUSETRANS.ASSETNUM          |
+            | Asset description     | ASSET.DESCRIPTION             |
+            | Rotating Asset        | MATUSETRANS.ROTASSETNUM       |
+            | GL Debit Account      | MATUSETRANS.GLDEBITACCT       |
+            | GL Credit Account     | MATUSETRANS.GLCREDITACCT      |
+            | Transaction Type      | MATUSETRANS.ISSUETYPE         |
+            | Outside               | MATUSETRANS.OUTSIDE           |
+            | Issued To             | MATUSETRANS.ISSUETO           |
+        
+        And I select the Services tab
+        And I only see these columns in this order in the Services table:
+            | column              | attribute                   |
+            | Task                |                             |
+            | Service             | SERVRECTRANS.ITEMNUM        |
+            | Description         | SERVRECTRANS.DESCRIPTION    |
+            | Quantity            | SERVRECTRANS.QUANTITY       |
+            | Unit Cost           | SERVRECTRANS.UNITCOST       |
+            | Loaded Cost         | SERVRECTRANS.LOADEDCOST     |
+        
+        And I select the Tools tab
+        And I only see these columns in this order in the Tools table:
+            | column              | attribute                   |
+            | Task                |                             |
+            | Tool                | TOOLTRANS.ITEMNUM           |
+            | Description         | TOOLITEM.DESCRIPTION        |
+            | Quantity            | TOOLTRANS.TOOLQTY           |
+            | Tool Hours          | TOOLTRANS.TOOLHRS           |
+            | Rate                | TOOLTRANS.TOOLRATE          |
+            | Line Cost           | TOOLTRANS.LINECOST          |
+            | Outside             | TOOLTRANS.OUTSIDE           |
+            | Location            | TOOLTRANS.LOCATION          |
+        And I see the 'Select Tools' button in the Tools table
+        And I see the 'Select Planned Tools' button in the Tools table
+        And I see the 'Select Issued Tools' button in the Tools table
+        And I see the 'New Row' button in the Tools table
+        And I click the 'New Row' button in the Tools table
+        
+        And I only see these fields in this order in the Details section in the Tools table details:
+            | field                       | attribute                     |
+            | Task                        | TOOLTRANS.ACTUALSTASKID       |
+            | Tool                        | TOOLTRANS.ITEMNUM             |
+            | Tool description            | TOOLITEM.DESCRIPTION          |
+            | Outside                     | TOOLTRANS.OUTSIDE             |
+            | Location                    | TOOLTRANS.LOCATION            |
+            | Location description        | LOCATIONS.DESCRIPTION         |
+            | Asset                       | TOOLTRANS.ASSETNUM            |
+            | Asset description           | ASSET.DESCRIPTION             |
+            | Rotating Asset              | TOOLTRANS.ROTASSETNUM         |
+            | Quantity                    | TOOLTRANS.TOOLQTY             |
+            | Tool Hours                  | TOOLTRANS.TOOLHRS             |
+            | Rate                        | TOOLTRANS.TOOLRATE            |
+            | Line Cost                   | TOOLTRANS.LINECOST            |
+            | GL Debit Account            | TOOLTRANS.GLDEBITACCT         |
+            | GL Credit Account           | TOOLTRANS.GLCREDITACCT        |
+            | Entered By                  | TOOLTRANS.ENTERBY             |
+            | Entered Date                | TOOLTRANS.ENTERDATE           |
+        
+        And I logout
+    
+    
+    Scenario: Work Order Tracking - UI - Screen Layout - Safety Plan tab
+       
+       When I click the 'New Work Order' toolbar button
+        And I select the 'Safety Plan' tab   
+        
+        And I only see these fields in this order in the header section:
+            | field                   | attribute                   |
+            | Work Order              | WORKORDER.WONUM             |
+            | Work Order description  | WORKORDER.DESCRIPTION       |
+            | Site                    | WORKORDER.SITEID            |
+            | Status                  | WORKORDER.STATUS            |
+        
+        And I see that the 'Hazards and Precautions' tab appears first in its group
+        And I see that the 'Hazardous Materials' tab appears immediately to the right of the 'Hazards and Precautions' tab
+        And I see that the 'Lock Out/Tag Out' tab appears last in its group
+        
+        And I see the Hazards table
+        And I only see these columns in this order in the Hazards table:
+            | column              | attribute                   |
+            | Hazard              | WOSAFETYLINK.HAZARDID       |
+            | Hazard Description  |                             |
+            | Hazard Type         |                             |
+            | Related Location    | WOSAFETYLINK.LOCATION       |
+            | Related Asset       | WOSAFETYLINK.ASSETNUM       |
+        And I see the 'New Row' button in the Hazards table
+        And I see the Precautions table
+        And I only see these columns in this order in the Precautions table:
+            | column              | attribute                   |
+            | Precaution          | WOHAZARDPREC.PRECAUTIONID   |
+            | Description         |                             |
+        And I see the 'New Row' button in the Precautions table
+        
+        And I select the 'Hazardous Materials' tab
+        And I only see these columns in this order in the 'Hazardous Materials' table:
+            | column              | attribute                   |
+            | Hazard              | WOSAFETYLINK.HAZARDID       |
+            | Hazard Description  |                             |
+            | Related Location    | WOSAFETYLINK.LOCATION       |
+            | Related Asset       | WOSAFETYLINK.ASSETNUM       |
+        And I see the 'New Row' button in the 'Hazardous Materials' table
+        
+        And I select the 'Lock Out/Tag Out' tab
+        And I see the Hazards table
+        And I see the 'Tag Outs' table
+        And I see the 'Lock Out Tasks' table
+        And I only see these columns in this order in the Hazards table:
+            | column              | attribute                   |
+            | Hazard              | WOSAFETYLINK.HAZARDID       |
+            | Hazard Description  |                             |
+            | Related Location    | WOSAFETYLINK.LOCATION       |
+            | Related Asset       | WOSAFETYLINK.ASSETNUM       |
+        And I only see these columns in this order in the 'Tag Outs' table:
+            | column              | attribute                   |
+            | Apply Sequence      | WOSAFETYLINK.APPLYSEQ       |
+            | Tag Out             | WOSAFETYLINK.TAGOUTID       |
+            | Description         |                             |
+            | Location            |                             |
+            | Asset               |                             |
+            | Required State      |                             |
+        And I see the 'New Row' button in the 'Tag Outs' table
+        And I only see these columns in this order in the 'Lock Out Tasks' table:
+            | column              | attribute                   |
+            | Location            |                             |
+            | Asset               |                             |
+            | Device Description  |                             |
+            | Required State      |                             |
+            | Apply Sequence      | WOTAGLOCK.APPLYSEQ          |
+        And I see the 'New Row' button in the 'Lock Out Tasks' table
+        And I logout
+    
+    
+    Scenario: Work Order Tracking - UI - Screen Layout - Log tab
+      
+       When I click the 'New Work Order' toolbar button
+        And I select the Log tab
+        
+        And I only see these fields in this order in the header section:
+            | field                   | attribute                   |
+            | Work Order              | WORKORDER.WONUM             |
+            | Work Order description  | WORKORDER.DESCRIPTION       |
+            | Site                    | WORKORDER.SITEID            |
+            | Status                  | WORKORDER.STATUS            |
+        
+        And I see that the 'Work Log' tab appears first in its group
+        And I see that the 'Communication Log' tab appears last in its group
+        
+        And I see the 'Work Logs' table
+        And I only see these columns in this order in the 'Work Logs' table:
+            | column              | attribute                   |
+            | Record              | WORKLOG.RECORDKEY           |
+            | Class               | WORKLOG.CLASS               |
+            | Created By          | WORKLOG.CREATEBY            |
+            | Date                | WORKLOG.CREATEDATE          |
+            | Type                | WORKLOG.LOGTYPE             |
+            | Summary             | WORKLOG.DESCRIPTION         |
+            | Viewable            | WORKLOG.CLIENTVIEWABLE      |
+        
+        And I select the 'Communication Log' tab
+        And I only see these columns in this order in the 'Communication Logs' table:
+            | column                  | attribute                   |
+            | Originating application |                             |
+            | ID                      |                             |
+            | Created By              | COMMLOG.CREATEBY            |
+            | To                      | COMMLOG.SENDTO              |
+            | Date                    | COMMLOG.CREATEDATE          |
+            | Subject                 | COMMLOG.SUBJECT             |
+        And I logout
+        
+    
+    # following steps are specific to Maximo instances with Calibration license
+    # Scenario: Work Order Tracking - UI - Screen Layout - Data Sheet tab
+      
+    # When I select the 'Data Sheet' tab
+      
+    #   And I only see these fields in this order in the header section:
+    #         | field               | attribute                   |
+    #         | Work Order          | WORKORDER.WONUM             |
+    #         | Description         | WORKORDER.DESCRIPTION       |
+    #         | Parent WO           | WORKORDER.PARENT            |
+    #         | Site                | WORKORDER.SITEID            |
+    #         | Status              | WORKORDER.STATUS            |
+            
+    #   And I only see these columns in this order in the 'Associated Data Sheets' table:
+    #         | column                  | attribute                   | 
+    #         | Data Sheet              | PLUSCWODS.DSPLANNUM         |
+    #         | Description             | PLUSDSPLAN.DESCRIPTION      |
+    #         | Asset                   | PLUSCWODS.ASSETNUM          |
+    #         | Location                | PLUSCWODS.LOCATION          |
+    #         | Tag Location            | PLUSCWODS.TAGLOCATION       |
+    #         | As Found Status         | PLUSCWODS.ASFOUNDCALSTATUS  |
+    #         | As Left Status          | PLUSCWODS.ASLEFTCALSTATUS   |
+    #         | Required                | PLUSCWODS.REQUIRED          |
+    #   And I see the 'New Row' button in the 'Associated Data Sheets' table
+      
+    #   And I only see these columns in this order in the 'Asset Functions' table:
+    #         | column                  | attribute                       | 
+    #         | Asset Function          | PLUSCWODSINSTR.ASSETFUNCTION    |
+    #         | Description             | PLUSCWODSINSTR.DESCRIPTION      |
+    #         | Type                    | PLUSCWODSINSTR.PLANTYPE         |
+    #         | Calibration Points      | PLUSCWODSINSTR.CALPOINT         |
+    #         | Function Checks         | PLUSCWODSINSTR.CALFUNCTION      |
+    #         | Dynamic Checks          | PLUSCWODSINSTR.CALDYNAMIC       |
+    #         | Input Units             | PLUSCWODSINSTR.INSTRCALRANGEEU  |
+    #         | Output Units            | PLUSCWODSINSTR.INSTROUTRANGEEU  |
+    #         | No Adj Made             | PLUSCWODSINSTR.NOADJMADE        |
+    #         | As Found Status         | PLUSCWODSINSTR.ASFOUNDCALSTATUS |
+    #         | As Left Status          | PLUSCWODSINSTR.ASLEFTCALSTATUS  |
+    #         | As Found Errors         | PLUSCWODSINSTR.ASFOUNDERROR     |
+    #         | As Left Errors          | PLUSCWODSINSTR.ASLEFTERROR      |
+      
+    #   And I see that the 'Calibration Points' tab appears first in its group
+    #   And I only see these columns in this order in the 'Calibration Points' table:
+    #         | column                  | attribute                       |
+    #         | Asset Function          |                                 |
+    #         | Calibration Point       | PLUSCWODSPOINT.POINT            |
+    #         | Nominal Input           |                                 |
+    #         | Desired Output          |                                 |
+    #         | Pv As Left Input        | PLUSCWODSPOINT.PVASLTINPUT      |
+    #         | Pv As Left Output       | PLUSCWODSPOINT.PVASLTOUTPUT     |
+    #         | As Found Input          |                                 |
+    #         | As Found Output         |                                 |
+    #         | As Left Input           |                                 |
+    #         | As Left Output          |                                 |
+    #         | Set Point               |                                 |
+    #         | Pv As Left Set Point    | PLUSCWODSPOINT.PVASLTSETPNT     |
+    #         | As Found Set Point      |                                 |
+    #         | As Left Set Point       |                                 |
+    #         | As Found Errors         | PLUSCWODSPOINT.ASFOUNDERROR     |
+    #         | As Left Errors          | PLUSCWODSPOINT.ASLEFTERROR      |
+    #   And I see the 'New Row' button in the 'Calibration Points' table
+      
+    #   And I see that the 'Function Checks' tab appears immediately to the right of the 'Calibration Points' tab
+    #   And I select the 'Function Checks' tab
+    #   And I only see these columns in this order in the 'Function Checks' table:
+    #         | column                  | attribute                       |
+    #         | Asset Function          |                                 |
+    #         | Function Check Point    | PLUSCWODSPOINT.POINT            |
+    #         | Description             | PLUSCWODSPOINT.POINTDESCRIPTION |
+    #         | As Found Pass           | PLUSCWODSPOINT.ASFOUNDPASS      |
+    #         | As Found Fail           | PLUSCWODSPOINT.ASFOUNDFAIL      |
+    #         | As Left Pass            | PLUSCWODSPOINT.ASLEFTPASS       |
+    #         | As Left Fail            | PLUSCWODSPOINT.ASLEFTFAIL       |
+    #   And I see the 'New Row' button in the 'Function Checks' table
+      
+    #   And I see that the 'Dynamic Checks' tab appears immediately to the right of the 'Function Checks' tab
+    #   And I select the 'Dynamic Checks' tab
+    #   And I only see these columns in this order in the 'Function Checks' table:
+    #         | column                  | attribute                       |
+    #         | Asset Function          |                                 |
+    #         | Dynamic Check Point     | PLUSCWODSPOINT.POINT            |
+    #         | Description             | PLUSCWODSPOINT.POINTDESCRIPTION |
+    #         | Completed               |                                 |
+    #         | As Found Value          |                                 |
+    #         | As Found Unit           | PLUSCWODSPOINT.ASFOUNDUNIT      |
+    #         | As Left Value           |                                 |
+    #         | As Left Unit            | PLUSCWODSPOINT.ASLEFTUNIT       |
+    #   And I see the 'New Row' button in the 'Dynamic Checks' table
+    #   And I logout
+    
+    # end license-specific steps
+    
+    
+    Scenario: Work Order Tracking - UI - Screen Layout - Failure Reporting tab
+      
+       When I click the 'New Work Order' toolbar button
+        And I select the 'Failure Reporting' tab
+        
+        And I only see these fields in this order in the header section:
+            | field                   | attribute                   |
+            | Work Order              | WORKORDER.WONUM             |
+            | Work Order description  | WORKORDER.DESCRIPTION       |
+            | Site                    | WORKORDER.SITEID            |
+            | Status                  | WORKORDER.STATUS            |    
+        And I only see these fields in this order in the 'Failure Details' section:
+            | field                     | attribute                   |
+            | Failure Class             | WORKORDER.FAILURECODE       |
+            | Failure Class description | FAILURECODE.DESCRIPTION     |
+            | Failed Date               | WORKORDER.FAILDATE          |
+            | Remarks                   | WORKORDER.REMARKDESC        |
+            | Remark Date               | WORKORDER.REMARKENTERDATE   |
+        
+        And I see the 'Failure Codes' table
+        And I logout
+    
+    
+    Scenario: Work Order Tracking - UI - Screen Layout - Specifications tab
+      
+       When I click the 'New Work Order' toolbar button
+        And I select the Specifications tab
+        
+        And I only see these fields in this order in the header section:
+            | field                   | attribute                         |
+            | Work Order              | WORKORDER.WONUM                   |
+            | Work Order description  | WORKORDER.DESCRIPTION             |
+            | Classification          | CLASSSTRUCTURE.HIERARCHYPATH      |
+            | Class Description       | CLASSSTRUCTURE.DESCRIPTION_CLASS  |
+            | Site                    | WORKORDER.SITEID                  |
+            | Status                  | WORKORDER.STATUS                  |
+        
+        And I see the Specifications table
+        And I only see these columns in this order in the Specifications table:
+            | column              | attribute                   |
+            | Attribute           | WORKORDERSPEC.ASSETATTRID   |
+            | Description         | ASSETATTRIBUTE.DESCRIPTION  |
+            | Data Type           | ASSETATTRIBUTE.DATATYPE     |
+            | Alphanumeric Value  | WORKORDERSPEC.ALNVALUE      |
+            | Numeric Value       | WORKORDERSPEC.NUMVALUE      |
+            | Unit of Measure     | WORKORDERSPEC.MEASUREUNITID |
+            | Table Value         | WORKORDERSPEC.TABLEVALUE    |
+        And I see the 'New Row' button in the Specifications table
+        
+        And I logout
+    
+    Scenario: Work Order Tracking - UI - Screen Layout - Service Address tab
+      
+       When I click the 'New Work Order' toolbar button
+        And I select the 'Service Address' tab
+        
+        And I only see these fields in this order in the header section:
+            | field                   | attribute                   |
+            | Work Order              | WORKORDER.WONUM             |
+            | Work Order description  | WORKORDER.DESCRIPTION       |
+            | Organization            | WORKORDER.ORGID             |
+            | Site                    | WORKORDER.SITEID            |
+        
+        And I only see these fields in this order in the 'Address Information' section:
+            | field                       | attribute                         |
+            | Service Address             | WOSERVICEADDRESS.SADDRESSCODE     |
+            | Service Address description | WOSERVICEADDRESS.DESCRIPTION      |
+            | Formatted Address           | WOSERVICEADDRESS.FORMATTEDADDRESS |
+            | Street Address              | WOSERVICEADDRESS.STREETADDRESS    |
+            | Address Line 2              | WOSERVICEADDRESS.ADDRESSLINE2     |
+            | Address Line 3              | WOSERVICEADDRESS.ADDRESSLINE3     |
+            | City                        | WOSERVICEADDRESS.CITY             |
+            | Region/District             | WOSERVICEADDRESS.REGIONDISTRICT   |
+            | County                      | WOSERVICEADDRESS.COUNTY           |
+            | State/Province              | WOSERVICEADDRESS.STATEPROVINCE    |
+            | State/Province description  | ALNDOMAIN.DESCRIPTION             |
+            | Zip/Postal Code             | WOSERVICEADDRESS.POSTALCODE       |
+            | Country                     | WOSERVICEADDRESS.COUNTRY          |
+            | Country description         | ALNDOMAIN.DESCRIPTION             |
+            | GEO Code                    | WOSERVICEADDRESS.GEOCODE          |
+            | Time Zone                   | WOSERVICEADDRESS.TIMEZONE         |
+            | Time Zone description       | SYNONYMDOMAIN.DESCRIPTION         |
+            | Latitude(Y)                 | WOSERVICEADDRESS.LATITUDEY        |
+            | Longitude(X)                | WOSERVICEADDRESS.LONGITUDEX       |
+            | Reference Point             | WOSERVICEADDRESS.REFERENCEPOINT   |
+            | Directions                  | WOSERVICEADDRESS.DIRECTIONS       |
+        
+        And I logout
+              
+    

@@ -1,0 +1,45 @@
+# template
+Feature: Locations - Records - History
+  
+  The asset history of a location shall be viewed.
+  
+  Scenario: Locations - Records - History - View Asset History
+    
+    Maximo users shall be able to view the history of assets that have been installed at a location.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'OPERATING' in the Type field
+      And I enter 'Test Location' in the description field of the Location field
+      And I save the record
+      And I see the flash message 'Record has been saved'
+     When I go to the Assets / Assets application
+      And I click the 'New Asset' toolbar button
+      And I record a random 12 digit number as [Asset]
+      And I enter these values in the following fields:
+        | field     | value         |
+        | Asset     | [Asset]       |
+        | Type      | PRODUCTION    |
+        | Location  | [Location]    |        
+      And I enter 'Test Asset' in the description field of the Asset field
+      And I successfully save the record
+      And I select action 'Move/Modify Assets'
+      And I enter '' in the 'To Location' field on the current row in the Assets table
+      And I click the OK button
+      And I see the 'Asset [Asset] in site BEDFORD was moved successfully' system message
+      And I click the OK button
+     Then I go to the Assets / Locations application
+      And I enter '=[Location]' in the Location filter in the Locations table
+      And I initiate search in the Locations table
+      And I choose the 1st row in the Locations table
+      And I select the History tab
+      And I see these values in the following fields on the current row in the Assets table:
+        | field         | value      |
+        | Asset         | [Asset]    |
+        | Description   | Test Asset |
+        | From Location | [Location] |
+        | To Location   |            |
+      And I logout

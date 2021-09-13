@@ -1,0 +1,127 @@
+#template
+Feature: Work Order Tracking - Actions - Create Job Plan from Work Plan
+  
+  Maximo users shall be able to create job plans from work orders.
+  
+  Scenario: Work Order Tracking - Actions - Create Job Plan from Work Plan
+    
+    # create new WO and populate fields that will carryover to JP
+    Given I login to Maximo as Administrator
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [WO]
+      And I enter 'Creating Job Plan from Work Plan' in the description field of the 'Work Order' field
+      And I activate the detail menu for the 'Location' field
+      And I click menu item 'Select Value'
+      And I record the value in the Location field on the first row in the unnamed table as [Location]
+      And I choose the first row in the unnamed table
+      And I see the value '[Location]' in the Location field in the header section
+      And I activate the detail menu for the 'Work Type' field
+      And I enter '=PM' in the Type filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I record '3' as [Priority]
+      And I enter '[Priority]' in the Priority field
+      And I record '2:00' as [Duration]
+      And I enter '[Duration]' in the Duration field in the 'Scheduling Information' section
+      And I activate the detail menu for the Supervisor field in the Responsibility section
+      And I click menu item 'Select Value'
+      And I record the value in the Person field on the first row in the unnamed table as [Supervisor]
+      And I choose the first row in the unnamed table
+      And I select the Plans tab
+      And I click the 'New Row' button in the 'Tasks for Work Order [WO]' table
+      And I see the value '10' in the Task field in the 'Tasks for Work Order [WO]' table details
+      And I enter 'test task 1' in the description field of the Task field in the 'Tasks for Work Order [WO]' table details
+      And I click the 'New Row' button in the 'Tasks for Work Order [WO]' table
+      And I see the value '20' in the Task field in the 'Tasks for Work Order [WO]' table details
+      And I enter 'test task 2' in the description field of the Task field in the 'Tasks for Work Order [WO]' table details
+      And I click the 'New Row' button in the Labor table
+      And I activate the detail menu for the Craft field in the Labor table details
+      And I click menu item 'Select Value'
+      And I record the value in the Craft field on the first row in the unnamed table as [Craft]
+      And I choose the first row in the unnamed table
+      And I see the value '[Craft]' in the Craft field in the Labor table details
+      And I enter '2' in the Quantity field in the Labor table details
+      And I enter '2' in the 'Regular Hours' field in the Labor table details
+      And I select the Materials tab
+      And I click the 'New Row' button in the Materials table
+      And I enter '10' in the Task field in the Materials table details
+      And I activate the detail menu for the Item field in the Materials table details
+      And I click menu item 'Select Value'
+      And I record the value in the Item field on the first row in the unnamed table as [Material]
+      And I choose the first row in the unnamed table
+      And I see the value '[Material]' in the Item field in the Materials table details 
+      And I activate the detail menu for the Storeroom field in the Materials table details
+      And I click menu item 'Select Value'
+      And I record the value in the Storeroom field on the first row in the unnamed table as [Storeroom]
+      And I choose the first row in the unnamed table
+      And I select the Services tab
+      And I click the 'New Row' button in the Services table
+      And I select 'Standard Service' in the dropdown list for the 'Line Type' field in the Services table details
+      And I activate the detail menu for the Service field in the Services table details
+      And I click menu item 'Select Value'
+      And I record the value in the 'Service Item' field on the first row in the unnamed table as [Service]
+      And I choose the first row in the unnamed table
+      And I see the value '[Service]' in the Service field in the Services table details
+      And I enter '2' in the Quantity field in the Services table details
+      And I select the Tools tab
+      And I click the 'New Row' button in the Tools table
+      And I enter '20' in the Task field in the Tools table details
+      And I activate the detail menu for the Tool field in the Tools table details
+      And I click menu item 'Select Value'
+      And I record the value in the Tool field on the first row in the unnamed table as [Tool]
+      And I choose the first row in the unnamed table
+      And I see the value '[Tool]' in the Tool field in the Tools table details 
+      And I select the 'Work Order' tab
+    
+     When I select action 'Create Job Plan from Work Plan'
+      And I see the 'Create Job Plan from Work Plan' dialog
+      And I see the value 'Creating Job Plan from Work Plan' in the description field of the 'Job Plan' field
+      And I click the Autonumber button
+      And I see a value in the 'Job Plan' field
+      And I record the value in the 'Job Plan' field as [JP]
+      And I click the OK button
+    
+     Then I see the flash message 'Job Plan [JP] created'
+      And I go to the Planning / Job Plans application
+      And I enter '=[JP]' in the 'Job Plan' filter in the 'Job Plans' table
+      And I initiate search in the 'Job Plans' table
+      And I choose the first row in the 'Job Plans' table
+      And I see the value '[JP]' in the 'Job Plan' field
+      # verify fields on main tab match WO fields
+      And I see these values in the following fields:
+          | field           | value             |
+          | Duration        | [Duration]        |
+          | WO Priority     | [Priority]        |
+          | Supervisor      | [Supervisor]      |
+      # verify task
+      And I see these values in the following fields on the current row in the 'Job Plan Tasks' table:
+          | field           | value             |
+          | Task            | 10                |
+          | Description     | test task 1       |
+      # verify planned labor/matls/services/tools matches WO entries
+      And I see these values in the following fields on the current row in the 'Planned Labor' table:
+          | field           | value             |
+          | Task            |                   | 
+          | Craft           | [Craft]           |
+          | Quantity        | 2                 | 
+          | Hours           | 2:00              |
+      And I select the Materials tab
+      And I see these values in the following fields on the current row in the 'Planned Materials' table:
+          | field           | value             |
+          | Task            | 10                | 
+          | Item            | [Material]        |
+          | Storeroom       | [Storeroom]       |
+      And I select the Services tab
+      And I see these values in the following fields on the current row in the 'Planned Services' table:
+          | field           | value             |
+          | Task            |                   | 
+          | Service Item    | [Service]         |
+          | Quantity        | 2.00              |
+      And I select the Tools tab
+      And I see these values in the following fields on the current row in the 'Planned Tools' table:
+          | field           | value             |
+          | Task            | 20                | 
+          | Tool            | [Tool]            |
+      
+      And I logout

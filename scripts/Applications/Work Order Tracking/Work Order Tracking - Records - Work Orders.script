@@ -1,0 +1,91 @@
+#template
+Feature: Work Order Tracking - Records - Work Orders
+  
+  Maximo users shall be able to create, update, and search work orders.
+  
+  Background:
+    
+    Given I login to Maximo as Administrator
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [WO]
+      And I activate the detail menu for the 'Location' field
+      And I click menu item 'Select Value'
+      And I record the value in the Location field on the first row in the unnamed table as [Location]
+      And I choose the first row in the unnamed table
+      And I see the value '[Location]' in the Location field in the header section
+      And I activate the detail menu for the 'Work Type' field
+      And I enter '=PM' in the Type filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      
+  Scenario: Work Order Tracking - Records - Work Orders - Create Work Order
+    
+    Maximo users shall be able to create a work order.
+    
+     When I enter 'Creating a Work Order' in the description field of the 'Work Order' field
+    
+     Then I successfully save the record
+      And I logout
+  
+  
+  Scenario: Work Order Tracking - Records - Work Orders - Search for Work Order
+    
+    Maximo users shall be able to navigate to a work order from the List View tab.
+    
+     When I enter 'Searching Work Orders' in the description field of the 'Work Order' field
+      And I successfully save the record
+      And I go to the Work Orders / Work Order Tracking application
+      And I enter '=[WO]' in the 'Work Order' filter in the 'Work Orders' table
+      And I initiate search in the 'Work Orders' table
+    
+     Then I see the value '[WO]' in the 'Work Order' field on the first row in the 'Work Orders' table
+      And I choose the first row in the 'Work Orders' table
+      And I see the value [WO] in the 'Work Order' field
+    
+     When I select the 'List View' tab
+      And I enter '' in the 'Work Order' filter in the 'Work Orders' table
+      And I enter 'Searching%' in the Description filter in the 'Work Orders' table
+      And I initiate search in the 'Work Orders' table
+    
+     Then I choose the first row in the 'Work Orders' table
+      And I see the value 'Searching Work Orders' in the description field of the 'Work Order' field
+      And I logout
+  
+  
+  Scenario: Work Order Tracking - Records - Work Orders - Advanced Search for Work Order
+    
+    Maximo users shall be able to navigate to a work order using the Advanced Search dialog.
+    
+     When I enter 'Advanced Search Work Orders' in the description field of the 'Work Order' field
+      And I enter '4' in the Priority field
+      And I successfully save the record
+      And I go to the Work Orders / Work Order Tracking application
+      And I click menu bar button 'Advanced Search'
+      And I enter '[WO]' in the 'Work Order' field
+      And I click the Find button
+     
+     Then I see the value '[WO]' in the 'Work Order' field
+      And I logout
+  
+  
+  Scenario: Work Order Tracking - Records - Work Orders - Update Work Order
+    
+    Maximo users shall be able to update fields on a work order in an appropriate status.
+    
+     When I enter 'Updating a Work Order' in the description field of the 'Work Order' field
+      And I successfully save the record
+      And I go to the Work Orders / Work Order Tracking application
+      And I enter '=[WO]' in the 'Work Order' filter in the 'Work Orders' table
+      And I initiate search in the 'Work Orders' table
+      And I choose the first row in the 'Work Orders' table
+      And I see the value '[WO]' in the 'Work Order' field
+      And I activate the detail menu for the Location field
+      And I click menu item 'Select Value'
+      And I record the value in the Location field on the second row in the unnamed table as [NewLoc]
+      And I choose the second row in the unnamed table
+      And I see the 'different GL account' system message
+      And I click the Yes button
+      And I see the value '[NewLoc]' in the Location field
+      And I do not see an error indicator next to the Location field
+      And I logout

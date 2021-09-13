@@ -1,0 +1,58 @@
+#template
+Feature: Preventive Maintenance - Actions - Delete PM
+  
+  Maximo users shall be able to delete PM records, provided no open work orders that reference the PM exist.
+  
+  Scenario: Preventive Maintenance - Actions - Delete PM
+    
+    Given I login to Maximo as Administrator
+      And I go to the Preventive Maintenance / Preventive Maintenance application
+      And I click the 'New PM' toolbar button
+      And I record a random 8 digit number as [PM]
+      And I enter '[PM]' in the PM field
+      And I enter 'Delete PM' in the description field of the PM field
+      And I activate the detail menu for the Location field in the Details section
+      And I click menu item 'Select Value'
+      And I choose the first row in the unnamed table
+      And I select action 'Change Status'
+      And I select 'Active' in the dropdown list for the 'New Status' field
+      And I click the OK button
+    
+     When I select action 'Generate Work Orders'
+      And I uncheck the 'Use Frequency Criteria' checkbox
+      And I see that the 'Run Work Order Generation in the Background' checkbox is unchecked
+      And I see an empty value in the 'Notification E-mail for Work Order Generation' field
+      And I click the OK button
+     Then I see the 'PM [PM] created work order' system message
+      And I click the OK button
+      
+     When I select action 'Delete PM'
+     Then I see the 'Cannot delete a PM referenced on an open work order' system message
+      And I click the OK button
+      And I go to the Work Orders / Work Order Tracking application
+      And I click menu bar button 'Advanced Search'
+      And I enter '[PM]' in the PM field
+      And I click the Find button
+      And I see the value '[PM]' in the PM field in the 'Job Details' section
+      And I see the value 'WSCH' in the Status field
+      And I select action 'Change Status'
+      And I select 'Canceled' in the dropdown list for the 'New Status' field
+      And I see that the 'Change work order status in back ground' checkbox is unchecked
+      And I see an empty value in the 'Notification E-mail for Work Order Change Status' field
+      And I click the OK button
+      And I see the 'Do you want to reinstate the preventive maintenance record while you are canceling the PM work order' system message
+      And I click the Yes button
+     Then I see the value 'CAN' in the Status field
+    
+     When I go to the Preventive Maintenance / Preventive Maintenance application
+      And I enter '=[PM]' in the PM filter in the PMs table
+      And I initiate search in the PMs table
+      And I choose the first row in the PMs table
+      And I select action 'Delete PM'
+      And I see the 'Are you sure you want to delete this record' system message
+      And I click the Yes button
+     
+     Then I go to the Preventive Maintenance / Preventive Maintenance application
+      And I enter '=[PM]' in the PM filter in the PMs table
+      And I see 0 rows in the PMs table
+      And I logout

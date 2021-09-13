@@ -1,0 +1,29 @@
+#template
+Feature: Work Order Tracking - Actions - Assign to New Parent
+  
+  Maximo users shall be able to assign work orders to a new parent work order via the Select Action menu.
+  
+  Scenario: Work Order Tracking - Actions - Assign to New Parent
+  
+    Given I login to Maximo as Administrator
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [ParentWO]
+      And I enter 'Assign to New Parent' in the description field of the 'Work Order' field
+      And I successfully save the record
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [ChildWO]
+      And I enter 'Assign to New Parent' in the description field of the 'Work Order' field
+      And I see an empty value in the 'Parent WO' field
+      And I successfully save the record
+    
+     When I select action 'Assign to New Parent'
+      And I see the 'Assign To New Parent' dialog
+      And I enter '[ParentWO]' in the 'Work Order' filter in the 'Work Orders' table
+      And I initiate search in the 'Work Orders' table
+      And I see the value '[ParentWO]' in the 'Work Order' field on the first row in the 'Work Orders' table
+      And I choose the first row in the 'Work Orders' table
+      
+     Then I see the flash message 'Work Order [ChildWO] has been assigned a new parent [ParentWO]'
+      And I see the value '[ParentWO]' in the 'Parent WO' field
+      And I logout

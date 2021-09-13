@@ -1,0 +1,141 @@
+#template
+Feature: Work Order Tracking - Actions - Enter Meter Readings
+  
+  Maximo users shall be able to enter meter readings for a location or asset meter on a work order.
+  
+  Scenario: Work Order Tracking - Actions - Enter Meter Readings - Enter Location Meter Readings
+    
+    Given I login to Maximo as Administrator
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [WO]
+      And I enter 'Enter Meter Readings' in the description field of the 'Work Order' field
+      And I activate the detail menu for the 'Location' field
+      And I click menu item 'Go To Locations'
+      And I expand the menu for the menu bar button 'Advanced Search'
+      And I click menu item 'Where Clause'
+    # query assumes that at least one location with a meter exists 
+      And I enter the following value in the 'Current Query' field
+      """
+      exists (select 1 from locationmeter where 
+      locationmeter.metername is not null and 
+      locationmeter.location = locations.location)
+      """
+      And I click the Find button
+      And I choose the first row in the Locations table
+      And I record the value in the Location field as [MeterLocation]
+      And I select the Meters tab
+      And I record the value in the Meter field on the first row in the Meters table as [Meter]
+      And I make sure that the table details are visible for the Meters table
+      And I record the value in the 'Last Reading' field in the Meters table details as [LastReading]
+      And I click the 'Return With Value' titlebar button
+      
+     When I select action 'Enter Meter Readings'
+      And I see the 'Enter Meter Readings' dialog
+      And I select the 'Location Meter Readings' tab
+      And I enter '[Meter]' in the Meter filter in the 'Location Meter Readings' table
+      And I initiate search in the 'Location Meter Readings' table
+      And I see these values in the following fields on the current row in the 'Location Meter Readings' table:
+          | field               | value                   |
+          | Meter               | [Meter]                 |
+          | Last Reading        | [LastReading]           |
+      And I uncheck the 'Delta' checkbox in the 'Location Meter Readings' table details
+      And I add the numeric value '10' to the numeric value '[LastReading]' and record the result as [NewReading]
+      And I enter '[NewReading]' in the 'New Reading' field on the current row in the 'Location Meter Readings' table
+      And I click the OK button
+      And I see the flash message 'Meter readings have been saved'
+    
+    # re-open meter reading dialog, verify new reading saved
+     Then I select action 'Enter Meter Readings'
+      And I see the 'Enter Meter Readings' dialog
+      And I select the 'Location Meter Readings' tab
+      And I enter '[Meter]' in the Meter filter in the 'Location Meter Readings' table
+      And I initiate search in the 'Location Meter Readings' table
+      And I see the value '[Meter]' in the Meter field on the current row in the 'Location Meter Readings' table
+      And I make sure that the table details are visible for the 'Location Meter Readings' table
+    # if a numerical value is greater than 999 Maximo adds commas - compare numerical values of the fields instead of displayed values
+      And I record the value in the 'Last Reading' field in the 'Location Meter Readings' table details as [LastReadingFormatted]
+      And I see that the numeric value '[NewReading]' is equal to the numeric value '[LastReadingFormatted]'
+      And I click the Cancel button
+    # verify in Locations app
+      And I go to the Assets / Locations application
+      And I enter '=[MeterLocation]' in the Location filter in the Locations table
+      And I initiate search in the Locations table
+      And I choose the first row in the Locations table
+      And I select the Meters tab
+      And I enter '[Meter]' in the Meter filter in the Meters table
+      And I initiate search in the Meters table
+      And I make sure that the table details are visible for the Meters table
+    # if a numerical value is greater than 999 Maximo adds commas - compare numerical values of the fields instead of displayed values
+      And I record the value in the 'Last Reading' field in the Meters table details as [LastReadingFormatted]
+      And I see that the numeric value '[NewReading]' is equal to the numeric value '[LastReadingFormatted]'
+      And I logout
+    
+    
+  Scenario: Work Order Tracking - Actions - Enter Meter Readings - Enter Asset Meter Readings
+    
+    Given I login to Maximo as Administrator
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [WO]
+      And I enter 'Enter Meter Readings' in the description field of the 'Work Order' field
+      And I activate the detail menu for the 'Asset' field
+      And I click menu item 'Go To Assets'
+      And I expand the menu for the menu bar button 'Advanced Search'
+      And I click menu item 'Where Clause'
+    # query assumes that at least one asset with a meter exists 
+      And I enter the following value in the 'Current Query' field
+      """
+      exists (select 1 from assetmeter where 
+      assetmeter.metername is not null and 
+      assetmeter.assetnum = asset.assetnum)
+      """
+      And I click the Find button
+      And I choose the first row in the Assets table
+      And I record the value in the Asset field as [MeterAsset]
+      And I select the Meters tab
+      And I record the value in the Meter field on the first row in the Meters table as [Meter]
+      And I make sure that the table details are visible for the Meters table
+      And I record the value in the 'Last Reading' field in the Meters table details as [LastReading]
+      And I click the 'Return With Value' titlebar button
+      
+     When I select action 'Enter Meter Readings'
+      And I see the 'Enter Meter Readings' dialog
+      And I select the 'Asset Meter Readings' tab
+      And I enter '[Meter]' in the Meter filter in the 'Asset Meter Readings' table
+      And I initiate search in the 'Asset Meter Readings' table
+      And I see these values in the following fields on the current row in the 'Asset Meter Readings' table:
+          | field               | value                   |
+          | Meter               | [Meter]                 |
+          | Last Reading        | [LastReading]           |
+      And I uncheck the 'Delta' checkbox in the 'Asset Meter Readings' table details
+      And I add the numeric value '10' to the numeric value '[LastReading]' and record the result as [NewReading]
+      And I enter '[NewReading]' in the 'New Reading' field on the current row in the 'Asset Meter Readings' table
+      And I click the OK button
+      And I see the flash message 'Meter readings have been saved'
+    
+    # re-open meter reading dialog, verify new reading saved
+     Then I select action 'Enter Meter Readings'
+      And I see the 'Enter Meter Readings' dialog
+      And I select the 'Asset Meter Readings' tab
+      And I enter '[Meter]' in the Meter filter in the 'Asset Meter Readings' table
+      And I initiate search in the 'Asset Meter Readings' table
+      And I see the value '[Meter]' in the Meter field on the current row in the 'Asset Meter Readings' table
+      And I make sure that the table details are visible for the 'Asset Meter Readings' table
+    # if a numerical value is greater than 999 Maximo adds commas - compare numerical values of the fields instead of displayed values
+      And I record the value in the 'Last Reading' field in the 'Asset Meter Readings' table details as [LastReadingFormatted]
+      And I see that the numeric value '[NewReading]' is equal to the numeric value '[LastReadingFormatted]'
+      And I click the Cancel button
+    # verify in Assets app
+      And I go to the Assets / Assets application
+      And I enter '=[MeterAsset]' in the Asset filter in the Assets table
+      And I initiate search in the Assets table
+      And I choose the first row in the Assets table
+      And I select the Meters tab
+      And I enter '[Meter]' in the Meter filter in the Meters table
+      And I initiate search in the Meters table
+      And I make sure that the table details are visible for the Meters table
+    # if a numerical value is greater than 999 Maximo adds commas - compare numerical values of the fields instead of displayed values
+      And I record the value in the 'Last Reading' field in the Meters table details as [LastReadingFormatted]
+      And I see that the numeric value '[NewReading]' is equal to the numeric value '[LastReadingFormatted]'
+      And I logout

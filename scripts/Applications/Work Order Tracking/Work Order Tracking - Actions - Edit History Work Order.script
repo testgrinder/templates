@@ -1,0 +1,119 @@
+#template
+Feature: Work Order Tracking - Actions - Edit History Work Order
+  
+  Maximo users shall be able to edit certain fields on closed work orders via the 
+  Edit History Work Order action.
+  
+  Scenario: Work Order Tracking - Actions - Edit History Work Order
+    
+    Given I login to Maximo as Administrator
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [WO]
+      And I enter 'Edit History Work Order' in the description field of the 'Work Order' field
+      And I activate the detail menu for the 'Location' field
+      And I click menu item 'Select Value'
+      And I record the value in the Location field on the first row in the unnamed table as [Location]
+      And I choose the first row in the unnamed table
+      And I see the value '[Location]' in the Location field in the header section
+      And I activate the detail menu for the 'Work Type' field
+      And I enter '=PM' in the Type filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I click the 'Approve Work Order' toolbar button
+      And I see the 'Change Status' dialog
+      And I see the value 'Approved' in the 'New Status' field
+      And I click the OK button
+      And I see the value 'APPR' in the Status field
+      And I click the 'Complete Work Order' toolbar button
+      And I see the 'Change Status' dialog
+      And I see the value 'Completed' in the 'New Status' field
+      And I click the OK button
+      And I see the value 'COMP' in the Status field
+    
+    # most fields are still editable in COMP status
+    
+      And I see fields input mode as:
+          | field                           | mode          |
+          | Work Order description          | editable      |
+          | Parent WO                       | editable      |
+          | Classification                  | editable      |
+          | Work Type                       | editable      |
+          | Failure Class                   | editable      |
+          | Priority                        | editable      |
+          | Target Start                    | editable      |
+          | Target Finish                   | editable      |
+          | Actual Start                    | editable      |
+          | Actual Finish                   | editable      |
+          | Supervisor                      | editable      |
+          | Crew                            | editable      |
+          | Lead                            | editable      |
+          | Work Group                      | editable      |
+      And I click the 'Close Work Order' toolbar button
+      And I see the 'Change Status' dialog
+      And I see the value 'Closed' in the 'New Status' field
+      And I click the OK button
+      And I see the value 'CLOSE' in the Status field
+    
+    # closing the work order prevents input in fields
+    
+      And I see fields input mode as:
+          | field                           | mode          |
+          | Work Order description          | readonly      |
+          | Parent WO                       | readonly      |
+          | Classification                  | readonly      |
+          | Work Type                       | readonly      |
+          | Failure Class                   | readonly      |
+          | Priority                        | readonly      |
+          | Target Start                    | readonly      |
+          | Target Finish                   | readonly      |
+          | Actual Start                    | readonly      |
+          | Actual Finish                   | readonly      |
+          | Supervisor                      | readonly      |
+          | Crew                            | readonly      |
+          | Lead                            | readonly      |
+          | Work Group                      | readonly      |
+          
+     When I select action 'Edit History Work Order'
+    
+    # Edit History Work Order action does not change the status from CLOSE, but makes the fields editable
+    
+     Then I see the value 'CLOSE' in the Status field
+      And I see fields input mode as:
+          | field                           | mode          |
+          | Work Order description          | editable      |
+          | Parent WO                       | editable      |
+          | Classification                  | editable      |
+          | Work Type                       | editable      |
+          | Failure Class                   | editable      |
+          | Priority                        | editable      |
+          | Target Start                    | editable      |
+          | Target Finish                   | editable      |
+          | Actual Start                    | editable      |
+          | Actual Finish                   | editable      |
+          | Supervisor                      | editable      |
+          | Crew                            | editable      |
+          | Lead                            | editable      |
+          | Work Group                      | editable      |
+     
+     When I successfully save the record
+    
+    # saving the work order returns the fields to readonly
+     
+     Then I see fields input mode as:
+          | field                           | mode          |
+          | Work Order description          | readonly      |
+          | Parent WO                       | readonly      |
+          | Classification                  | readonly      |
+          | Work Type                       | readonly      |
+          | Failure Class                   | readonly      |
+          | Priority                        | readonly      |
+          | Target Start                    | readonly      |
+          | Target Finish                   | readonly      |
+          | Actual Start                    | readonly      |
+          | Actual Finish                   | readonly      |
+          | Supervisor                      | readonly      |
+          | Crew                            | readonly      |
+          | Lead                            | readonly      |
+          | Work Group                      | readonly      |
+      And I logout

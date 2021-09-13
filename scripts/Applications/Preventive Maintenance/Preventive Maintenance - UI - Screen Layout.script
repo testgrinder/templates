@@ -1,0 +1,319 @@
+#template
+Feature: Preventive Maintenance - UI - Screen Layout
+  
+  Maximo users shall be able to confirm screen layouts in the Preventive Maintenance application.
+  
+  Background:
+    
+    Given I login to Maximo as Administrator
+      And I go to the Preventive Maintenance / Preventive Maintenance application
+  
+  
+  Scenario: Preventive Maintenance - UI - Screen Layout - List tab
+    
+     When I see the PMs table
+     Then I only see these columns in this order in the PMs table:
+          | column           | attribute       |
+          | PM               | PM.PMNUM        |
+          | Description      | PM.DESCRIPTION  |
+          | Location         | PM.LOCATION     |
+          | Asset            | PM.ASSETNUM     |
+          | Priority         | PM.PRIORITY     |
+          | Forecast Exists  |                 |
+          | Site             | PM.SITEID       |
+      And I logout
+  
+  
+  Scenario: Preventive Maintenance - UI - Screen Layout - PM tab
+    
+     When I initiate search in the PMs table
+      And I choose the first row in the PMs table
+     
+     Then I only see these fields in this order in the header section:
+          | field                           | attribute                           |
+          | PM                              | PM.PMNUM                            |
+          | PM description                  | PM.DESCRIPTION                      |
+          | Master PM                       | PM.MASTERPM                         |
+          | Master PM description           | MASTERPM.DESCRIPTION                |
+          | Site                            | PM.SITEID                           |
+          | Override Updates from Master PM | PM.OVERRIDEMASTERUPD                |
+          | Forecast Dates Locked           | PM.LOCKFORECAST                     |
+          | Status                          | PM.STATUS                           |
+          | Forecast Exists                 | PM.FORECASTEXISTS                   |
+      And I only see these fields in this order in the Details section:
+          | field                           | attribute                           |
+          | Location                        | PM.LOCATION                         |
+          | Location description            | LOCATIONS.DESCRIPTION               |
+          | Asset                           | PM.ASSETNUM                         |
+          | Asset description               | ASSET.DESCRIPTION                   |
+          | Route                           | PM.ROUTE                            |
+          | Route description               | ROUTES.DESCRIPTION                  |
+          | Lead Time (Days)                | PM.LEADTIME                         |
+          | Lead Time Active                | PM.LEADTIMEACTIVE                   |
+          | Include this PM in the Forecast | PM.INCLFORECAST                     |
+          | Counter                         | PM.PMCOUNTER                        |
+          | Use Job Plan Sequences          | PM.JPSEQINUSE                       |
+          | Has Children                    | PM.HASCHILDREN                      |
+      And I only see these fields in this order in the 'Work Order Information' section:
+          | field                           | attribute                           |
+          | Job Plan                        | PM.JPNUM                            |
+          | Work Type                       | PM.WORKTYPE                         |
+          | Work Order Status               | PM.WOSTATUS                         |
+          | Priority                        | PM.PRIORITY                         |
+          | Interruptible                   | PM.INTERRUPTIBLE                    |
+          | Description                     | JOBPLAN.DESCRIPTION                 |
+          | Last Start Date                 | PM.LASTSTARTDATE                    |
+          | Last Completion Date            | PM.LASTCOMPDATE                     |
+          | Earliest Next Due Date          | PM.ERLSTWOGENDATE                   |
+          | Start Constraint Offset         | PM.STCONOFFSET                      |
+          | Finish Constraint Offset        | PM.FNCONOFFSET                      |
+      And I only see these fields in this order in the Responsibility section:
+          | field                           | attribute                           |
+          | Supervisor                      | PM.SUPERVISOR                       |
+          | Crew                            | PM.AMCREW                           |
+          | Lead                            | PM.LEAD                             |
+          | Work Group                      | PM.PERSONGROUP                      |
+          | Owner                           | PM.OWNER                            |
+          | Owner Group                     | PM.OWNERGROUP                       |
+          | Crew Work Group                 | PM.CREWWORKGROUP                    |
+      And I only see these fields in this order in the 'Resource Information' section:
+          | field                                                   | attribute                           |
+          | GL Account                                              | PM.GLACCOUNT                        |
+          | Storeroom                                               | PM.STORELOC                         |
+          | Storeroom Site                                          | PM.STORELOCSITE                     |
+          | Use this PM to Trigger PM Hierarchy                     | PM.USEFREQUENCY                     |
+          | Child Work Orders and Tasks Will Inherit Status Changes | PM.PARENTCHGSSTATUS                 |
+          
+      And I logout
+  
+  
+  Scenario: Preventive Maintenance - UI - Screen Layout - Frequency tab
+    
+     When I initiate search in the PMs table
+      And I choose the first row in the PMs table
+      And I select the Frequency tab
+    
+     Then I only see these fields in this order in the header section:
+          | field                           | attribute                           |
+          | PM                              | PM.PMNUM                            |
+          | PM description                  | PM.DESCRIPTION                      |
+          | Site                            | PM.SITEID                           |
+          | Status                          | PM.STATUS                           |
+          | Forecast Exists                 | PM.FORECASTEXISTS                   |
+          | Frequency                       | PM.FREQUENCY                        |
+          | Frequency Units                 | PM.FREQUNIT                         |
+          | Alert Lead (Days)               | PM.ALERTLEAD                        |
+          | Estimated Next Due Date         | PM.NEXTDATE                         |
+          | Extended Date                   | PM.EXTDATE                          |
+          | Adjust Next Due Date            | PM.ADJNEXTDUE                       |
+          | Target Start Time               | PM.TARGSTARTTIME                    |
+      And I only see these fields in this order in the 'Work Order Generation Information' section:
+          | field                                                         | attribute                           |
+          | Use Last Work Order's Start Date to Calculate Next Due Date   | PM.USETARGETDATE                    |
+          | Generate Work Order Based on Meter Readings (Do Not Estimate) | PM.PMACTMETER                       |
+          | Generate Work Order When Meter Frequency is Reached           | PM.PMASSETWOGEN                     |
+      And I select the 'Meter Based Frequency' tab
+      And I only see these columns in this order in the 'Meter Based Frequency' table:
+          | column                          | attribute                           |
+          | Meter                           | PMMETER.METERNAME                   |
+          | Description                     | METER.DESCRIPTION                   |
+          | Frequency                       | PMMETER.FREQUENCY                   |
+          | Units to Go                     |                                     |
+          | Generate WO Ahead By            | PMMETER.TOLERANCE                   |
+          | Alert Lead                      | PMMETER.ALERTLEAD                   |
+      
+      And I logout
+  
+  
+  Scenario: Preventive Maintenance - UI - Screen Layout - Seasonal Dates tab
+    
+     When I initiate search in the PMs table
+      And I choose the first row in the PMs table
+      And I select the 'Seasonal Dates' tab
+    
+     Then I only see these fields in this order in the header section:
+          | field                                 | attribute                           |
+          | PM                                    | PM.PMNUM                            |
+          | PM description                        | PM.DESCRIPTION                      |
+          | Site                                  | PM.SITEID                           |
+          | Status                                | PM.STATUS                           |
+          | Forecast Exists                       | PM.FORECASTEXISTS                   |
+          | Schedule Early on Frequency Conflict  | PM.SCHEDEARLY                       |
+      And I only see these fields in this order in the 'Active Days' section:
+          | field                           | attribute                           |
+          | Sunday                          | PM.SUNDAY                           |
+          | Monday                          | PM.MONDAY                           |
+          | Tuesday                         | PM.TUESDAY                          |
+          | Wednesday                       | PM.WEDNESDAY                        |
+          | Thursday                        | PM.THURSDAY                         |
+          | Friday                          | PM.FRIDAY                           |
+          | Saturday                        | PM.SATURDAY                         |
+      And I only see these fields in this order in the 'Active Time' section:
+          | field                           | attribute                           |
+          | Target Start Time               | PM.TARGSTARTTIME                    |
+      And I see the 'Active Dates' table
+      And I only see these columns in this order in the 'Active Dates' table:
+          | column                          | attribute                           |
+          | Start Month                     | PMSEASONS.STARTMONTH                |
+          | Start Day                       | PMSEASONS.STARTDAY                  |
+          | End Month                       | PMSEASONS.ENDMONTH                  |
+          | End Day                         | PMSEASONS.ENDDAY                    |
+      
+      And I logout
+            
+  
+  Scenario: Preventive Maintenance - UI - Screen Layout - Job Plan Sequence tab
+    
+     When I initiate search in the PMs table
+      And I choose the first row in the PMs table
+      
+      And I select the 'Job Plan Sequence' tab
+    
+     Then I only see these fields in this order in the header section:
+          | field                           | attribute                           |
+          | PM                              | PM.PMNUM                            |
+          | PM description                  | PM.DESCRIPTION                      |
+          | Site                            | PM.SITEID                           |
+          | Status                          | PM.STATUS                           |
+          | Forecast Exists                 | PM.FORECASTEXISTS                   |
+          | Location                        | PM.LOCATION                         |
+          | Location description            | LOCATIONS.DESCRIPTION               |
+          | Asset                           | PM.ASSETNUM                         |
+          | Asset description               | ASSET.DESCRIPTION                   |
+          | Job Plan                        | PM.JPNUM                            |
+          | Job Plan description            | JOBPLAN.DESCRIPTION                 |
+          | Storeroom                       | PM.STORELOC                         |
+          | Storeroom Site                  | PM.STORELOCSITE                     |
+      And I see the 'Job Plan Sequence' table
+      And I only see these columns in this order in the 'Job Plan Sequence' table:
+          | column                          | attribute                           |
+          | Job Plan                        | PMSEQUENCE.JPNUM                    |
+          | Description                     | JOBPLAN.DESCRIPTION                 |
+          | Sequence                        | PMSEQUENCE.INTERVAL                 |
+      
+      And I logout
+  
+  
+  Scenario: Preventive Maintenance - UI - Screen Layout - PM Hierarchy tab
+    
+     When I initiate search in the PMs table
+      And I choose the first row in the PMs table
+      
+      And I select the 'PM Hierarchy' tab
+      
+     Then I only see these fields in this order in the header section:
+          | field                           | attribute                           |
+          | PM                              | PM.PMNUM                            |
+          | PM description                  | PM.DESCRIPTION                      |
+          | Parent                          | PM.PARENT                           |
+          | Parent description              | PM.DESCRIPTION                      |
+          | Site                            | PM.SITEID                           |
+          | Status                          | PM.STATUS                           |
+          | Forecast Exists                 | PM.FORECASTEXISTS                   |
+      And I see the Children table
+      And I only see these columns in this order in the Children table:
+          | column                          | attribute                           |
+          | Sequence                        | PM.WOSEQUENCE                       |
+          | PM                              | PM.PMNUM                            |
+          | Description                     | PM.DESCRIPTION                      |
+          | Asset                           | PM.ASSETNUM                         |
+          | Location                        | PM.LOCATION                         |
+          | Status                          | PM.STATUS                           |
+      
+      And I logout
+          
+  
+  Scenario: Preventive Maintenance - UI - Screen Layout - Forecast tab
+    
+     When I initiate search in the PMs table
+      And I choose the first row in the PMs table
+      
+      And I select the Forecast tab
+    
+     Then I only see these fields in this order in the header section:
+          | field                           | attribute                           |
+          | PM                              | PM.PMNUM                            |
+          | PM description                  | PM.DESCRIPTION                      |
+          | Site                            | PM.SITEID                           |
+          | Forecast Dates Locked           | PM.LOCKFORECAST                     |
+          | Status                          | PM.STATUS                           |
+          | Reforecast Subsequent Dates     | PM.REFORECAST                       |
+      And I see the 'Forecast Details' table
+      And I only see these columns in this order in the 'Forecast Details' table:
+          | column                          | attribute                           |
+          | Forecast Date                   | PMFORECAST.FORECASTDATE             |
+          | Job Plan                        |                                     |
+          | New Date                        | PMFORECAST.NEWDATE                  |
+          | Changed By                      | PMFORECAST.CHANGEBY                 |
+          | Changed Date                    | PMFORECAST.CHANGEDATE               |
+          | Remarks                         | PMFORECAST.REMARKS                  |
+          | Reforecast Pending              | PMFORECAST.REGENERATE               |
+      And I see the 'Process Pending Reforecast' button
+      And I logout
+            
+  
+  Scenario: Preventive Maintenance - UI - Screen Layout - Forecast Cost tab
+    
+     When I initiate search in the PMs table
+      And I choose the first row in the PMs table
+      
+      And I select the 'Forecast Cost' tab
+      
+     Then I only see these fields in this order in the header section:
+          | field                           | attribute                           |
+          | PM                              | PM.PMNUM                            |
+          | PM description                  | PM.DESCRIPTION                      |
+          | Site                            | PM.SITEID                           |
+          | Last Calculated Date            | PM.PMFPCOSTCALDATE                  |
+          | Grand Total Cost                | PM.GRANDTOTALCOST                   |
+      And I see the 'Calculate Cost' button in the header section
+      And I see the 'Forecast Details' table
+      And I only see these columns in this order in the 'Forecast Details' table:
+          | column                          | attribute                           |
+          | Forecast Date                   | PMFORECAST.FORECASTDATE             |
+          | Job Plan                        | PMFORECASTJP.JPNUM                  |
+          | Nested Job Plan                 | PMFORECASTJP.NESTEDJP               |
+          | Route                           | PMFORECASTJP.ROUTE                  |
+          | Route Stop                      | PMFORECASTJP.ROUTESTOPID            |
+          | Total Labor Hours               | PMFORECASTJP.TOTALLABHRS            |
+          | Total Labor Cost                | PMFORECASTJP.TOTALLABCOST           |
+          | Total Material Cost             | PMFORECASTJP.TOTALMATCOST           |
+          | Total Tool Cost                 | PMFORECASTJP.TOTALTOOLCOST          |
+          | Total Service Cost              | PMFORECASTJP.TOTALSERVCOST          |
+          | Total Cost                      | PMFORECASTJP.TOTALCOST              |
+      And I select the LABOR tab
+      And I see the Labor table
+      And I only see these columns in this order in the Labor table:
+          | column                          | attribute                           |
+          | Crew Type                       | JOBLABOR.AMCREWTYPE                 |
+          | Craft                           | JOBLABOR.CRAFT                      |
+          | Skill Level                     | JOBLABOR.SKILLLEVEL                 |
+          | Labor                           | JOBLABOR.LABORCODE                  |
+          | Rate                            |                                     |
+          | Labor Hours                     | PMFORECASTLABOR.THISLABORHRS        |
+          | Labor Cost                      | PMFORECASTLABOR.THISLABORCOST       |
+      And I select the MATERIAL tab
+      And I see the Material table
+      And I only see these columns in this order in the Material table:
+          | column                          | attribute                           |
+          | Item                            | JOBMATERIAL.ITEMNUM                 |
+          | Item Quantity                   | JOBMATERIAL.ITEMQTY                 |
+          | Material Cost                   | PMFORECASTMATERIAL.THISMATCOST      |
+      And I select the TOOL tab
+      And I see the Tool table
+      And I only see these columns in this order in the Tool table:
+          | column                          | attribute                           |
+          | Tool                            | JOBTOOL.ITEMNUM                     |
+          | Tool Quantity                   | JOBTOOL.ITEMQTY                     |
+          | Tool Hours                      | JOBTOOL.HOURS                       |
+          | Rate                            | JOBTOOL.RATE                        |
+          | Tool Cost                       | PMFORECASTTOOL.THISTOOLCOST         |
+      And I select the SERVICE tab
+      And I see the Service table
+      And I only see these columns in this order in the Service table:
+          | column                          | attribute                           |
+          | Service Item                    | JOBSERVICE.ITEMNUM                  |
+          | Quantity                        | JOBSERVICE.ITEMQTY                  |
+          | Service Cost                    | PMFORECASTSERVICE.THISSERVCOST      |
+      
+      And I logout

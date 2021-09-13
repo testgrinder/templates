@@ -1,0 +1,348 @@
+#template
+Feature: Work Order Tracking - Actions - Change Status
+  
+  Maximo users shall be able to change the status of work orders.
+  
+  Background:
+    
+    Given I login to Maximo as Administrator
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [WO]
+      And I enter 'WO Status Change test' in the description field of the 'Work Order' field
+      And I activate the detail menu for the 'Location' field
+      And I click menu item 'Select Value'
+      And I record the value in the Location field on the first row in the unnamed table as [Location]
+      And I choose the first row in the unnamed table
+      And I see the value '[Location]' in the Location field in the header section
+      And I activate the detail menu for the 'Work Type' field
+      And I enter '=PM' in the Type filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+    
+    
+  Scenario: Work Order Tracking - Actions - Approve Work Order
+    
+    Maximo users shall be able to change a work order's status to APPR by clicking the Approve Work Order toolbar button.
+    
+     When I click the 'Approve Work Order' toolbar button
+     
+     Then I see the value 'Approved' in the 'New Status' field
+      And I click the OK button
+      And I see the value 'APPR' in the Status field
+      And I logout
+  
+  
+  Scenario: Work Order Tracking - Actions - Initiate Work Order
+    
+    Maximo users shall be able to change a work order's status to INPRG by clicking the Initiate Work Order toolbar button.
+    
+     When I click the 'Initiate Work Order' toolbar button
+     
+     Then I see the value 'In Progress' in the 'New Status' field
+      And I click the OK button
+      And I see the value 'INPRG' in the Status field
+      And I logout
+  
+  
+  Scenario: Work Order Tracking - Actions - Complete Work Order
+    
+    Maximo users shall be able to change a work order's status to COMP by clicking the Complete Work Order toolbar button.
+    
+     When I click the 'Complete Work Order' toolbar button
+     
+     Then I see the value 'Completed' in the 'New Status' field
+      And I click the OK button
+      And I see the value 'COMP' in the Status field
+      And I logout
+  
+  Scenario Outline: Work Order Tracking - Actions - Change Status from WAPPR
+    
+    Maximo users shall be able to select the following statuses when a work order's status is WAPPR.
+    
+      And I see the value 'WAPPR' in the Status field
+    
+     When I select action 'Change Status'
+      And I see these values in the dropdown list for the 'New Status' field:
+          | Approved                    |
+          | Canceled                    |
+          | Closed                      |
+          | Completed                   |
+          | In Progress                 |
+          | Waiting on Material         |
+          | Waiting on Plant Cond       |
+          | Waiting to be Scheduled     |
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+    
+     Then I do not see a system message
+      And I see the value '<StatusCode>' in the Status field
+      And I logout
+    
+    Examples:
+          | Status                      | StatusCode  |
+          | Approved                    | APPR        |
+          | Canceled                    | CAN         |
+          | Closed                      | CLOSE       |
+          | Completed                   | COMP        |
+          | In Progress                 | INPRG       |
+          | Waiting on Material         | WMATL       |
+          | Waiting on Plant Cond       | WPCOND      |
+          | Waiting to be Scheduled     | WSCH        |
+  
+  
+  Scenario Outline: Work Order Tracking - Actions - Change Status from WSCH
+    
+    Maximo users shall be able to select the following statuses when a work order's status is WSCH.
+    
+      And I select action 'Change Status'
+      And I select 'Waiting to be Scheduled' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the value 'WSCH' in the Status field
+    
+     When I select action 'Change Status'
+      And I see these values in the dropdown list for the 'New Status' field:
+          | Approved                    |
+          | Canceled                    |
+          | Closed                      |
+          | Completed                   |
+          | In Progress                 |
+          | Waiting on Approval         |
+          | Waiting on Material         |
+          | Waiting on Plant Cond       |
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+    
+     Then I do not see a system message
+      And I see the value '<StatusCode>' in the Status field
+      And I logout
+    
+    Examples:
+          | Status                      | StatusCode  |
+          | Approved                    | APPR        |
+          | Canceled                    | CAN         |
+          | Closed                      | CLOSE       |
+          | Completed                   | COMP        |
+          | In Progress                 | INPRG       |
+          | Waiting on Approval         | WAPPR       |
+          | Waiting on Material         | WMATL       |
+          | Waiting on Plant Cond       | WPCOND      |
+  
+  
+  Scenario Outline: Work Order Tracking - Actions - Change Status from APPR
+    
+    Maximo users shall be able to select the following statuses when a work order's status is APPR.
+     
+      And I select action 'Change Status'
+      And I select 'Approved' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the value 'APPR' in the Status field
+    
+     When I select action 'Change Status'
+      And I see these values in the dropdown list for the 'New Status' field:
+          | Canceled                    |
+          | Closed                      |
+          | Completed                   |
+          | In Progress                 |
+          | Waiting on Approval         |
+          | Waiting on Material         |
+          | Waiting on Plant Cond       |
+          | Waiting to be Scheduled     |
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+    
+     Then I do not see a system message
+      And I see the value '<StatusCode>' in the Status field
+      And I logout
+    
+    Examples:
+          | Status                      | StatusCode  |
+          | Canceled                    | CAN         |
+          | Closed                      | CLOSE       |
+          | Completed                   | COMP        |
+          | In Progress                 | INPRG       |
+          | Waiting on Approval         | WAPPR       |
+          | Waiting on Material         | WMATL       |
+          | Waiting on Plant Cond       | WPCOND      |
+          | Waiting to be Scheduled     | WSCH        |
+  
+  Scenario Outline: Work Order Tracking - Actions - Change Status from WPCOND
+    
+    Maximo users shall be able to select the following statuses when a work order's status is WPCOND.
+     
+      And I select action 'Change Status'
+      And I select 'Waiting on Plant Cond' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the value 'WPCOND' in the Status field
+    
+     When I select action 'Change Status'
+      And I see these values in the dropdown list for the 'New Status' field:
+          | Approved                    |
+          | Canceled                    |
+          | Closed                      |
+          | Completed                   |
+          | In Progress                 |
+          | Waiting on Approval         |
+          | Waiting on Material         |
+          | Waiting to be Scheduled     |
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+    
+     Then I do not see a system message
+      And I see the value '<StatusCode>' in the Status field
+      And I logout
+    
+    Examples:
+          | Status                      | StatusCode  |
+          | Approved                    | APPR        |
+          | Canceled                    | CAN         |
+          | Closed                      | CLOSE       |
+          | Completed                   | COMP        |
+          | In Progress                 | INPRG       |
+          | Waiting on Approval         | WAPPR       |
+          | Waiting on Material         | WMATL       |
+          | Waiting to be Scheduled     | WSCH        |
+  
+  
+  Scenario Outline: Work Order Tracking - Actions - Change Status from WMATL
+    
+    Maximo users shall be able to select the following statuses when a work order's status is WMATL.
+     
+      And I select action 'Change Status'
+      And I select 'Waiting on Material' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the value 'WMATL' in the Status field
+    
+     When I select action 'Change Status'
+      And I see these values in the dropdown list for the 'New Status' field:
+          | Canceled                    |
+          | Closed                      |
+          | Completed                   |
+          | In Progress                 |
+          | Waiting on Approval         |
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+    
+     Then I do not see a system message
+      And I see the value '<StatusCode>' in the Status field
+      And I logout
+    
+    Examples:
+          | Status                      | StatusCode  |
+          | Canceled                    | CAN         |
+          | Closed                      | CLOSE       |
+          | Completed                   | COMP        |
+          | In Progress                 | INPRG       |
+          | Waiting on Approval         | WAPPR       |
+  
+  
+  Scenario Outline: Work Order Tracking - Actions - Change Status from INPRG
+    
+    Maximo users shall be able to select the following statuses when a work order's status is INPRG.
+     
+      And I select action 'Change Status'
+      And I select 'In Progress' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the value 'INPRG' in the Status field
+    
+     When I select action 'Change Status'
+      And I see these values in the dropdown list for the 'New Status' field:
+          | Closed                      |
+          | Completed                   |
+          | Waiting on Approval         |
+          | Waiting on Material         |
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+    
+     Then I do not see a system message
+      And I see the value '<StatusCode>' in the Status field
+      And I logout
+    
+    Examples:
+          | Status                      | StatusCode  |
+          | Closed                      | CLOSE       |
+          | Completed                   | COMP        |
+          | Waiting on Approval         | WAPPR       |
+          | Waiting on Material         | WMATL       |
+  
+  
+  Scenario Outline: Work Order Tracking - Actions - Change Status from COMP
+    
+    Maximo users shall only be able to select a new status of Closed when a work order's status is COMP.
+     
+      And I select action 'Change Status'
+      And I select 'Completed' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the value 'COMP' in the Status field
+    
+     When I select action 'Change Status'
+      And I see these values in the dropdown list for the 'New Status' field:
+          | Closed                      |
+      And I select '<Status>' in the dropdown list for the 'New Status' field
+      And I click the OK button
+    
+     Then I do not see a system message
+      And I see the value '<StatusCode>' in the Status field
+      And I logout
+    
+    Examples:
+          | Status                      | StatusCode  |
+          | Closed                      | CLOSE       |
+  
+  
+  Scenario: Work Order Tracking - Actions - Change Status from CLOSE
+    
+    Maximo users shall not be able to change the status of a work order in Closed status; however users may edit closed work orders which will move their status to HISTEDIT.
+    
+      And I select action 'Change Status'
+      And I select 'Closed' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the value 'CLOSE' in the Status field
+      And I see that the description field of the 'Work Order' field is read-only
+      And I see fields input mode as:
+          | field             | mode             |
+          | Work Type         | read-only        |
+          | Priority          | read-only        |
+          | Actual Start      | read-only        |
+          | Actual Finish     | read-only        |
+          | Supervisor        | read-only        |
+    
+     When I select action 'Change Status'
+     Then I see the 'The status cannot be changed for the selected records.' system message
+      And I click the OK button
+    
+     When I select action 'Edit History Work Order'
+     Then I see that the description field of the 'Work Order' field is editable
+      And I see fields input mode as:
+          | field             | mode            |
+          | Work Type         | editable        |
+          | Priority          | editable        |
+          | Actual Start      | editable        |
+          | Actual Finish     | editable        |
+          | Supervisor        | editable        |
+      And I successfully save the record
+      And I see that the description field of the 'Work Order' field is read-only
+      And I see fields input mode as:
+          | field             | mode             |
+          | Work Type         | read-only        |
+          | Priority          | read-only        |
+          | Actual Start      | read-only        |
+          | Actual Finish     | read-only        |
+          | Supervisor        | read-only        |
+      And I logout
+  
+  
+  Scenario: Work Order Tracking - Actions - Change Status from CAN
+    
+    Maximo users shall not be able to change the status of a work order in Canceled status.
+    
+      And I select action 'Change Status'
+      And I select 'Canceled' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the value 'CAN' in the Status field
+    
+     When I select action 'Change Status'
+      
+     Then I see the 'The status cannot be changed for the selected records.' system message
+      And I click the OK button
+      And I logout

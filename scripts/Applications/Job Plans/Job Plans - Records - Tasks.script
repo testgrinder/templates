@@ -1,0 +1,228 @@
+# template
+Feature: Job Plans - Records - Tasks
+  
+  Maximo users shall be able to add, remove, search, and update job tasks and planned labor, materials, services, and tools.
+  
+  Background: Create JP and add task
+    
+    Given I login to Maximo as Administrator
+      And I go to the Planning / Job Plans application
+      And I click the 'New Job Plan' toolbar button
+      And I record a random 10 digit number as [JP]
+      And I enter '[JP]' in the 'Job Plan' field
+      
+  
+  Scenario: Job Plans - Records - Tasks - Add Task
+    
+    Maximo users shall be able to add a task to a job plan.
+    
+      And I click the 'New Row' button in the 'Job Plan Tasks' table
+      And I see the value '10' in the Task field on the first row in the 'Job Plan Tasks' table
+      And I enter 'Adding a task' in the description field of the Task field
+     When I successfully save the record
+     Then I logout
+  
+  
+  Scenario: Job Plans - Records - Tasks - Delete Task
+    
+    Maximo users shall be able to remove tasks from a job plan.
+    
+      And I click the 'New Row' button in the 'Job Plan Tasks' table
+      And I enter 'Deleting a task' in the description field of the Task field
+     When I successfully save the record
+      And I go to the Planning / Job Plans application
+      And I enter '=[JP]' in the 'Job Plan' filter in the 'Job Plans' table
+      And I initiate search in the 'Job Plans' table
+      And I choose the first row in the 'Job Plans' table
+      And I only see the following rows in the 'Job Plan Tasks' table:
+          | Task  | Description     |
+          | 10    | Deleting a task |
+      And I click the trash can on the first row in the 'Job Plan Tasks' table
+      And I successfully save the record
+     Then I see 0 rows in the 'Job Plan Tasks' table
+      And I logout
+  
+  
+  Scenario: Job Plans - Records - Tasks - Update Task
+    
+    Maximo users shall be able to update tasks on job plans not in ACTIVE status.
+    
+      And I click the 'New Row' button in the 'Job Plan Tasks' table
+      And I enter 'Updating a task' in the description field of the Task field
+      And I successfully save the record
+      And I go to the Planning / Job Plans application
+      And I enter '=[JP]' in the 'Job Plan' filter in the 'Job Plans' table
+      And I initiate search in the 'Job Plans' table
+      And I choose the first row in the 'Job Plans' table
+      And I only see the following rows in the 'Job Plan Tasks' table:
+          | Task  | Description     |
+          | 10    | Updating a task |
+      And I see fields input mode on the first row in the 'Job Plan Tasks' table as:
+          | field             | mode        |
+          | Sequence          | editable    |
+          | Task              | readonly    |
+          | Description       | editable    |
+          | Nested Job Plan   | readonly    |
+          | Duration          | editable    |
+          | Meter             | editable    |
+     When I enter 'Updated task description' in the Description field on the first row in the 'Job Plan Tasks' table
+      And I enter '2:00' in the Duration field on the first row in the 'Job Plan Tasks' table
+      And I successfully save the record
+     Then I only see the following rows in the 'Job Plan Tasks' table:
+          | Sequence  | Task  | Description               | Nested Job Plan | Duration  | Meter |
+          |           | 10    | Updated task description  |                 | 2:00      |       |
+      And I logout
+  
+  
+  Scenario: Job Plans - Records - Tasks - Filter Tasks
+    
+    Maximo users shall be able to filter and search the Job Plan Tasks table.
+    
+      And I click the 'New Row' button in the 'Job Plan Tasks' table
+      And I enter 'Searching tasks' in the description field of the Task field
+      And I click the 'New Row' button in the 'Job Plan Tasks' table
+      And I enter 'Searching tasks 2' in the description field of the Task field
+      And I click the 'New Row' button in the 'Job Plan Tasks' table
+      And I successfully save the record
+      And I go to the Planning / Job Plans application
+      And I enter '=[JP]' in the 'Job Plan' filter in the 'Job Plans' table
+      And I initiate search in the 'Job Plans' table
+      And I choose the first row in the 'Job Plans' table
+      And I see other than 0 visible rows in the 'Job Plan Tasks' table
+     When I enter '*20*' in the Task filter in the 'Job Plan Tasks' table
+      And I initiate search in the 'Job Plan Tasks' table
+     Then I only see the following rows in the 'Job Plan Tasks' table:
+          | Task  | Description       |
+          | 20    | Searching tasks 2 |
+      And I logout
+  
+  
+  Scenario: Job Plans - Records - Tasks - Add Planned Labor - Add Craft
+  
+     When I click the 'New Row' button in the 'Planned Labor' table
+      And I see that the Organization field is required in the 'Planned Labor' table details
+      And I activate the detail menu for the Organization field in the 'Planned Labor' table details
+      And I choose the first row in the unnamed table
+      And I see a value in the Organization field in the 'Planned Labor' table details
+      And I activate the detail menu for the Craft field in the 'Planned Labor' table details
+      And I click menu item 'Select Value'
+      And I enter '!=~null~' in the 'Skill Level' filter in the unnamed table
+      And I enter '!=~null~' in the Vendor filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I record the value in the Craft field on the first row in the unnamed table as [Craft]
+      And I record the value in the 'Skill Level' field on the first row in the unnamed table as [Skill]
+      And I record the value in the Vendor field on the first row in the unnamed table as [Vendor]
+      And I choose the first row in the unnamed table
+     Then I see these values in the following fields in the 'Planned Labor' table details:
+          | field         | value       |
+          | Craft         | [Craft]     |
+          | Skill Level   | [Skill]     |
+          | Vendor        | [Vendor]    |
+      And I see that the Labor field is readonly in the 'Planned Labor' table details
+      And I successfully save the record
+      And I logout
+  
+  
+  Scenario:Job Plans - Records - Tasks - Add Planned Labor - Add Labor
+    
+     When I click the 'New Row' button in the 'Planned Labor' table
+      And I see that the Organization field is required in the 'Planned Labor' table details
+      And I activate the detail menu for the Organization field in the 'Planned Labor' table details
+      And I choose the first row in the unnamed table
+      And I see a value in the Organization field in the 'Planned Labor' table details
+      And I activate the detail menu for the Labor field in the 'Planned Labor' table details
+      And I click menu item 'Select Value'
+      And I record the value in the Labor field on the first row in the unnamed table as [Labor]
+      And I record the value in the Name field on the first row in the unnamed table as [Name]
+      And I choose the first row in the unnamed table
+     Then I see the value '[Labor]' in the Labor field in the 'Planned Labor' table details
+      And I see the value '[Name]' in the description field of the Labor field in the 'Planned Labor' table details
+      And I see fields input mode in the 'Planned Labor' table details as:
+            | field               | mode                  |
+            | Craft               | readonly              |
+            | Skill Level         | readonly              |
+            | Vendor              | readonly              |
+            | Labor Contract      | readonly              |
+            | Crew Type           | readonly              |
+            | Crew                | readonly              |
+            | Quantity            | readonly              |
+            | Rate                | readonly              |
+      And I successfully save the record
+      And I logout
+  
+  
+  Scenario: Job Plans - Records - Tasks - Add Planned Materials
+    
+     When I select the Materials tab
+      And I click the 'New Row' button in the 'Planned Materials' table
+      And I activate the detail menu for the Item field in the 'Planned Materials' table details
+      And I click menu item 'Select Value'
+      And I record the value in the Item field on the first row in the unnamed table as [Item]
+      And I record the value in the Description field on the first row in the unnamed table as [Description]
+      And I choose the first row in the unnamed table
+     Then I see these values in the following fields in the 'Planned Materials' table details:
+          | field         | value             |
+          | Item          | [Item]            |
+          | Item Quantity | 1.00              |
+      And I see the value '[Description]' in the description field of the Item field in the 'Planned Materials' table details
+      And I successfully save the record
+      And I logout
+  
+  
+  Scenario: Job Plans - Records - Tasks - Add Planned Services
+    
+     When I select the Services tab
+      And I click the 'New Row' button in the 'Planned Services' table
+      And I activate the detail menu for the 'Service Item' field in the 'Planned Services' table details
+      And I click menu item 'Select Value'
+      And I record the value in the 'Service Item' field on the first row in the unnamed table as [Service]
+      And I record the value in the Description field on the first row in the unnamed table as [Description]
+      And I choose the first row in the unnamed table
+     Then I see these values in the following fields in the 'Planned Services' table details:
+          | field         | value             |
+          | Service Item  | [Service]         |
+          | Quantity      | 1.00              |
+      And I see the value '[Description]' in the description field of the 'Service Item' field in the 'Planned Services' table details
+      And I successfully save the record
+  
+  
+  Scenario: Job Plans - Records - Tasks - Add Planned Tools
+    
+     When I select the Tools tab
+      And I click the 'New Row' button in the 'Planned Tools' table
+      And I activate the detail menu for the Tool field in the 'Planned Tools' table details
+      And I click menu item 'Select Value'
+      And I record the value in the Tool field on the first row in the unnamed table as [Tool]
+      And I record the value in the Description field on the first row in the unnamed table as [Description]
+      And I choose the first row in the unnamed table
+     Then I see these values in the following fields in the 'Planned Tools' table details:
+          | field         | value             |
+          | Tool          | [Tool]            |
+          | Tool Quantity | 1.00              |
+          | Tool Hours    | 0:00              |
+          | Rate          | 0.00              |
+      And I see the value '[Description]' in the description field of the Tool field in the 'Planned Tools' table details
+      And I see fields input mode in the 'Planned Tools' table details as:
+          | field         | mode              |
+          | Tool          | editable          |
+          | Tool Quantity | editable          |
+          | Tool Hours    | editable          |
+          | Rate          | editable          |
+      And I see fields input mode in the 'Planned Tools' table details as:
+          | field         | mode              |
+          | Tool          | required          |
+          | Tool Quantity | required          |
+          | Tool Hours    | required          |
+          | Rate          | required          |
+      And I successfully save the record
+      And I logout
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

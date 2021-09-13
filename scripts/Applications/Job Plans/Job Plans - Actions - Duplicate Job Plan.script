@@ -1,0 +1,44 @@
+# template
+Feature: Job Plans - Actions - Duplicate Job Plan
+  
+  Maximo users shall be able to duplicate job plans.
+  
+  Scenario: Job Plans - Actions - Duplicate Job Plan
+    
+    Given I login to Maximo as Administrator
+      And I go to the Planning / Job Plans application
+      And I click the 'New Job Plan' toolbar button
+      And I record a random 8 digit number as [JP]
+      And I enter '[JP]' in the 'Job Plan' field
+      And I enter 'Duplicate Job Plan' in the description field of the 'Job Plan' field
+    # enter add'l data to verify that it copies to duplicate
+      And I enter these values in the following fields in the Details section:
+          | field               | value           |
+          | Duration            | 2:00            |
+          | WO Priority         | 3               |
+      And I activate the detail menu for the Owner field in the Responsibility section
+      And I click menu item 'Select Value'
+      And I record the value in the Person field on the first row in the unnamed table as [Owner]
+      And I choose the first row in the unnamed table
+      And I see the value '[Owner]' in the Owner field in the Responsibility section
+      And I click the 'New Row' button in the 'Job Plan Tasks' table
+      And I see the value '10' in the Task field in the 'Job Plan Tasks' table details
+      And I enter 'Test Task for Duplication' in the description field of the Task field in the 'Job Plan Tasks' table details
+      And I successfully save the record
+     When I select action 'Duplicate Job Plan'
+      And I see the flash message 'Record has been duplicated'
+     Then I see an empty value in the 'Job Plan' field
+      And I see these values in the following fields:
+          | field               | value           |
+          | Duration            | 2:00            |
+          | WO Priority         | 3               |
+          | Owner               | [Owner]         |
+      And I see the value 'Duplicate Job Plan' in the description field of the 'Job Plan' field
+      And I only see the following rows in the 'Job Plan Tasks' table:
+            | Task  | Description               |
+            | 10    | Test Task for Duplication |
+      And I select the 'List View' tab
+      And I click the No button
+      And I logout
+          
+      

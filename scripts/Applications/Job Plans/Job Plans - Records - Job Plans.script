@@ -1,0 +1,67 @@
+# template
+Feature: Job Plans - Records - Job Plans
+  
+  Maximo users shall be able to create, update, and search job plan records.
+  
+  Background:
+    
+    Given I login to Maximo as Administrator
+      And I go to the Planning / Job Plans application
+      And I click the 'New Job Plan' toolbar button
+      And I record a random 12 digit number as [JP]
+      And I enter '[JP]' in the 'Job Plan' field
+    
+  
+  Scenario: Job Plans - Records - Job Plans - Create Job Plan
+    
+    Maximo users shall be able to create new job plan records.
+    
+     When I enter 'Create Job Plan' in the description field of the 'Job Plan' field
+     Then I successfully save the record
+      And I logout
+      
+  
+  Scenario: Job Plans - Records - Job Plans - Search for Job Plan
+    
+    Maximo users shall be able to navigate to a job plan from the List View tab.
+    
+     When I enter 'Search for Job Plan' in the description field of the 'Job Plan' field 
+      And I successfully save the record
+      And I go to the Planning / Job Plans application
+      And I enter '=[JP]' in the 'Job Plan' filter in the 'Job Plans' table
+      And I initiate search in the 'Job Plans' table
+      And I choose the first row in the 'Job Plans' table
+     Then I see the value '[JP]' in the 'Job Plan' field
+      And I logout
+  
+  
+  Scenario: Job Plans - Records - Job Plans - Advanced Search for Job Plan
+    
+    Maximo users shall be able to navigate to a job plan using the Advanced Search function.
+    
+     When I enter 'Advanced Search for Job Plan' in the description field of the 'Job Plan' field
+      And I successfully save the record
+      And I go to the Planning / Job Plans application
+      And I click menu bar button 'Advanced Search'
+      And I enter '[JP]' in the 'Job Plan' field
+      And I click the Find button
+     Then I see the value '[JP]' in the 'Job Plan' field
+      And I logout
+  
+  
+  Scenario: Job Plans - Records - Job Plans - Update PM
+    
+    Maximo users shall be able to update fields on job plans in DRAFT status.
+    
+      And I enter 'Update Job Plan' in the description field of the 'Job Plan' field
+      And I enter '6:00' in the Duration field in the Details section
+      And I enter '3' in the 'WO Priority' field in the Details section
+      And I successfully save the record
+     When I go to the Planning / Job Plans application
+      And I enter '=[JP]' in the 'Job Plan' filter in the 'Job Plans' table
+      And I initiate search in the 'Job Plans' table
+      And I choose the first row in the 'Job Plans' table
+      And I enter '5:00' in the Duration field in the Details section
+      And I enter '2' in the 'WO Priority' field in the Details section
+     Then I successfully save the record
+      And I logout

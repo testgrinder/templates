@@ -1,0 +1,23 @@
+# template
+Feature: Locations - Actions - Duplicate Location
+  
+  Maximo users shall be able to duplicate locations.
+  
+  Scenario: Locations - Actions - Duplicate Location - Create Duplicate Location
+    
+    Maximo users shall be able to duplicate a location.
+    
+    Given I login to Maximo as Administrator
+      And I go to the Assets / Locations application
+      And I click the 'New Location' toolbar button
+      And I record a random 12 digit number as [Location]
+      And I enter '[Location]' in the Location field
+      And I enter 'Duplicating Location' in the description field of the Location field
+      And I enter 'OPERATING' in the Type field
+      And I successfully save the record
+     When I select action 'Duplicate Location'
+     Then I see an empty value in the Location field
+      And I see the value 'Duplicating Location' in the description field of the Location field
+      And I select the 'List View' tab
+      And I click the No button
+      And I logout

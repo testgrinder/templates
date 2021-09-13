@@ -1,0 +1,516 @@
+Feature: Work Order Tracking - Actions - View
+  
+  Maximo users shall be able to view overviews of a work order from the select action menu.
+  # Status/Ownership Changes: date/time recording step is putting two spaces between date and time, Maximo puts one space between them in datetime fields
+  # causing Status Date / Own Date columns not to match the recorded datetime variables
+  # can work around this with regex but it makes the scripts a bit messy
+  Scenario: Work Order Tracking - Actions - View - Work Order History - Status Changes
+  
+    Given I login to Maximo as Administrator
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record current date/time as [DateTime]
+      And I see that '[DateTime]' matches \d+/\d+/\d+\s+(\d+:\d{2}\s\D{2}) and record the matching part as [Time]
+      And I convert maximo date time '[DateTime]' to maximo date and record it as [Date]
+      And I record the value in the 'Reported By' field as [Admin]
+      And I wait for 55 seconds
+      And I click the 'Approve Work Order' toolbar button
+      And I record current date/time as [DateTime1]
+      And I click the OK button
+      And I see that '[DateTime1]' matches \d+/\d+/\d+\s+(\d+:\d{2}\s\D{2}) and record the matching part as [Time1]
+      And I wait for 55 seconds
+      And I click the 'Initiate Work Order' toolbar button
+      And I record current date/time as [DateTime2]
+      And I click the OK button
+      And I see that '[DateTime2]' matches \d+/\d+/\d+\s+(\d+:\d{2}\s\D{2}) and record the matching part as [Time2]
+      And I wait for 55 seconds
+      And I click the 'Complete Work Order' toolbar button
+      And I record current date/time as [DateTime3]
+      And I click the OK button
+      And I see that '[DateTime3]' matches \d+/\d+/\d+\s+(\d+:\d{2}\s\D{2}) and record the matching part as [Time3]
+      And I wait for 55 seconds
+      And I click the 'Close Work Order' toolbar button
+      And I record current date/time as [DateTime4]
+      And I click the OK button
+      And I see that '[DateTime4]' matches \d+/\d+/\d+\s+(\d+:\d{2}\s\D{2}) and record the matching part as [Time4]
+    
+    When I select action 'View / Work Order History'
+      And I see the 'View Work Order History' dialog
+      
+    Then I only see the following rows in the 'Status History' table:
+          | Status    | Status Date     | Changed By  |
+          | CLOSE     | [Date] [Time4]  | [Admin]     |
+          | COMP      | [Date] [Time3]  | [Admin]     |
+          | INPRG     | [Date] [Time2]  | [Admin]     |
+          | APPR      | [Date] [Time1]  | [Admin]     |
+          | WAPPR     | [Date] [Time]   | [Admin]     |
+      And I click the OK button
+      And I logout
+  
+  Scenario: Work Order Tracking - Actions - View - Work Order History - Ownership Changes
+  
+    Given I login to Maximo as Administrator
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Reported By' field as [Owner1]
+      And I select action 'Take Ownership'
+      And I see the value '[Owner1]' in the Owner field
+      And I record current date/time as [DateTime]
+      And I see that '[DateTime]' matches \d+/\d+/\d+\s+(\d+:\d{2}\s\D{2}) and record the matching part as [Time]
+      And I convert maximo date time '[DateTime]' to maximo date and record it as [Date]
+      And I wait for 60 seconds
+      And I select action 'Select Owner'
+      And I see the 'Select Owner' dialog
+      And I record the value in the Person field on the first row in the Persons table as [Owner2]
+      And I record current date/time as [DateTime1]
+      And I choose the first row in the Persons table
+      And I see that '[DateTime1]' matches \d+/\d+/\d+\s+(\d+:\d{2}\s\D{2}) and record the matching part as [Time1]
+      And I wait for 60 seconds
+      And I select action 'Select Owner'
+      And I see the 'Select Owner' dialog
+      And I select the 'Person Groups' tab
+      And I record the value in the 'Person Group' field on the first row in the 'Person Groups' table as [OwnerGrp]
+      And I record current date/time as [DateTime2]
+      And I choose the first row in the 'Person Groups' table
+      And I see that '[DateTime2]' matches \d+/\d+/\d+\s+(\d+:\d{2}\s\D{2}) and record the matching part as [Time2]
+    
+    When I select action 'View / Work Order History'
+      And I see the 'View Work Order History' dialog
+      
+    Then I only see the following rows in the 'Ownership History' table:
+          | Own Date        | Owner     | Owner Group  | Owner Change By |
+          | [Date] [Time2]  |           | [OwnerGrp]   | [Owner1]        |
+          | [Date] [Time1]  | [Owner2]  |              | [Owner1]        |
+          | [Date] [Time]   | [Owner1]  |              | [Owner1]        |
+      And I click the OK button
+      And I logout
+      
+      
+  Scenario: Work Order Tracking - Actions - View - Costs
+    
+    Given I login to Maximo as Administrator
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [WO]
+      And I enter 'View WO Costs' in the description field of the 'Work Order' field
+      And I click the 'Approve Work Order' toolbar button
+      And I click the OK button
+      And I select the Actuals tab
+      And I click the 'Select Labor' button in the Labor table
+    # internal labor
+      And I enter '~null~' in the Vendor filter in the Labor table
+      And I initiate search in the Labor table
+      And I check off the first row in the Labor table
+      And I click the OK button
+      And I record the value in the Rate field in the Labor table details as [IntRate]
+      And I enter '1:00' in the 'Regular Hours' field in the Labor table details
+    # external labor
+      And I click the 'Select Labor' button in the Labor table
+      And I enter '!=~null~' in the Vendor filter in the Labor table
+      And I initiate search in the Labor table
+      And I check off the first row in the Labor table
+      And I click the OK button
+      And I record the value in the Rate field in the Labor table details as [ExtRate]
+      And I enter '1:00' in the 'Regular Hours' field in the Labor table details
+      And I record the value in the 'GL Credit Account' field in the Labor table details as [GL]
+      And I enter '[GL]' in the 'GL Debit Account' field in the Labor table details
+      And I add the numeric value '[IntRate]' to the numeric value '[ExtRate]' and record the result as [LaborCost]
+      And I successfully save the record
+    # approve labor - external labor will not show on Costs dialog until approved (internal labor is auto-approved)
+      And I go to the Work Orders / Labor Reporting application
+      And I click menu bar button 'Advanced Search'
+      And I enter '[WO]' in the 'Work Order' field
+      And I enter 'N' in the 'Approved' field
+      And I click the Find button
+      And I see 1 visible row in the Transactions table
+      And I check off the first row in the Transactions table
+      And I select action 'Approve Labor'
+      And I go to the Work Orders / Work Order Tracking application
+      And I enter '=[WO]' in the 'Work Order' filter in the 'Work Orders' table
+      And I initiate search in the 'Work Orders' table
+      And I choose the first row in the 'Work Orders' table
+      And I select the Actuals tab
+    # material
+      And I select the Materials tab
+      And I click the 'New Row' button in the Materials table
+      And I activate the detail menu for the Item field in the Materials table details
+      And I click menu item 'Go To / Inventory'
+      And I expand the menu for the menu bar button 'Advanced Search'
+      And I click menu item 'Where Clause'
+      And I enter the following value in the 'Current Query' richtext field
+      """
+      (status != 'OBSOLETE') and exists 
+      (select 1 from invbalances where itemnum = inventory.itemnum 
+      and location = inventory.location and curbal > 10)
+      """
+      And I click the Find button
+      And I choose the first row in the Inventory table
+      And I click the 'Return With Value' titlebar button
+      And I do not see the value '0.00' in the 'Unit Cost' field in the Materials table details
+      And I record the value in the 'Line Cost' field in the Materials table details as [MatlCost]
+      And I record the value in the 'GL Credit Account' field in the Materials table details as [GL]
+      And I enter '[GL]' in the 'GL Debit Account' field in the Materials table details
+    # tool
+      And I select the Tools tab
+      And I click the 'Select Tools' button in the Tools table
+      And I see the 'Select Tools' dialog
+      And I check off the first row in the Tools table
+      And I click the OK button
+      And I do not see the value '0.00' in the Rate field on the current row in the Tools table
+      And I record the value in the 'Line Cost' field on the first row in the Tools table as [ToolCost]
+      And I record the value in the 'GL Credit Account' field in the Tools table details as [GL]
+      And I enter '[GL]' in the 'GL Debit Account' field in the Tools table details
+    # service - must be added via PO
+      And I successfully save the record
+      And I go to the Purchasing / Purchase Orders application
+      And I click the 'New Purchase Order' toolbar button
+      And I record the value in the PO field as [PO]
+      And I activate the detail menu for the Company field
+      And I click menu item 'Select Value'
+      And I enter 'V' in the 'Company Type' filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I select the 'PO Lines' tab
+      And I click the 'New Row' button in the 'PO Lines' table
+      And I select 'Service' in the dropdown list for the 'Line Type' field in the 'PO Lines' table details
+      And I enter 'test line for WO' in the description field of the Item field in the 'PO Lines' table details
+      And I record '100.00' as [ServCost]
+      And I enter '[ServCost]' in the 'Unit Cost' field in the 'PO Lines' table details
+    # charge line to created WO
+      And I enter '[WO]' in the 'Work Order' field in the 'Charge To' section in the 'PO Lines' table details
+    # approve PO and complete receipts
+      And I click the 'Approve Purchase Order' toolbar button
+      And I click the OK button
+      And I see the value 'APPR' in the Status field
+      And I go to the Purchasing / Receiving application
+      And I enter '=[PO]' in the PO filter in the POs table
+      And I initiate search in the POs table
+      And I choose the first row in the POs table
+      And I select the 'Service Receipts' tab
+      And I click the 'Select Ordered Services' button in the 'Service Receipts' table
+      And I check off the first row in the Services table
+      And I click the OK button
+      And I select action 'Change Inspection Status'
+      And I select the 'Service Receipts' tab
+      And I check off the first row in the 'Service Receipts' table
+      And I click the OK button
+    # return to WO and verify service line
+      And I go to the Work Orders / Work Order Tracking application
+      And I enter '=[WO]' in the 'Work Order' filter in the 'Work Orders' table
+      And I initiate search in the 'Work Orders' table
+      And I choose the first row in the 'Work Orders' table
+      And I select the Actuals tab
+      And I select the Services tab
+      And I only see the following rows in the Services table:
+          | Service | Description       | Unit Cost |
+          |         | test line for WO  | 100.00    |
+    # calculations
+      And I add the numeric value '[LaborCost]' to the numeric value '[MatlCost]' and record the result as [LaborMatl]
+      And I add the numeric value '[LaborMatl]' to the numeric value '[ToolCost]' and record the result as [LaborMatlTool]
+      And I add the numeric value '[LaborMatlTool]' to the numeric value '[ServCost]' and record the result as [LaborMatlToolServ]
+    # verify costs
+     When I select action View / Costs
+      And I see the 'View Costs' dialog
+    
+     Then I only see the following rows in the 'WO Costs' table:
+          | Resource                | Actual              |
+          | Internal Labor Hours    | 1.00                |
+          | External Labor Hours    | 1.00                |
+          | Labor Hours             | 2.00                |
+          | Internal Labor Cost     | [IntRate]           |
+          | External Labor Cost     | [ExtRate]           |
+          | Labor Costs             | [LaborCost]         |
+          | Material Cost           | [MatlCost]          |
+          | Tool Costs              | [ToolCost]          |
+          | Service Cost            | [ServCost]          |
+          | Total Cost              | [LaborMatlToolServ] |
+      And I click the Close button
+      And I logout
+    
+  
+  Scenario: Work Order Tracking - Actions - View - Entire Plan
+    
+    Given I login to Maximo as Administrator
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [WO]
+      And I enter 'View WO Costs' in the description field of the 'Work Order' field
+      And I select the Plans tab
+    # labor
+      And I click the 'New Row' button in the Labor table
+      And I activate the detail menu for the Labor field in the Labor table details
+      And I click menu item 'Select Value'
+      And I record the value in the Labor field on the first row in the unnamed table as [Labor]
+      And I choose the first row in the unnamed table
+      And I enter '1:00' in the 'Regular Hours' field in the Labor table details
+      And I record the value in the Rate field in the Labor table details as [LaborRate]
+    # material
+      And I select the Materials tab
+      And I click the 'New Row' button in the Materials table
+      And I activate the detail menu for the Item field in the Materials table details
+      And I click menu item 'Go To / Inventory'
+      And I expand the menu for the menu bar button 'Advanced Search'
+      And I click menu item 'Where Clause'
+      And I enter the following value in the 'Current Query' richtext field
+      """
+      (status != 'OBSOLETE') and exists 
+      (select 1 from invbalances where itemnum = inventory.itemnum 
+      and location = inventory.location and curbal > 10)
+      """
+      And I click the Find button
+      And I choose the first row in the Inventory table
+      And I record the value in the Item field as [Item]
+      And I record the value in the description field of the Item field as [ItemDesc]
+      And I click the 'Return With Value' titlebar button
+      And I do not see the value '0.00' in the 'Unit Cost' field in the Materials table details
+      And I enter '3.00' in the Quantity field in the Materials table details
+      And I save the record
+      And I record the value in the 'Line Cost' field in the Materials table details as [MatlCost]
+    # service
+      And I select the Services tab
+      And I click the 'New Row' button in the Services table
+      And I enter 'test service' in the description field of the Service field in the Services table details
+      And I enter 'HOURS' in the 'Order Unit' field in the Services table details
+      And I enter '2.00' in the Quantity field in the Services table details
+      And I enter '50' in the 'Unit Cost' field in the Services table details
+      And I activate the detail menu for the Vendor field in the Services table details
+      And I click menu item 'Select Value'
+      And I enter 'V' in the 'Company Type' filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I record the value in the Company field on the first row in the unnamed table as [Vendor]
+      And I choose the first row in the unnamed table
+    # tool
+      And I select the Tools tab
+      And I click the 'Select Tools' button in the Tools table
+      And I see the 'Select Tools' dialog
+      And I record the value in the Item field on the first row in the Tools table as [Tool]
+      And I record the value in the Description field on the first row in the Tools table as [ToolDesc]
+      And I check off the first row in the Tools table
+      And I click the OK button
+      And I make sure that the table details are visible for the Tools table
+      And I record the value in the Rate field in the Tools table details as [ToolRate]
+      And I enter '8:00' in the 'Tool Hours' field in the Tools table details
+      And I successfully save the record
+      And I record the value in the 'Line Cost' field on the first row in the Tools table as [ToolCost]
+    
+    # view entire plan
+     When I select action 'View / Entire Plan'
+      And I see the 'View Entire Plan' dialog
+     Then I only see the following rows in the Labor table:
+          | Work Order  | Quantity      | Labor         | Regular Hours | Rate        | Line Cost   |
+          | [WO]        | 1             | [Labor]       | 1:00          | [LaborRate] | [LaborRate] |
+      And I select the Materials tab
+      And I only see the following rows in the Items table:
+          | Work Order  | Item          | Description   | Quantity      | Line Cost   | 
+          | [WO]        | [Item]        | [ItemDesc]    | 3.00          | [MatlCost]  |
+      And I select the Services tab
+      And I only see the following rows in the Services table:
+          | Work Order  | Description   | Quantity      | Unit Cost     | Line Cost   | Vendor      |
+          | [WO]        | test service  | 2.00          | 50.00         | 100.00      | [Vendor]    |
+      And I select the Tools tab
+      And I only see the following rows in the Tools table:
+          | Work Order  | Tool          | Description   | Quantity      | Tool Hours  | Rate        | Line Cost   | 
+          | [WO]        | [Tool]        | [ToolDesc]    | 1.00          | 8:00        | [ToolRate]  | [ToolCost]  |
+      And I click the Close button
+      And I logout
+  
+  
+  Scenario: Work Order Tracking - Actions - View - PO Information
+    
+    Given I login to Maximo as Administrator
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I record the value in the 'Work Order' field as [WO]
+      And I enter 'View PO Information' in the description field of the 'Work Order' field
+      And I click the 'Approve Work Order' toolbar button
+      And I click the OK button
+    # create PR against WO
+      And I go to the Purchasing / Purchase Requisitions application
+      And I click the 'New Purchase Requisition' toolbar button
+      And I record the value in the PR field as [PR]
+      And I enter 'test PR for WO' in the description field of the PR field
+      And I activate the detail menu for the Company field in the Vendor section
+      And I click menu item 'Select Value'
+      And I enter 'V' in the 'Company Type' filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I record the value in the Company field on the first row in the unnamed table as [Vendor]
+      And I choose the first row in the unnamed table
+      And I select the 'PR Lines' tab
+      And I click the 'New Row' button in the 'PR Lines' table
+      And I select 'Material' in the dropdown list for the 'Line Type' field in the 'PR Lines' table details
+      And I enter 'test material' in the description field of the Item field in the 'PR Lines' table details
+      And I enter '2.00' in the Quantity field in the 'Quantity and Costs' section in the 'PR Lines' table details
+      And I enter 'EACH' in the 'Order Unit' field in the 'Quantity and Costs' section in the 'PR Lines' table details
+      And I enter '50.00' in the 'Unit Cost' field in the 'Quantity and Costs' section in the 'PR Lines' table details
+      And I activate the detail menu for the 'Work Order' field in the 'Charge To' section in the 'PR Lines' table details
+      And I click menu item 'Select Value'
+      And I enter '[WO]' in the 'Work Order' filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I record the date 5 days from now as [ReqDate]
+      And I enter '[ReqDate]' in the 'Required Date' field in the Details section in the 'PR Lines' table details
+      And I record the date 4 days from now as [VendorDate]
+      And I enter '[VendorDate]' in the 'Vendor Date' field in the Details section in the 'PR Lines' table details
+      And I click the 'Approve Purchase Requisition' toolbar button
+      And I click the OK button
+    # view PR information on WO before PO creation
+     When I go to the Work Orders / Work Order Tracking application
+      And I enter '=[WO]' in the 'Work Order' filter in the 'Work Orders' table
+      And I initiate search in the 'Work Orders' table
+      And I choose the first row in the 'Work Orders' table
+      And I select action 'View / PO Information'
+      And I see the 'View PO Information' dialog
+     Then I see 0 rows in the 'Purchase Orders' table
+      And I only see the following rows in the 'Purchase Requisitions' table:
+          | Line Type | Item  | Description         | Quantity  | Line Cost | Required Date | PO  | PR    | Company   | Status  |
+          | MATERIAL  |       | test material       | 2.00      | 100.00    | [ReqDate]     |     | [PR]  | [Vendor]  | APPR    |
+      And I click the Close button
+     When I go to the Purchasing / Purchase Requisitions application
+      And I enter '=[PR]' in the PR filter in the PRs table
+      And I initiate search in the PRs table
+      And I choose the first row in the PRs table
+      And I select action 'Create PO'
+      And I see the 'Create PO' dialog
+      And I click the Autonumber button
+      And I record the value in the PO field as [PO]
+      And I click the OK button
+      And I see the flash message 'PR [PR] status changed to CLOSE'
+    # verify PO information
+      And I go to the Purchasing / Purchase Orders application
+      And I enter '=[PO]' in the PO filter in the POs table
+      And I initiate search in the POs table
+      And I choose the first row in the POs table
+      And I enter '[ReqDate]' in the 'Required Date' field in the Dates section
+      And I record the date 4 days from now as [VendorDate]
+      And I enter '[VendorDate]' in the 'Vendor Date' field in the Dates section
+      And I save the record
+      And I select the 'PO Lines' tab
+      And I make sure that the table details are visible for the 'PO Lines' table
+      And I see these values in the following fields in the 'PO Lines' table details:
+          | field             | value                 |
+          | Line Type         | Material              |
+          | Item description  | test material         |
+          | Quantity          | 2.00                  |
+          | Order Unit        | EACH                  |
+          | Unit Cost         | 50.00                 |
+          | Line Cost         | 100.00                |
+          | Work Order        | [WO]                  |
+          | PR                | [PR]                  |
+          | Required Date     | [ReqDate]             |
+          | Vendor Date       | [VendorDate]          |
+      And I click the 'Approve Purchase Order' toolbar button
+      And I click the OK button
+      And I see the value 'APPR' in the Status field
+    # view PO/PR information on WO before receipts
+     When I go to the Work Orders / Work Order Tracking application
+      And I enter '=[WO]' in the 'Work Order' filter in the 'Work Orders' table
+      And I initiate search in the 'Work Orders' table
+      And I choose the first row in the 'Work Orders' table
+      And I select action 'View / PO Information'
+      And I see the 'View PO Information' dialog
+     Then I only see the following rows in the 'Purchase Requisitions' table:
+          | Line Type | Item  | Description         | Quantity  | Line Cost | Required Date | PO    | PR    | Company   | Status  |
+          | MATERIAL  |       | test material       | 2.00      | 100.00    | [ReqDate]     | [PO]  | [PR]  | [Vendor]  | CLOSE   |
+      And I only see the following rows in the 'Purchase Orders' table:
+          | Line Type | Item  | Description         | Quantity  | Quantity Received | Line Cost | Required Date | Vendor Date   | PO    | Company   | Status  |
+          | MATERIAL  |       | test material       | 2.00      |                   | 100.00    | [ReqDate]     | [VendorDate]  | [PO]  | [Vendor]  | APPR    |
+      And I click the Close button
+    # receive items on PO, verify info on WO
+     When I go to the Purchasing / Receiving application
+      And I enter '=[PO]' in the PO filter in the POs table
+      And I initiate search in the POs table
+      And I choose the first row in the POs table
+      And I click the 'Select Ordered Items' button in the 'Material Receipts' table
+      And I see the 'Select Ordered Items' dialog
+      And I only see the following rows in the 'Ordered Items' table:
+          | PO Line | Description   | Quantity Due  | Quantity Ordered  |
+          | 1       | test material | 2.00          | 2.00              |
+      And I check off the first row in the 'Ordered Items' table
+      And I click the OK button
+      And I select action 'Change Inspection Status'
+      And I see the value '2.00' in the 'Quantity Accepted' field on the first row in the 'Material Receipts' table
+      And I see the value '0.00' in the 'Reject Quantity' field on the first row in the 'Material Receipts' table
+      And I check off the first row in the 'Material Receipts' table
+      And I click the OK button
+      And I see the value 'COMPLETE' in the Receipts field
+     Then I go to the Work Orders / Work Order Tracking application
+      And I enter '=[WO]' in the 'Work Order' filter in the 'Work Orders' table
+      And I initiate search in the 'Work Orders' table
+      And I choose the first row in the 'Work Orders' table
+      And I select action 'View / PO Information'
+      And I see the 'View PO Information' dialog
+      And I only see the following rows in the 'Purchase Requisitions' table:
+          | Line Type | Item  | Description         | Quantity  | Line Cost | Required Date | PO    | PR    | Company   | Status  |
+          | MATERIAL  |       | test material       | 2.00      | 100.00    | [ReqDate]     | [PO]  | [PR]  | [Vendor]  | CLOSE   |
+      And I only see the following rows in the 'Purchase Orders' table:
+          | Line Type | Item  | Description         | Quantity  | Quantity Received | Line Cost | Required Date | Vendor Date   | PO    | Company   | Status  |
+          | MATERIAL  |       | test material       | 2.00      | 2.00              | 100.00    | [ReqDate]     | [VendorDate]  | [PO]  | [Vendor]  | APPR    |
+      And I click the Close button
+      And I logout
+    
+  
+  Scenario: Work Order Tracking - Actions - View - Warranties
+    
+    Given I login to Maximo as Administrator
+    # create test asset
+      And I go to the Assets / Assets application
+      And I click the 'New Asset' toolbar button
+      And I record the value in the Asset field as [Asset]
+      And I enter 'WO Warranty Test' in the description field of the Asset field
+      And I record the value in the Site field as [Site]
+      And I click the 'Change Status' toolbar button
+      And I select 'Operating' in the dropdown list for the 'New Status' field
+      And I click the OK button
+    # set up and approve warranty contract and associate created asset
+      And I go to the Contracts / Warranty Contracts application
+      And I click the 'New Warranty Contract' toolbar button
+      And I record the value in the Contract field as [Contract]
+      And I enter 'test contract for WO' in the description field of the Contract field
+      And I activate the detail menu for the Vendor field
+      And I click menu item 'Select Value'
+      And I record the value in the Company field on the first row in the unnamed table as [Vendor]
+      And I choose the first row in the unnamed table
+      And I see today's date in the 'Start Date' field
+      And I record the date 2 days from now as [End]
+      And I enter '[End]' in the 'End Date' field
+      And I select action 'Authorize Sites'
+      And I click the 'Select Sites' button
+      And I enter '[Site]' in the Site filter in the Sites table
+      And I initiate search in the Sites table
+      And I check off the first row in the Sites table
+      And I click the OK button
+      And I click the OK button
+      And I select the 'Contract Lines' tab
+      And I click the 'New Row' button in the 'Contract Lines' table
+      And I see the value 'Service' in the 'Line Type' field in the 'Contract Lines' table details
+      And I enter 'test warranty service' in the description field of the Item field in the 'Contract Lines' table details
+      And I enter '2' in the Duration field in the 'Contract Lines' table details
+      And I enter 'DAYS' in the 'Time Unit' field in the 'Contract Lines' table details
+      And I click the 'Change Status' toolbar button
+      And I select 'Approved' in the dropdown list for the 'New Status' field
+      And I click the OK button
+      And I see the value 'APPR' in the Status field
+      And I select the 'Associated Assets' tab
+      And I click the 'Select More Assets' button in the 'Assets/Locations' table
+      And I enter '=[Asset]' in the Asset filter in the Assets table
+      And I initiate search in the Assets table
+      And I check off the first row in the Assets table
+      And I click the OK button
+      And I successfully save the record
+    # create WO against warrantied asset
+      And I go to the Work Orders / Work Order Tracking application
+      And I click the 'New Work Order' toolbar button
+      And I enter 'View Warranties' in the description field of the 'Work Order' field
+      And I enter '[Asset]' in the Asset field
+      And I successfully save the record
+      
+    # select View Warranties action
+     When I select action 'View / Warranties'
+    
+     Then I see the 'View Warranties' dialog
+      And I see the value '[Asset]' in the Asset field on the current row in the 'Work Order and Tasks' table
+      And I only see the following rows in the 'Work Order Warranties' table:
+          | Asset   | Contract    | Revision  | Description       | Vendor    |
+          | [Asset] | [Contract]  | 0         | WO Warranty Test  | [Vendor]  |
+      And I click the OK button
+      And I logout

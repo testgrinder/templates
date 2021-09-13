@@ -1,0 +1,47 @@
+#template
+Feature: Preventive Maintenance - Actions - Generate Forecast
+  
+  Maximo users shall be able to generate forecasts for PM records.
+  
+  Scenario: Preventive Maintenance - Actions - Generate Forecast
+    
+    Given I login to Maximo as Administrator
+      And I go to the Preventive Maintenance / Preventive Maintenance application
+      And I click the 'New PM' toolbar button
+      And I record a random 8 digit number as [PM]
+      And I enter '[PM]' in the PM field
+      And I enter 'Generate Forecast' in the description field of the PM field
+      And I activate the detail menu for the Location field in the Details section
+      And I click menu item 'Select Value'
+      And I choose the first row in the unnamed table
+      And I record the value in the Location field as [Location]
+      And I record the value in the Site field as [Site]
+      And I select the Frequency tab
+      And I enter '4' in the Frequency field
+      And I activate the detail menu for the 'Frequency Units' field
+      And I enter 'weeks' in the Value filter in the unnamed table
+      And I initiate search in the unnamed table
+      And I choose the first row in the unnamed table
+      And I see the value 'WEEKS' in the 'Frequency Units' field
+      And I record the date 28 days from now as [4Weeks]
+      And I record the date 56 days from now as [8Weeks]
+      And I enter '[4Weeks]' in the 'Estimated Next Due Date' field
+      And I select action 'Change Status'
+      And I select 'Active' in the dropdown list for the 'New Status' field
+      And I click the OK button
+    
+     When I select action 'Generate Forecast'
+      And I see the 'Generate Forecast' dialog
+      And I see an empty value in the 'Last Forecast Date' field
+      And I enter '60' in the 'Forecast For (Days)' field
+      And I see that the 'Run Forecast Generation in the Background' checkbox is unchecked
+      And I see an empty value in the 'Notification E-mail for Forecast Generation' field
+      And I click the OK button
+    
+     Then I see the 'Forecasting for PM [PM] in site [Site] successful' system message
+      And I click the OK button
+      And I select the Forecast tab
+      And I see 2 rows in the 'Forecast Details' table
+      And I see the value '[4Weeks]' in the 'Forecast Date' field on the first row in the 'Forecast Details' table
+      And I see the value '[8Weeks]' in the 'Forecast Date' field on the second row in the 'Forecast Details' table
+      And I logout
